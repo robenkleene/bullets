@@ -6,19 +6,28 @@ var should = require('should');
 
 // After the above works, move the jsdom stuff into a helper file
 
-describe('Array', function(){
-  before(function(){
-	  var jsdom = require("jsdom");
-	  jsdom.env("../example/index.html", function (errors, window) {
-	    // free memory associated with the window
-		console.log(window.document.documentElement.outerHTML);
-	    window.close();
-	  });
-  });
+describe('Array', function() {
+	var w;
 
-  describe('#indexOf()', function(){
-    it('should return -1 when not present', function(){
-      [1,2,3].indexOf(4).should.equal(-1);
+	before(function(done) {
+		var jsdom = require("jsdom");
+		jsdom.env("../example/index.html", function(errors, window) {
+			w = window;
+			done();
+		});
+	});
+
+    after(function() {
+		console.log("after");
+
+		// console.log(w);
+		w.close();
     });
-  });
+
+	describe('#indexOf()', function() {
+		it('should return -1 when not present', function() {
+			console.log(w.document.documentElement.outerHTML);
+			[1, 2, 3].indexOf(4).should.equal(-1);
+		});
+	});
 });
