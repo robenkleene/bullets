@@ -6,27 +6,44 @@ var should = require('should');
 
 // After the above works, move the jsdom stuff into a helper file
 
-describe('Array', function() {
+describe('Outliner', function() {
 	var w;
-
 	before(function(done) {
 		var jsdom = require("jsdom");
-		jsdom.env("../example/index.html", function(errors, window) {
-			w = window;
-			done();
+		jsdom.env({
+			file: "../example/index.html",
+			src: [""], // An empty JavaScript src forces external scripts to be processed before the callback fires.
+			features: {
+				FetchExternalResources   : ['script'],
+				ProcessExternalResources : ['script'],
+				MutationEvents           : "2.0"
+			},
+			done: function (errors, window) {
+				w = window;
+				Outliner = window.Outliner;
+				$ = window.$
+				done();
+			}
 		});
 	});
 
     after(function() {
-		console.log("after");
-
-		// console.log(w);
 		w.close();
     });
 
-	describe('#indexOf()', function() {
-		it('should return -1 when not present', function() {
-			console.log(w.document.documentElement.outerHTML);
+	describe('selectNext', function() {
+		it('should should select the first tag when nothing is selected', function() {
+
+			// TODO Figure out how to execute JavaScript code here
+			// The test is whether external scripts are loaded
+
+			// console.log(w.document.documentElement.outerHTML);
+
+
+			Outliner.selectNext();
+			console.log($(Outliner.selectedID).first().text()); // TODO After tests are working, refacot to use public `selected` method
+
+
 			[1, 2, 3].indexOf(4).should.equal(-1);
 		});
 	});

@@ -28,7 +28,9 @@ var Outliner = {
 			this.nothingToSelect();
 			return;
 		}
-		var selected = $(this.selectedID);
+
+
+		var selected = $(this.selectedID); // TODO After tests are runing, refactor this to use a public `selected` method
 		if (!selected.length > 0) {
 			// Nothing selected, select first or last element
 			var select;
