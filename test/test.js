@@ -6,10 +6,9 @@ describe('Outliner', function() {
 	var testhelper;
 
 	before(function(done) {
-		// TODO Put all these constants in external module
-		dommanager = require('./lib/dom_manager');
-		testhelper = require('./lib/test_helper');
-		dommanager.loadFile('../example/index.html', function(window) { 
+		dommanager = require(constants.dommanagerFile);
+		testhelper = require(constants.testhelperFile);
+		dommanager.loadFile(constants.HTMLFile, function(window) { 
 			$ = window.$
 			Outliner = window.Outliner;
 			testhelper.init(window);
@@ -25,7 +24,7 @@ describe('Outliner', function() {
 		it('should should select the first tag when nothing is selected', function() {
 			Outliner.selectNext();
 			var testHelperText = testhelper.textOf('a', 0);
-			var outlinerText = $(Outliner.selectedID).first().text(); // TODO After tests are working, refactor to use public `selected` method
+			var outlinerText = Outliner.selection.first().text();
 			outlinerText.should.equal(testHelperText);
 		});
 	});

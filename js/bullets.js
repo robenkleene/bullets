@@ -3,6 +3,9 @@ var Outliner = {
 	// Public
 	tags: 'a',
 	selected: 'selected',
+    get selection () {
+		return $(Outliner.selectedID);
+	},
 
 	// Private
 	nextOffset: 1,
@@ -12,7 +15,6 @@ var Outliner = {
 	},
 
 	// Public
-
 	selectNext: function() {
 		this.selectOffset(this.nextOffset);
 	},
@@ -21,7 +23,6 @@ var Outliner = {
 	},
 
 	// Private
-
 	selectOffset: function(offset) {
 		var tags = $(this.tags);
 		if (!tags.length > 0) {
@@ -30,9 +31,9 @@ var Outliner = {
 		}
 
 
-		var selected = $(this.selectedID); // TODO After tests are runing, refactor this to use a public `selected` method
-		if (!selected.length > 0) {
-			// Nothing selected, select first or last element
+		var selection = this.selection;
+		if (!selection.length > 0) {
+			// Nothing selection, select first or last element
 			var select;
 			if (offset > 0) {
 				select = tags.first();
@@ -42,7 +43,7 @@ var Outliner = {
 			this.select(select);
 			return;
 		}
-		var indexToSelect = tags.index(selected) + offset;
+		var indexToSelect = tags.index(selection) + offset;
 		var tag = tags.eq(indexToSelect);
 		if (!tag.length > 0 || indexToSelect < 0) { 
 			// No next tag was found.
@@ -50,9 +51,10 @@ var Outliner = {
 			this.nothingToSelect();
 			return;
 		}
-		this.deselect(selected);
+		this.deselect(selection);
 		this.select(tag);
 	},
+
 
 	select: function(object) {
 		object.attr('id', this.selected);
