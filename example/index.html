@@ -7,7 +7,9 @@
 	<link rel="stylesheet" href="css/style.css">
 	<script type="text/javascript" src="js/handlebars.js"></script>
 	<script type="text/javascript" src="js/mousetrap.js"></script>
-	<script type="text/javascript" src="js/zepto.js"></script>
+	<!-- Zepto causes bugs when running with jsdom, use jquery instead. -->
+	<!-- <script type="text/javascript" src="js/zepto.js"></script>  -->
+	<script type="text/javascript" src="js/jquery.js"></script>
 	<script type="text/javascript" src="js/wcsearch.js"></script>
 	<script type="text/javascript" src="../js/bullets.js"></script>
 	<script type="text/javascript" src="js/wcsearch_bullets.js"></script>

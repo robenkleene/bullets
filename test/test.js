@@ -27,5 +27,11 @@ describe('Outliner', function() {
 			var outlinerText = Outliner.selection.first().text();
 			outlinerText.should.equal(testHelperText);
 		});
+		it('should select the next tag when after the selection', function() {
+			Outliner.selectNext();
+			var outlinerText = Outliner.selection.first().text();
+			var testHelperText = testhelper.textOf('a', 1);
+			outlinerText.should.equal(testHelperText);
+		});
 	});
 });
