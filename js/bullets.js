@@ -1,17 +1,17 @@
-var Outliner = {
+var Bullets = {
 
 	// Public
 	tags: 'a',
 	selected: 'selected',
     get selection () {
-		return $(Outliner.selectedID);
+		return $(Bullets.selectedID);
 	},
 
 	// Private
 	nextOffset: 1,
 	previousOffset: -1,
     get selectedID () {
-		return '#' + Outliner.selected;
+		return '#' + Bullets.selected;
 	},
 
 	// Public

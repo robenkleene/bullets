@@ -1,9 +1,9 @@
 Mousetrap.bind('down', function() {
-	Outliner.selectNext();
+	Bullets.selectNext();
     return false;
 });
 
 Mousetrap.bind('up', function() {
-	Outliner.selectPrevious();
+	Bullets.selectPrevious();
     return false;
 });
