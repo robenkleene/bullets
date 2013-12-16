@@ -61,6 +61,7 @@ var Outliner = {
 	},
 
 	deselect: function(object) {
+		object = object || this.selection;
 		object.removeAttr('id');
 	},
 
