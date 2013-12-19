@@ -54,8 +54,7 @@ describe('Bullets', function() {
 			bulletsText.should.equal(testHelperText);
 		});
 		it('should keep the same selected tag when the last tag is selected', function() {
-			Bullets.selectNext();
-			Bullets.selectNext();
+			Bullets.selectPrevious();
 			Bullets.selectNext();
 			var bulletsText = Bullets.selection.text();
 			var testHelperText = testhelper.textOf('a', 1);
@@ -84,8 +83,7 @@ describe('Bullets', function() {
 			bulletsText.should.equal(testHelperText);
 		});
 		it('should keep the same selected tag when the first tag is selected', function() {
-			Bullets.selectPrevious();
-			Bullets.selectPrevious();
+			Bullets.selectNext();
 			Bullets.selectPrevious();
 			var bulletsText = Bullets.selection.text();
 			var testHelperText = testhelper.textOf('a', 0);

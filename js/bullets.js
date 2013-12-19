@@ -30,7 +30,6 @@ var Bullets = {
 			return;
 		}
 
-
 		var selection = this.selection;
 		if (!selection.length > 0) {
 			// Nothing selection, select first or last element
@@ -55,7 +54,11 @@ var Bullets = {
 		this.select(tag);
 	},
 
-
+	followSelection: function() {
+		var selection = this.selection;
+		var address = selection.attr('href');
+		window.location = address;
+	},
 	select: function(object) {
 		object.attr('id', this.selected);
 	},
