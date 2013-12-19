@@ -92,4 +92,14 @@ describe('Bullets', function() {
 		});
 	});
 
+	// TODO Write tests based on these handlers
+	// $(document).ready(function () {
+	// 	$(Bullets.tags).focus(function() {
+	// 		$(this).attr('id', Bullets.selected);
+	// 	});
+	// 	$(Bullets.tags).blur(function() {
+	// 		$(this).removeAttr('id');
+	// 	});
+	// });
+
 });

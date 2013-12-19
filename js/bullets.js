@@ -4,10 +4,21 @@ var Bullets = {
 	tags: 'a',
 	selected: 'selected',
     get selection () {
+		if (document.body != document.activeElement) {
+			return $(document.activeElement);
+		}
 		return $(Bullets.selectedID);
 	},
 
 	// Private
+    init: function() {
+		$(this.tags).focus(function() {
+			$(this).attr('id', Bullets.selected);
+		});
+		$(this.tags).blur(function() {
+			$(this).removeAttr('id');
+		});
+    },
 	nextOffset: 1,
 	previousOffset: -1,
     get selectedID () {
@@ -50,7 +61,6 @@ var Bullets = {
 			this.nothingToSelect();
 			return;
 		}
-		this.deselect(selection);
 		this.select(tag);
 	},
 
@@ -60,12 +70,12 @@ var Bullets = {
 		window.location = address;
 	},
 	select: function(object) {
-		object.attr('id', this.selected);
+		object.focus();
 	},
 
 	deselect: function(object) {
 		object = object || this.selection;
-		object.removeAttr('id');
+		object.blur();
 	},
 
 	nothingToSelect: function() {
@@ -73,3 +83,7 @@ var Bullets = {
 		console.log("Nothing to select");
 	}
 }
+
+$(document).ready(function () {
+	Bullets.init();
+});
