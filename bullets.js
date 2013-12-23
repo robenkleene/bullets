@@ -11,14 +11,6 @@ var Bullets = {
 	},
 
 	// Private
-    init: function() {
-		$(this.tags).focus(function() {
-			$(this).attr('id', Bullets.selected);
-		});
-		$(this.tags).blur(function() {
-			$(this).removeAttr('id');
-		});
-    },
 	nextOffset: 1,
 	previousOffset: -1,
     get selectedID () {
@@ -70,12 +62,17 @@ var Bullets = {
 		window.location = address;
 	},
 	select: function(object) {
+		this.deselect();
 		object.focus();
+		object.attr('id', Bullets.selected);
 	},
 
 	deselect: function(object) {
 		object = object || this.selection;
-		object.blur();
+		if (object.length > 0) {
+			object.blur();
+			object.removeAttr('id');			
+		}
 	},
 
 	nothingToSelect: function() {
@@ -83,7 +80,3 @@ var Bullets = {
 		console.log("Nothing to select");
 	}
 }
-
-$(document).ready(function () {
-	Bullets.init();
-});

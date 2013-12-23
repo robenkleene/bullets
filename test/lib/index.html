@@ -2,16 +2,18 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Bullets Demo</title>
-    <link rel="stylesheet" href="./css/bullets.css">
-    <link rel="stylesheet" href="./css/raster.css">
-    <link rel="stylesheet" href="./css/style.css">
-    <script src="./js/handlebars.js"></script>
-    <script src="./js/jquery.js"></script>
-    <script src="./js/mousetrap.js"></script>
-    <script src="./js/wcsearch_bullets.js"></script>
-    <script src="./js/wcsearch.js"></script>
-    <script src="./../bullets.js"></script>
+    <link rel="stylesheet" href="css/mocha.css">
+    <script src="js/test_helper.js"></script>
+    <title>Bullets Tests</title>
+    <link rel="stylesheet" href="../../example/css/bullets.css">
+    <link rel="stylesheet" href="../../example/css/raster.css">
+    <link rel="stylesheet" href="../../example/css/style.css">
+    <script src="../../example/js/handlebars.js"></script>
+    <script src="../../example/js/jquery.js"></script>
+    <script src="../../example/js/mousetrap.js"></script>
+    <script src="../../example/js/wcsearch_bullets.js"></script>
+    <script src="../../example/js/wcsearch.js"></script>
+    <script src="../../example/../bullets.js"></script>
   </head>
   <body>
     <section>
@@ -134,5 +136,19 @@
         </ul>
       </header>
     </section>
+	<div id="mocha"></div>
+	<script src="js/mocha.js"></script>
+	<script src="js/chai.js"></script>
+	<script>
+	  mocha.ui('bdd');
+	  mocha.reporter('html');
+	  // expect = chai.expect;
+	  var should = chai.should();
+	</script>
+	<script src="../test.js"></script>
+	<script>
+	  if (window.mochaPhantomJS) { mochaPhantomJS.run(); }
+	  else { mocha.run(); }
+	</script>
   </body>
 </html>
