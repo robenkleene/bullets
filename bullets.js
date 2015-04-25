@@ -3,7 +3,7 @@ var Bullets = {
 	// Public
 	tags: 'a',
 	selected: 'selected',
-    get selection () {
+  get selection() {
 		if (document.body != document.activeElement) {
 			return $(document.activeElement);
 		}
@@ -13,7 +13,7 @@ var Bullets = {
 	// Private
 	nextOffset: 1,
 	previousOffset: -1,
-    get selectedID () {
+  get selectedID () {
 		return '#' + Bullets.selected;
 	},
 
