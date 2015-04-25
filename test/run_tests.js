@@ -1,7 +1,11 @@
 #!/usr/bin/env node
 
-var path = require('path');
+var args = process.argv.slice(2);
 
+var path = require('path');
 var htmlFilePath = path.join(__dirname,'lib/index.html')
+
+var spawnArgs = [htmlFilePath].concat(args);
+
 var spawn = require('child_process').spawn;
-spawn('mocha-phantomjs', [htmlFilePath], { stdio: 'inherit' });
+spawn('mocha-phantomjs', spawnArgs, { stdio: 'inherit' });
