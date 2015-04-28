@@ -3,7 +3,7 @@ describe('Bullets', function() {
 		Bullets.deselect();
 	});
 	describe('deselect', function() {
-		it('should deselect the selection when it is passed in', function () {
+		it('TARGET should deselect the selection when it is passed in', function () {
 			Bullets.selectNext();
 			testhelper.testSelection();
 			Bullets.deselect(Bullets.selectedElement);
