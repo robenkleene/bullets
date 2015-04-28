@@ -1,14 +1,14 @@
 Mousetrap.bind('down', function() {
 	Bullets.selectNext();
-    return false;
+  return false;
 });
 
 Mousetrap.bind('up', function() {
 	Bullets.selectPrevious();
-    return false;
+  return false;
 });
 
 Mousetrap.bind('return', function() {
 	Bullets.followSelection();
-    return false;
+  return false;
 });

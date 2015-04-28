@@ -1,11 +1,9 @@
 var testhelper = {
 	testSelection: function() {
-		Bullets.selection.length.should.equal(1);
 		var testSelection = document.activeElement;
-		var selection = Bullets.selection[0];
-		selection.should.equal(testSelection);
-		selection.id.should.equal(Bullets.selected)
-		$(Bullets.selectedID).length.should.equal(1);
+		var selectedElement = Bullets.selectedElement;
+		selectedElement.should.equal(testSelection);
+		selectedElement.id.should.equal(Bullets.selected);
 	},
 	testNoSelection: function() {
 		Bullets.selection.length.should.equal(0);
@@ -23,4 +21,4 @@ var testhelper = {
 		return $(tag).eq(index).text();
 	}
 
-}
+};

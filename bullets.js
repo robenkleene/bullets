@@ -1,77 +1,83 @@
 var Bullets = {
+	// Constants
+	NEXT_OFFSET: 1,
+	PREVIOUS_OFFSET: -1,
 
 	// Public
+	selectedID: 'selected',
 	tags: 'a',
-	selected: 'selected',
-  get selection() {
+  // selectedIDValue: 'selected',
+  //   get selectedSelector () {
+  //   return '#' + this.selectedIDValue;
+  // },
+  get selectedElement() {
 		if (document.body != document.activeElement) {
-			return $(document.activeElement);
+console.log("activeElement = " + activeElement);
+			return document.activeElement;
 		}
-		return $(Bullets.selectedID);
-	},
-
-	// Private
-	nextOffset: 1,
-	previousOffset: -1,
-  get selectedID () {
-		return '#' + Bullets.selected;
+console.log("document.getElementById(this.selectedID) = " + document.getElementById(this.selectedID));
+    return document.getElementById(this.selectedID);
 	},
 
 	// Public
 	selectNext: function() {
-		this.selectOffset(this.nextOffset);
+		this.selectOffset(this.NEXT_OFFSET);
 	},
 	selectPrevious: function() {
-		this.selectOffset(this.previousOffset);
+		this.selectOffset(this.PREVIOUS_OFFSET);
 	},
 
 	// Private
 	selectOffset: function(offset) {
-		var tags = $(this.tags);
-		if (!tags.length > 0) {
+		var tagsNodeList = document.querySelectorAll(this.tags);
+
+		if (tagsNodeList.length < 1) {
 			this.nothingToSelect();
 			return;
 		}
 
-		var selection = this.selection;
-		if (!selection.length > 0) {
+		var selectedElement = this.selectedElement;
+
+		if (!selectedElement) {
 			// Nothing selection, select first or last element
-			var select;
-			if (offset > 0) {
-				select = tags.first();
-			} else {
-				select = tags.last();
-			}
-			this.select(select);
+			var firstOrLastElement = offset > 0 ? tagsNodeList[0] : tagsNodeList.last();
+			this.select(firstOrLastElement);
 			return;
 		}
-		var indexToSelect = tags.index(selection) + offset;
-		var tag = tags.eq(indexToSelect);
-		if (!tag.length > 0 || indexToSelect < 0) { 
+
+		var indexToSelect = tagsNodeList.index(selectedElement) + offset;
+
+  	if (indexToSelect < 0) {
 			// No next tag was found.
 			// Ignore indexes less than zero to prevent wrapping.
 			this.nothingToSelect();
 			return;
 		}
-		this.select(tag);
+
+    var elementToSelect = tagsNodeList[indexToSelect];
+		this.select(elementToSelect);
 	},
 
 	followSelection: function() {
-		var selection = this.selection;
-		var address = selection.attr('href');
+		var selectedElement = this.selectedElement;
+		var address = selectedElement.attr('href');
 		window.location = address;
 	},
+
 	select: function(object) {
 		this.deselect();
 		object.focus();
-		object.attr('id', Bullets.selected);
+console.log("object = " + object);
+		object.attr('id', this.selectedID);
 	},
 
 	deselect: function(object) {
-		object = object || this.selection;
-		if (object.length > 0) {
+// console.log("object = " + object);
+		element = object || this.selectedElement;
+// console.log("element = " + element);
+		if (!!element) {
 			object.blur();
-			object.removeAttr('id');			
+			object.removeAttr('id');
 		}
 	},
 
@@ -79,4 +85,4 @@ var Bullets = {
 		// TODO Beep or visual bell here?
 		console.log("Nothing to select");
 	}
-}
+};

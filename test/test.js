@@ -6,7 +6,7 @@ describe('Bullets', function() {
 		it('should deselect the selection when it is passed in', function () {
 			Bullets.selectNext();
 			testhelper.testSelection();
-			Bullets.deselect(Bullets.selection);
+			Bullets.deselect(Bullets.selectedElement);
 			testhelper.testNoSelection();
 		});
 		it('should deselect the selection when nothing is passed in', function () {
@@ -76,7 +76,7 @@ describe('Bullets', function() {
 			});
 		});
 		after(function() {
-		    $(Bullets.tags).unbind('blur') ; 
+		    $(Bullets.tags).unbind('blur') ;
 		    $(Bullets.tags).unbind('focus') ;
 		});
 		beforeEach(function() {
