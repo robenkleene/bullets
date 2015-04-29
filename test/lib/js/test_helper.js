@@ -3,7 +3,7 @@ var testhelper = {
 		var testSelection = document.activeElement;
 		var selectedElement = Bullets.selectedElement;
 		selectedElement.should.equal(testSelection);
-		selectedElement.id.should.equal(Bullets.selected);
+		selectedElement.id.should.equal(Bullets.selectedID);
 	},
 	testNoSelection: function() {
 		Bullets.selection.length.should.equal(0);

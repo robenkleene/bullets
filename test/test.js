@@ -5,7 +5,7 @@ describe('Bullets', function() {
 	describe('deselect', function() {
 		it('TARGET should deselect the selection when it is passed in', function () {
 			Bullets.selectNext();
-			// testhelper.testSelection();
+			testhelper.testSelection();
 			// Bullets.deselect(Bullets.selectedElement);
 			// testhelper.testNoSelection();
 		});
@@ -19,7 +19,7 @@ describe('Bullets', function() {
 
 	describe('selectNext', function() {
 	    afterEach(function() {
-			Bullets.deselect();
+				Bullets.deselect();
 	    });
 		it('should select the first tag when nothing is selected', function() {
 			Bullets.selectNext();
