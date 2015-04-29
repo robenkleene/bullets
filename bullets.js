@@ -6,16 +6,10 @@ var Bullets = {
 	// Public
 	selectedID: 'selected',
 	tags: 'a',
-  // selectedIDValue: 'selected',
-  //   get selectedSelector () {
-  //   return '#' + this.selectedIDValue;
-  // },
   get selectedElement() {
 		if (document.body != document.activeElement) {
-console.log("activeElement = " + activeElement);
 			return document.activeElement;
 		}
-console.log("document.getElementById(this.selectedID) = " + document.getElementById(this.selectedID));
     return document.getElementById(this.selectedID);
 	},
 
@@ -30,14 +24,12 @@ console.log("document.getElementById(this.selectedID) = " + document.getElementB
 	// Private
 	selectOffset: function(offset) {
 		var tagsNodeList = document.querySelectorAll(this.tags);
-
 		if (tagsNodeList.length < 1) {
 			this.nothingToSelect();
 			return;
 		}
 
 		var selectedElement = this.selectedElement;
-
 		if (!selectedElement) {
 			// Nothing selection, select first or last element
 			var firstOrLastElement = offset > 0 ? tagsNodeList[0] : tagsNodeList.last();
@@ -67,17 +59,14 @@ console.log("document.getElementById(this.selectedID) = " + document.getElementB
 	select: function(object) {
 		this.deselect();
 		object.focus();
-console.log("object = " + object);
-		object.attr('id', this.selectedID);
+		object.id = this.selectedID;
 	},
 
 	deselect: function(object) {
-// console.log("object = " + object);
 		element = object || this.selectedElement;
-// console.log("element = " + element);
 		if (!!element) {
-			object.blur();
-			object.removeAttr('id');
+			element.blur();
+			element.removeAttribute('id');
 		}
 	},
 
