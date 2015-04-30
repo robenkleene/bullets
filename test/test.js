@@ -3,7 +3,7 @@ describe('Bullets', function() {
 		Bullets.deselect();
 	});
 	describe('deselect', function() {
-		it('TARGET should deselect the selection when it is passed in', function () {
+		it('should deselect the selection when it is passed in', function () {
 			Bullets.selectNext();
 			testhelper.testSelection();
 			Bullets.deselect(Bullets.selectedElement);
@@ -21,7 +21,7 @@ describe('Bullets', function() {
 	    afterEach(function() {
 				Bullets.deselect();
 	    });
-		it('should select the first tag when nothing is selected', function() {
+		it('TARGET should select the first tag when nothing is selected', function() {
 			Bullets.selectNext();
 			testhelper.testSelection();
 			testhelper.testSelectionMatchesIndex(0);

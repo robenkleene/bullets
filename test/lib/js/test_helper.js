@@ -11,14 +11,15 @@ var testhelper = {
 		document.querySelectorAll(Bullets.selectedID).length.should.equal(0);
 	},
 	testSelectionMatchesIndex: function(index) {
-		var testText = testhelper.textOf(Bullets.tags, index);
-		var bulletsText = Bullets.selection.text();
+		var testText = testhelper.textOfQuerySelectorAtIndex(Bullets.tags, index);
+		var bulletsText = Bullets.selectedElement.innerText;
 		bulletsText.should.equal(testText);
 	},
 
 	// Private
-	textOf: function(tag, index) {
-		return $(tag).eq(index).text();
+	textOfQuerySelectorAtIndex: function(selectors, index) {
+		var nodeList = document.querySelectorAll(selectors);
+		return nodeList[index].innerText;
 	}
 
 };
