@@ -19,6 +19,9 @@ var testhelper = {
 	// Private
 	textOfQuerySelectorAtIndex: function(selectors, index) {
 		var nodeList = document.querySelectorAll(selectors);
+		if (index < 0) {
+			index = nodeList.length + index;
+		}
 		return nodeList[index].innerText;
 	}
 

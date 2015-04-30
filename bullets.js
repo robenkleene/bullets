@@ -32,16 +32,14 @@ var Bullets = {
 		var selectedElement = this.selectedElement;
 		if (!selectedElement) {
 			// Nothing selection, select first or last element
-			var firstOrLastElement = offset > 0 ? tagsNodeList[0] : tagsNodeList.last();
+			var firstOrLastElement = offset > 0 ? tagsNodeList[0] : tagsNodeList[tagsNodeList.length - 1];
 			this.select(firstOrLastElement);
 			return;
 		}
 
 		var indexToSelect = Array.prototype.indexOf.call(tagsNodeList, selectedElement) + offset;
-
-  	if (indexToSelect < 0) {
-			// No next tag was found.
-			// Ignore indexes less than zero to prevent wrapping.
+  	if (indexToSelect < 0 || indexToSelect >= tagsNodeList.length) {
+			// Ignore out of bounds indexes
 			this.nothingToSelect();
 			return;
 		}
@@ -58,8 +56,10 @@ var Bullets = {
 
 	select: function(object) {
 		this.deselect();
-		object.focus();
-		object.id = this.selectedID;
+		if (!!object) {
+			object.focus();
+			object.id = this.selectedID;
+		}
 	},
 
 	deselect: function(object) {
