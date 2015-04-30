@@ -21,7 +21,7 @@ describe('Bullets', function() {
 	    afterEach(function() {
 				Bullets.deselect();
 	    });
-		it('TARGET should select the first tag when nothing is selected', function() {
+		it('should select the first tag when nothing is selected', function() {
 			Bullets.selectNext();
 			testhelper.testSelection();
 			testhelper.testSelectionMatchesIndex(0);
@@ -32,7 +32,7 @@ describe('Bullets', function() {
 			testhelper.testSelection();
 			testhelper.testSelectionMatchesIndex(1);
 		});
-		it('should keep the same selected tag when the last tag is selected', function() {
+		it('TARGET should keep the same selected tag when the last tag is selected', function() {
 			Bullets.selectPrevious();
 			Bullets.selectNext();
 			testhelper.testSelection();

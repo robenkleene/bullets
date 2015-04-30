@@ -37,7 +37,7 @@ var Bullets = {
 			return;
 		}
 
-		var indexToSelect = tagsNodeList.index(selectedElement) + offset;
+		var indexToSelect = Array.prototype.indexOf.call(tagsNodeList, selectedElement) + offset;
 
   	if (indexToSelect < 0) {
 			// No next tag was found.
