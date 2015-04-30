@@ -6,9 +6,9 @@ var testhelper = {
 		selectedElement.id.should.equal(Bullets.selectedID);
 	},
 	testNoSelection: function() {
-		Bullets.selection.length.should.equal(0);
+		should.not.exist(Bullets.selectedElement);
 		document.activeElement.should.equal(document.body);
-		$(Bullets.selectedID).length.should.equal(0);
+		document.querySelectorAll(Bullets.selectedID).length.should.equal(0);
 	},
 	testSelectionMatchesIndex: function(index) {
 		var testText = testhelper.textOf(Bullets.tags, index);

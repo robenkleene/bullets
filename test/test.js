@@ -6,8 +6,8 @@ describe('Bullets', function() {
 		it('TARGET should deselect the selection when it is passed in', function () {
 			Bullets.selectNext();
 			testhelper.testSelection();
-			// Bullets.deselect(Bullets.selectedElement);
-			// testhelper.testNoSelection();
+			Bullets.deselect(Bullets.selectedElement);
+			testhelper.testNoSelection();
 		});
 		it('should deselect the selection when nothing is passed in', function () {
 			Bullets.selectNext();
