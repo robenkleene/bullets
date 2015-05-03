@@ -76,7 +76,7 @@ describe('Bullets', function() {
 		});
 
 
-		it('TARGET focus and blur should not run when the selection doen\'t change', function() {
+		it('focus and blur should not run when the selection doen\'t change', function() {
 			var element = Bullets.elementAtOffset(1);
 			var focusSpy = sinon.spy(element, 'focus');
 			var blurSpy = sinon.spy(element, 'blur');
@@ -92,27 +92,40 @@ describe('Bullets', function() {
 			focusSpy.restore();
 			blurSpy.restore();
 		});
-		// it('focus and blur should each fire once when the selection changes', function() {
-		// 	var testFocusCount = 0;
-		// 	var testBlurCount = 0;
-		//
-		// 	Bullets.selectNext();
-		// 	testFocusCount++;
-		// 	focusCount.should.equal(testFocusCount);
-		// 	blurCount.should.equal(testBlurCount);
-		//
-		// 	Bullets.selectNext();
-		// 	testFocusCount++;
-		// 	testBlurCount++;
-		// 	focusCount.should.equal(testFocusCount);
-		// 	blurCount.should.equal(testBlurCount);
-		//
-		// 	Bullets.selectNext();
-		// 	testFocusCount++;
-		// 	testBlurCount++;
-		// 	focusCount.should.equal(testFocusCount);
-		// 	blurCount.should.equal(testBlurCount);
-		// });
+		it('focus and blur should each fire once when the selection changes', function() {
+			var elementOne = Bullets.elementAtOffset(1);
+			var focusSpyOne = sinon.spy(elementOne, 'focus');
+			var blurSpyOne = sinon.spy(elementOne, 'blur');
+			Bullets.selectNext();
+
+			var elementTwo = Bullets.elementAtOffset(1);
+			var focusSpyTwo = sinon.spy(elementTwo, 'focus');
+			var blurSpyTwo = sinon.spy(elementTwo, 'blur');
+			Bullets.selectNext();
+			focusSpyOne.should.have.callCount(1);
+			blurSpyOne.should.have.callCount(1);
+			focusSpyTwo.should.have.callCount(1);
+			blurSpyTwo.should.have.callCount(0);
+
+
+			var elementThree = Bullets.elementAtOffset(1);
+			var focusSpyThree = sinon.spy(elementThree, 'focus');
+			var blurSpyThree = sinon.spy(elementThree, 'blur');
+			Bullets.selectNext();
+			focusSpyOne.should.have.callCount(1);
+			blurSpyOne.should.have.callCount(1);
+			focusSpyTwo.should.have.callCount(1);
+			blurSpyTwo.should.have.callCount(1);
+			focusSpyThree.should.have.callCount(1);
+			blurSpyThree.should.have.callCount(0);
+
+			focusSpyOne.restore();
+			blurSpyOne.restore();
+			focusSpyTwo.restore();
+			blurSpyTwo.restore();
+			focusSpyThree.restore();
+			blurSpyThree.restore();
+		});
 
 	});
 
