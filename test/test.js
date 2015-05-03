@@ -1,5 +1,5 @@
 describe('Bullets', function() {
-	after(function() {
+	beforeEach(function() {
 		Bullets.deselect();
 	});
 	describe('deselect', function() {
@@ -18,9 +18,6 @@ describe('Bullets', function() {
 	});
 
 	describe('selectNext', function() {
-	    afterEach(function() {
-				Bullets.deselect();
-	    });
 		it('should select the first tag when nothing is selected', function() {
 			Bullets.selectNext();
 			testhelper.testSelection();
@@ -44,9 +41,6 @@ describe('Bullets', function() {
 	});
 
 	describe('selectPrevious', function() {
-    afterEach(function() {
-			Bullets.deselect();
-    });
 		it('should select the last tag when nothing is selected', function() {
 			Bullets.selectPrevious();
 			testhelper.testSelection();
@@ -69,54 +63,35 @@ describe('Bullets', function() {
 		});
 	});
 
-	// describe('focus and blur', function() {
-	// 	var spies = [];
-	// 	before(function () {
-	// 		var tagsNodeList = document.querySelectorAll(this.tags);
-	// 		Array.prototype.map.call(nodeList, function(element) {
-	// 			var spy = sinon.spy(element, 'focus')
-	// 		});
-	//
-	// 		// $(Bullets.tags).focus(function() {
-	// 		// 	focusCount++;
-	// 		// });
-	// 		// $(Bullets.tags).blur(function() {
-	// 		// 	blurCount++;
-	// 		// });
-	// 	});
-	// 	after(function() {
-	// 	    $(Bullets.tags).unbind('blur') ;
-	// 	    $(Bullets.tags).unbind('focus') ;
-	// 	});
-	// 	beforeEach(function() {
-	// 		Bullets.deselect();
-	// 		blurCount = 0;
-	// 		focusCount = 0;
-	// 	});
-	// 	it('TARGET only focus should run when the next tag is selected', function() {
-	// 		var testFocusCount = 0;
-	// 		var testBlurCount = 0;
-	//
-	// 		Bullets.selectNext();
-	// 		testFocusCount++;
-	// 		focusCount.should.equal(testFocusCount);
-	// 		blurCount.should.equal(testBlurCount);
-	// 	});
+	describe('focus and blur', function() {
+		it('only focus should run when the next tag is selected', function() {
+			var element = Bullets.elementAtOffset(1);
+			var focusSpy = sinon.spy(element, 'focus');
+			var blurSpy = sinon.spy(element, 'blur');
+			Bullets.selectNext();
+			focusSpy.should.have.callCount(1);
+			blurSpy.should.have.callCount(0);
+			focusSpy.restore();
+			blurSpy.restore();
+		});
 
 
-		// it('focus and blur should not run when the selection doen\'t change', function() {
-		// 	var testFocusCount = 0;
-		// 	var testBlurCount = 0;
-		//
-		// 	Bullets.selectNext();
-		// 	testFocusCount++;
-		// 	focusCount.should.equal(testFocusCount);
-		// 	blurCount.should.equal(testBlurCount);
-		//
-		// 	Bullets.selectPrevious();
-		// 	focusCount.should.equal(testFocusCount);
-		// 	blurCount.should.equal(testBlurCount);
-		// });
+		it('TARGET focus and blur should not run when the selection doen\'t change', function() {
+			var element = Bullets.elementAtOffset(1);
+			var focusSpy = sinon.spy(element, 'focus');
+			var blurSpy = sinon.spy(element, 'blur');
+			var stub = sinon.stub(Bullets, 'nothingToSelect');
+
+			Bullets.selectNext();
+			Bullets.selectPrevious();
+			focusSpy.should.have.callCount(1);
+			blurSpy.should.have.callCount(0);
+			stub.should.have.callCount(1);
+
+			stub.restore();
+			focusSpy.restore();
+			blurSpy.restore();
+		});
 		// it('focus and blur should each fire once when the selection changes', function() {
 		// 	var testFocusCount = 0;
 		// 	var testBlurCount = 0;
@@ -138,7 +113,9 @@ describe('Bullets', function() {
 		// 	focusCount.should.equal(testFocusCount);
 		// 	blurCount.should.equal(testBlurCount);
 		// });
-	// });
+
+	});
+
 	// describe('focus and blur', function() {
 	// 	var blurCount;
 	// 	var focusCount;
