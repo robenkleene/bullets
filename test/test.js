@@ -32,9 +32,10 @@ describe('Bullets', function() {
 			testhelper.testSelection();
 			testhelper.testSelectionMatchesIndex(1);
 		});
-		it('TARGET should keep the same selected tag when the last tag is selected', function() {
+		it('should keep the same selected tag when the last tag is selected', function() {
 			Bullets.selectPrevious();
 			Bullets.selectNext();
+			// TODO Test that `nothingToSelect()` is called
 			testhelper.testSelection();
 			testhelper.testSelectionMatchesIndex(-1);
 		});
@@ -58,6 +59,7 @@ describe('Bullets', function() {
 		it('should keep the same selected tag when the first tag is selected', function() {
 			Bullets.selectNext();
 			Bullets.selectPrevious();
+			// TODO Test that `nothingToSelect()` is called
 			testhelper.testSelection();
 			testhelper.testSelectionMatchesIndex(0);
 		});
@@ -84,7 +86,7 @@ describe('Bullets', function() {
 			blurCount = 0;
 			focusCount = 0;
 		});
-		it('only focus should run when the next tag is selected', function() {
+		it('TARGET only focus should run when the next tag is selected', function() {
 			var testFocusCount = 0;
 			var testBlurCount = 0;
 
