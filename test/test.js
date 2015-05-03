@@ -69,69 +69,139 @@ describe('Bullets', function() {
 		});
 	});
 
+	// describe('focus and blur', function() {
+	// 	var spies = [];
+	// 	before(function () {
+	// 		var tagsNodeList = document.querySelectorAll(this.tags);
+	// 		Array.prototype.map.call(nodeList, function(element) {
+	// 			var spy = sinon.spy(element, 'focus')
+	// 		});
+	//
+	// 		// $(Bullets.tags).focus(function() {
+	// 		// 	focusCount++;
+	// 		// });
+	// 		// $(Bullets.tags).blur(function() {
+	// 		// 	blurCount++;
+	// 		// });
+	// 	});
+	// 	after(function() {
+	// 	    $(Bullets.tags).unbind('blur') ;
+	// 	    $(Bullets.tags).unbind('focus') ;
+	// 	});
+	// 	beforeEach(function() {
+	// 		Bullets.deselect();
+	// 		blurCount = 0;
+	// 		focusCount = 0;
+	// 	});
+	// 	it('TARGET only focus should run when the next tag is selected', function() {
+	// 		var testFocusCount = 0;
+	// 		var testBlurCount = 0;
+	//
+	// 		Bullets.selectNext();
+	// 		testFocusCount++;
+	// 		focusCount.should.equal(testFocusCount);
+	// 		blurCount.should.equal(testBlurCount);
+	// 	});
 
-	describe('focus and blur', function() {
-		var blurCount;
-		var focusCount;
-		before(function () {
-			$(Bullets.tags).focus(function() {
-				focusCount++;
-			});
-			$(Bullets.tags).blur(function() {
-				blurCount++;
-			});
-		});
-		after(function() {
-		    $(Bullets.tags).unbind('blur') ;
-		    $(Bullets.tags).unbind('focus') ;
-		});
-		beforeEach(function() {
-			Bullets.deselect();
-			blurCount = 0;
-			focusCount = 0;
-		});
-		it('TARGET only focus should run when the next tag is selected', function() {
-			var testFocusCount = 0;
-			var testBlurCount = 0;
 
-			Bullets.selectNext();
-			testFocusCount++;
-			focusCount.should.equal(testFocusCount);
-			blurCount.should.equal(testBlurCount);
-		});
-		it('focus and blur should not run when the selection doen\'t change', function() {
-			var testFocusCount = 0;
-			var testBlurCount = 0;
+		// it('focus and blur should not run when the selection doen\'t change', function() {
+		// 	var testFocusCount = 0;
+		// 	var testBlurCount = 0;
+		//
+		// 	Bullets.selectNext();
+		// 	testFocusCount++;
+		// 	focusCount.should.equal(testFocusCount);
+		// 	blurCount.should.equal(testBlurCount);
+		//
+		// 	Bullets.selectPrevious();
+		// 	focusCount.should.equal(testFocusCount);
+		// 	blurCount.should.equal(testBlurCount);
+		// });
+		// it('focus and blur should each fire once when the selection changes', function() {
+		// 	var testFocusCount = 0;
+		// 	var testBlurCount = 0;
+		//
+		// 	Bullets.selectNext();
+		// 	testFocusCount++;
+		// 	focusCount.should.equal(testFocusCount);
+		// 	blurCount.should.equal(testBlurCount);
+		//
+		// 	Bullets.selectNext();
+		// 	testFocusCount++;
+		// 	testBlurCount++;
+		// 	focusCount.should.equal(testFocusCount);
+		// 	blurCount.should.equal(testBlurCount);
+		//
+		// 	Bullets.selectNext();
+		// 	testFocusCount++;
+		// 	testBlurCount++;
+		// 	focusCount.should.equal(testFocusCount);
+		// 	blurCount.should.equal(testBlurCount);
+		// });
+	// });
+	// describe('focus and blur', function() {
+	// 	var blurCount;
+	// 	var focusCount;
+	// 	before(function () {
+	// 		$(Bullets.tags).focus(function() {
+	// 			focusCount++;
+	// 		});
+	// 		$(Bullets.tags).blur(function() {
+	// 			blurCount++;
+	// 		});
+	// 	});
+	// 	after(function() {
+	// 	    $(Bullets.tags).unbind('blur') ;
+	// 	    $(Bullets.tags).unbind('focus') ;
+	// 	});
+	// 	beforeEach(function() {
+	// 		Bullets.deselect();
+	// 		blurCount = 0;
+	// 		focusCount = 0;
+	// 	});
+	// 	it('TARGET only focus should run when the next tag is selected', function() {
+	// 		var testFocusCount = 0;
+	// 		var testBlurCount = 0;
+	//
+	// 		Bullets.selectNext();
+	// 		testFocusCount++;
+	// 		focusCount.should.equal(testFocusCount);
+	// 		blurCount.should.equal(testBlurCount);
+	// 	});
+	// 	it('focus and blur should not run when the selection doen\'t change', function() {
+	// 		var testFocusCount = 0;
+	// 		var testBlurCount = 0;
+	//
+	// 		Bullets.selectNext();
+	// 		testFocusCount++;
+	// 		focusCount.should.equal(testFocusCount);
+	// 		blurCount.should.equal(testBlurCount);
+	//
+	// 		Bullets.selectPrevious();
+	// 		focusCount.should.equal(testFocusCount);
+	// 		blurCount.should.equal(testBlurCount);
+	// 	});
+	// 	it('focus and blur should each fire once when the selection changes', function() {
+	// 		var testFocusCount = 0;
+	// 		var testBlurCount = 0;
+	//
+	// 		Bullets.selectNext();
+	// 		testFocusCount++;
+	// 		focusCount.should.equal(testFocusCount);
+	// 		blurCount.should.equal(testBlurCount);
+	//
+	// 		Bullets.selectNext();
+	// 		testFocusCount++;
+	// 		testBlurCount++;
+	// 		focusCount.should.equal(testFocusCount);
+	// 		blurCount.should.equal(testBlurCount);
+	//
+	// 		Bullets.selectNext();
+	// 		testFocusCount++;
+	// 		testBlurCount++;
+	// 		focusCount.should.equal(testFocusCount);
+	// 		blurCount.should.equal(testBlurCount);
+	// 	});
+	// });
 
-			Bullets.selectNext();
-			testFocusCount++;
-			focusCount.should.equal(testFocusCount);
-			blurCount.should.equal(testBlurCount);
-
-			Bullets.selectPrevious();
-			focusCount.should.equal(testFocusCount);
-			blurCount.should.equal(testBlurCount);
-		});
-		it('focus and blur should each fire once when the selection changes', function() {
-			var testFocusCount = 0;
-			var testBlurCount = 0;
-
-			Bullets.selectNext();
-			testFocusCount++;
-			focusCount.should.equal(testFocusCount);
-			blurCount.should.equal(testBlurCount);
-
-			Bullets.selectNext();
-			testFocusCount++;
-			testBlurCount++;
-			focusCount.should.equal(testFocusCount);
-			blurCount.should.equal(testBlurCount);
-
-			Bullets.selectNext();
-			testFocusCount++;
-			testBlurCount++;
-			focusCount.should.equal(testFocusCount);
-			blurCount.should.equal(testBlurCount);
-		});
-	});
 });

@@ -15,37 +15,43 @@ var Bullets = {
 
 	// Public
 	selectNext: function() {
-		this.selectOffset(this.NEXT_OFFSET);
+		this.selectAtOffset(this.NEXT_OFFSET);
 	},
 	selectPrevious: function() {
-		this.selectOffset(this.PREVIOUS_OFFSET);
+		this.selectAtOffset(this.PREVIOUS_OFFSET);
 	},
 
 	// Private
-	selectOffset: function(offset) {
+	selectAtOffset: function(offset) {
+    var elementToSelect = this.elementAtOffset(offset);
+		if (!elementToSelect) {
+			this.nothingToSelect();
+			return;
+		}
+		this.select(elementToSelect);
+	},
+
+	elementAtOffset: function(offset) {
 		var tagsNodeList = document.querySelectorAll(this.tags);
 		if (tagsNodeList.length < 1) {
-			this.nothingToSelect();
 			return;
 		}
 
 		var selectedElement = this.selectedElement;
 		if (!selectedElement) {
-			// Nothing selection, select first or last element
+			// No selected element, return first or last element
 			var firstOrLastElement = offset > 0 ? tagsNodeList[0] : tagsNodeList[tagsNodeList.length - 1];
-			this.select(firstOrLastElement);
-			return;
+			return firstOrLastElement;
 		}
 
 		var indexToSelect = Array.prototype.indexOf.call(tagsNodeList, selectedElement) + offset;
-  	if (indexToSelect < 0 || indexToSelect >= tagsNodeList.length) {
+		if (indexToSelect < 0 || indexToSelect >= tagsNodeList.length) {
 			// Ignore out of bounds indexes
-			this.nothingToSelect();
 			return;
 		}
 
-    var elementToSelect = tagsNodeList[indexToSelect];
-		this.select(elementToSelect);
+		var elementToSelect = tagsNodeList[indexToSelect];
+		return elementToSelect;
 	},
 
 	followSelection: function() {
