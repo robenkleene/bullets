@@ -34,17 +34,19 @@ describe('Bullets', function() {
 		});
 		it('should keep the same selected tag when the last tag is selected', function() {
 			Bullets.selectPrevious();
+			var stub = sinon.stub(Bullets, 'nothingToSelect');
 			Bullets.selectNext();
-			// TODO Test that `nothingToSelect()` is called
+			stub.should.have.callCount(1);
+			stub.restore();
 			testhelper.testSelection();
 			testhelper.testSelectionMatchesIndex(-1);
 		});
 	});
 
 	describe('selectPrevious', function() {
-	    afterEach(function() {
+    afterEach(function() {
 			Bullets.deselect();
-	    });
+    });
 		it('should select the last tag when nothing is selected', function() {
 			Bullets.selectPrevious();
 			testhelper.testSelection();
@@ -58,8 +60,10 @@ describe('Bullets', function() {
 		});
 		it('should keep the same selected tag when the first tag is selected', function() {
 			Bullets.selectNext();
+			var stub = sinon.stub(Bullets, 'nothingToSelect');
 			Bullets.selectPrevious();
-			// TODO Test that `nothingToSelect()` is called
+			stub.should.have.callCount(1);
+			stub.restore();
 			testhelper.testSelection();
 			testhelper.testSelectionMatchesIndex(0);
 		});
