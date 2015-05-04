@@ -2,9 +2,10 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="css/mocha.css">
-    <script src="js/test_helper.js"></script>
     <title>Bullets Tests</title>
+    <script src="js/test_helper.js"></script>
+    <script src="../../node_modules/mocha/mocha.js"></script>
+    <link rel="stylesheet" href="../../node_modules/mocha/mocha.css">
     <link rel="stylesheet" href="../../example/css/bullets.css">
     <link rel="stylesheet" href="../../example/css/raster.css">
     <link rel="stylesheet" href="../../example/css/style.css">
@@ -134,14 +135,12 @@
       </header>
     </section>
 	<div id="mocha"></div>
-	<script src="js/mocha.js"></script>
 	<script src="js/chai.js"></script>
 	<script src="js/sinon.js"></script>
 	<script src="js/sinon-chai.js"></script>
 	<script>
 	  mocha.ui('bdd');
 	  mocha.reporter('html');
-	  // expect = chai.expect;
 	  var should = chai.should();
 	</script>
 	<script src="../test.js"></script>

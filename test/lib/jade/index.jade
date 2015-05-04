@@ -2,9 +2,10 @@ doctype 5
 html(lang="en")
   head
     meta(charset="utf-8")
-    link(rel='stylesheet', href='css/mocha.css')
-    script(src='js/test_helper.js')
     title= "Bullets Tests"
+    - var nodeModulesPath = '../../node_modules/'
+    include javascript.jade
+    include css.jade
     - var resourceBasePath = '../../example/'
     include ../../../example/jade/css.jade
     include ../../../example/jade/javascript.jade
