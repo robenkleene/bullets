@@ -26,6 +26,7 @@
     "grunt-contrib-jade": "~0.8.0",
     "grunt-contrib-watch": "~0.5.3",
     "mocha": "^2.2.4",
-    "sinon": "^1.14.1"
+    "sinon": "^1.14.1",
+    "sinon-chai": "^2.7.0"
   }
 }
