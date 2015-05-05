@@ -3,7 +3,7 @@
 var args = process.argv.slice(2);
 
 var path = require('path');
-var htmlFilePath = path.join(__dirname,'lib/index.html')
+var htmlFilePath = path.join(__dirname,'../build/index.html');
 
 var spawnArgs = [htmlFilePath].concat(args);
 
