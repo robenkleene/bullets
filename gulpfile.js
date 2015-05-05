@@ -10,5 +10,6 @@ gulp.task('jade-test', function() {
     .pipe(gulp.dest('./test/build/'))
 });
 
-gulp.task('jade', ['jade-tests', 'jade-example']);
+// gulp.task('jade', ['jade-tests', 'jade-example']);
+gulp.task('jade', ['jade-test']);
 gulp.task('default', ['jade']);
