@@ -1,4 +1,4 @@
-doctype 5
+doctype html
 html(lang="en")
   head
     meta(charset="utf-8")
@@ -6,9 +6,9 @@ html(lang="en")
     - var nodeModulesPath = '../../node_modules/'
     include javascript.jade
     include css.jade
-    - var resourceBasePath = '../../example/'
-    include ../../../example/jade/css.jade
-    include ../../../example/jade/javascript.jade
+    - var resourceBasePath = '../../example/lib/'
+    include ../../../example/src/jade/css.jade
+    include ../../../example/src/jade/javascript.jade
   body
-    include ../../../example/jade/content.jade
+    include ../../../example/src/jade/content.jade
     include mocha.html
