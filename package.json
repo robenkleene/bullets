@@ -17,11 +17,14 @@
   },
   "homepage": "https://github.com/robenkleene/bullets",
   "devDependencies": {
+    "browserify": "^10.1.0",
     "chai": "^2.3.0",
+    "glob": "^5.0.5",
     "gulp": "^3.8.11",
     "gulp-jade": "^1.0.0",
     "mocha": "^2.2.4",
     "sinon": "^1.14.1",
-    "sinon-chai": "^2.7.0"
+    "sinon-chai": "^2.7.0",
+    "vinyl-source-stream": "^1.1.0"
   }
 }

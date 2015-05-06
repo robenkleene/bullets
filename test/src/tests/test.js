@@ -1,3 +1,5 @@
+var testhelper = require('../../lib/js/test_helper');
+
 describe('Bullets', function() {
 	beforeEach(function() {
 		Bullets.deselect();

@@ -1,4 +1,4 @@
-var testhelper = {
+module.exports = {
 	testSelection: function() {
 		var testSelection = document.activeElement;
 		var selectedElement = Bullets.selectedElement;
@@ -11,7 +11,7 @@ var testhelper = {
 		document.querySelectorAll(Bullets.selectedID).length.should.equal(0);
 	},
 	testSelectionMatchesIndex: function(index) {
-		var testText = testhelper.textOfQuerySelectorAtIndex(Bullets.tags, index);
+		var testText = this.textOfQuerySelectorAtIndex(Bullets.tags, index);
 		var bulletsText = Bullets.selectedElement.innerText;
 		bulletsText.should.equal(testText);
 	},
@@ -24,5 +24,4 @@ var testhelper = {
 		}
 		return nodeList[index].innerText;
 	}
-
 };
