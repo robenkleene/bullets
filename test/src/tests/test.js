@@ -1,4 +1,4 @@
-var testhelper = require('../../lib/js/test_helper');
+var testhelper = require('../../lib/js/test-helper');
 
 describe('Bullets', function() {
 	beforeEach(function() {
