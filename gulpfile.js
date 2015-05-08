@@ -4,6 +4,7 @@ var glob = require('glob');
 var browserify = require('browserify');
 var source = require('vinyl-source-stream');
 var path = require('path');
+var plumber = require('gulp-plumber');
 
 // Paths
 
@@ -23,6 +24,7 @@ var paths = {
 
 gulp.task('jade-example', function() {
   gulp.src(path.join(paths.example.src, 'jade/index.jade'))
+    .pipe(plumber())
     .pipe(jade({
       pretty: true
     }))
@@ -31,6 +33,7 @@ gulp.task('jade-example', function() {
 
 gulp.task('jade-test', function() {
   gulp.src(path.join(paths.test.src, 'jade/index.jade'))
+    .pipe(plumber())
     .pipe(jade({
       pretty: true
     }))
@@ -41,11 +44,17 @@ gulp.task('jade-test', function() {
 // Browserify
 
 gulp.task('browserify-test', function () {
-    var b = browserify({
-      entries: glob.sync(paths.test.src + 'tests/*.js')
-    });
+  var b = browserify({
+    entries: glob.sync(paths.test.src + 'tests/*.js')
+  });
 
-    b.bundle().pipe(source('tests.js')).pipe(gulp.dest('./test/build/js'));
+  b.bundle()
+    .on('error', function (err) {
+      console.log(err.toString());
+      this.emit("end");
+    })
+    .pipe(source('tests.js'))
+    .pipe(gulp.dest(path.join(paths.test.build, 'js')));
 });
 
 
