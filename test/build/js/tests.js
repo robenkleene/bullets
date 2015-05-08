@@ -3,6 +3,7 @@ describe('Bullets focus and blur', function() {
   beforeEach(function() {
 		Bullets.deselect();
 	});
+
   it('only focus should run when the next tag is selected', function() {
     var element = Bullets.elementAtOffset(1);
     var focusSpy = sinon.spy(element, 'focus');
@@ -13,7 +14,6 @@ describe('Bullets focus and blur', function() {
     focusSpy.restore();
     blurSpy.restore();
   });
-
 
   it('focus and blur should not run when the selection doesn\'t change', function() {
     var element = Bullets.elementAtOffset(1);
@@ -31,6 +31,7 @@ describe('Bullets focus and blur', function() {
     focusSpy.restore();
     blurSpy.restore();
   });
+
   it('focus and blur should each fire once when the selection changes', function() {
     var elementOne = Bullets.elementAtOffset(1);
     var focusSpyOne = sinon.spy(elementOne, 'focus');
@@ -74,6 +75,7 @@ describe('Bullets selection', function() {
 	beforeEach(function() {
 		Bullets.deselect();
 	});
+
 	describe('deselect', function() {
 		it('should deselect the selection when it is passed in', function () {
 			Bullets.selectNext();
@@ -132,6 +134,12 @@ describe('Bullets selection', function() {
 			stub.restore();
 			testhelper.testSelection();
 			testhelper.testSelectionMatchesIndex(0);
+		});
+	});
+
+	describe('followSelection', function() {
+		it('should follow the selected tag', function() {
+			Bullets.selectNext();
 		});
 	});
 });

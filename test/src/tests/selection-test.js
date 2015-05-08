@@ -4,6 +4,7 @@ describe('Bullets selection', function() {
 	beforeEach(function() {
 		Bullets.deselect();
 	});
+
 	describe('deselect', function() {
 		it('should deselect the selection when it is passed in', function () {
 			Bullets.selectNext();
@@ -62,6 +63,12 @@ describe('Bullets selection', function() {
 			stub.restore();
 			testhelper.testSelection();
 			testhelper.testSelectionMatchesIndex(0);
+		});
+	});
+
+	describe('followSelection', function() {
+		it('should follow the selected tag', function() {
+			Bullets.selectNext();
 		});
 	});
 });
