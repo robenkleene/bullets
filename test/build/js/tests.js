@@ -160,7 +160,6 @@ module.exports = {
 		}
 		return nodeList[index].innerText;
 	}
-
 };
 
 },{}]},{},[1]);
