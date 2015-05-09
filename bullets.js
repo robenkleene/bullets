@@ -56,9 +56,14 @@ var Bullets = {
 
 	followSelection: function() {
 		var selectedElement = this.selectedElement;
-		var address = selectedElement.attr('href');
+		var address = selectedElement.getAttribute('href');
+		this.redirect(address);
+	},
+
+	redirect: function(address) {
 		window.location = address;
 	},
+
 
 	select: function(object) {
 		this.deselect();

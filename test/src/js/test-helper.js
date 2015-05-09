@@ -16,12 +16,23 @@ module.exports = {
 		bulletsText.should.equal(testText);
 	},
 
-	// Private
+	// Nodes
 	textOfQuerySelectorAtIndex: function(selectors, index) {
+		var node = this.nodeOfQuerySelectorAtIndex(selectors, index);
+		return node.innerText;
+	},
+
+	valueOfAttributeForQuerySelectorAtIndex: function(selectors, index, attribute) {
+		var node = this.nodeOfQuerySelectorAtIndex(selectors, index);
+		return node.getAttribute(attribute);
+	},
+
+	nodeOfQuerySelectorAtIndex: function (selectors, index) {
 		var nodeList = document.querySelectorAll(selectors);
 		if (index < 0) {
 			index = nodeList.length + index;
 		}
-		return nodeList[index].innerText;
+		return nodeList[index];
 	}
+
 };

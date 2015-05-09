@@ -63,7 +63,9 @@ gulp.task('browserify-test', function () {
 gulp.task('watch', function() {
     // Test
     gulp.watch(paths.test.src + 'jade/*.*', ['jade-test']);
-    gulp.watch(paths.test.src + 'tests/*.js', ['browserify-test']);
+
+    var testsJSPaths = [paths.test.src + 'tests/*.js', paths.test.src + 'js/*.js'];
+    gulp.watch(testsJSPaths, ['browserify-test']);
 
     // Example
     // On example change also build test because test imports example

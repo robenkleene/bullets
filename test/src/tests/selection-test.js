@@ -1,4 +1,5 @@
-var testhelper = require('../../lib/js/test-helper');
+var testhelper = require('../js/test-helper');
+window.testhelper = testhelper;
 
 describe('Bullets selection', function() {
 	beforeEach(function() {
@@ -69,6 +70,14 @@ describe('Bullets selection', function() {
 	describe('followSelection', function() {
 		it('should follow the selected tag', function() {
 			Bullets.selectNext();
+			var href = testhelper.valueOfAttributeForQuerySelectorAtIndex(Bullets.tags, 0, 'href');
+			console.log("href = " + href);
+
+			// var stub = sinon.stub(Bullets, 'redirect');
+			// Bullets.followSelection();
+			// stub.should.have.callCount(1);
+			// stub.should.have.been.calledWithExactly('test');
+			// stub.restore();
 		});
 	});
 });
