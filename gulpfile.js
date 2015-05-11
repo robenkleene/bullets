@@ -64,12 +64,13 @@ gulp.task('watch', function() {
     // Test
     gulp.watch(paths.test.src + 'jade/*.*', ['jade-test']);
 
-    var testsJSPaths = [paths.test.src + 'tests/*.js', paths.test.src + 'js/*.js'];
-    gulp.watch(testsJSPaths, ['browserify-test']);
+    var testJSPaths = [paths.test.src + 'tests/*.js', paths.test.src + 'js/*.js'];
+    gulp.watch(testJSPaths, ['browserify-test']);
 
     // Example
-    // On example change also build test because test imports example
-    gulp.watch(paths.example.src + 'jade/*.*', ['jade-example', 'jade-test']);
+    // When "example" files change, also build "test" because "test" imports "example" content
+    var exampleJadePaths = [paths.example.src + 'jade/*.*', paths.example.src + 'markdown/*.*'];
+    gulp.watch(exampleJadePaths, ['jade-example', 'jade-test']);
 });
 
 gulp.task('jade', ['jade-test', 'jade-example']);
