@@ -25,8 +25,16 @@ var Bullets = {
 	selectPrevious: function() {
 		this.selectAtOffset(this.PREVIOUS_OFFSET);
 	},
+	deselect: function(element) {
+		element = element || this.selectedElement;
+		if (!!element) {
+			element.removeAttribute('id');
+		}
+	},
+
 
 	// Private
+
 	selectAtOffset: function(offset) {
     var elementToSelect = this.elementAtOffset(offset);
 		if (!elementToSelect) {
@@ -69,7 +77,6 @@ var Bullets = {
 		window.location = address;
 	},
 
-
 	select: function(element) {
 		this.deselect();
 		if (!!element) {
@@ -85,13 +92,6 @@ var Bullets = {
 	    var bottom = element.getBoundingClientRect().bottom;
 	    var isVisible = (top >= 0) && (bottom <= window.innerHeight);
 	    return isVisible;
-	},
-
-	deselect: function(element) {
-		element = element || this.selectedElement;
-		if (!!element) {
-			element.removeAttribute('id');
-		}
 	},
 
 	nothingToSelect: function() {

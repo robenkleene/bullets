@@ -69,8 +69,8 @@ describe('Bullets focus and blur', function() {
 });
 
 },{}],2:[function(require,module,exports){
-var testhelper = require('../js/test-helper');
-window.testhelper = testhelper;
+var testHelper = require('../js/test-helper');
+window.testHelper = testHelper;
 
 describe('Bullets selection', function() {
 	beforeEach(function() {
@@ -78,31 +78,31 @@ describe('Bullets selection', function() {
 	});
 
 	describe('deselect', function() {
-		it('TARGET should deselect the selection when it is passed in', function () {
+		it('should deselect the selection when it is passed in', function () {
 			Bullets.selectNext();
-			testhelper.testSelection();
+			testHelper.testSelection();
 			Bullets.deselect(Bullets.selectedElement);
-			testhelper.testNoSelection();
+			testHelper.testNoSelection();
 		});
 		it('should deselect the selection when nothing is passed in', function () {
 			Bullets.selectNext();
-			testhelper.testSelection();
+			testHelper.testSelection();
 			Bullets.deselect();
-			testhelper.testNoSelection();
+			testHelper.testNoSelection();
 		});
 	});
 
 	describe('selectNext', function() {
 		it('should select the first tag when nothing is selected', function() {
 			Bullets.selectNext();
-			testhelper.testSelection();
-			testhelper.testSelectionMatchesIndex(0);
+			testHelper.testSelection();
+			testHelper.testSelectionMatchesIndex(0);
 		});
 		it('should select the next tag after the selection', function() {
 			Bullets.selectNext();
 			Bullets.selectNext();
-			testhelper.testSelection();
-			testhelper.testSelectionMatchesIndex(1);
+			testHelper.testSelection();
+			testHelper.testSelectionMatchesIndex(1);
 		});
 		it('should keep the same selected tag when the last tag is selected', function() {
 			Bullets.selectPrevious();
@@ -110,22 +110,31 @@ describe('Bullets selection', function() {
 			Bullets.selectNext();
 			stub.should.have.callCount(1);
 			stub.restore();
-			testhelper.testSelection();
-			testhelper.testSelectionMatchesIndex(-1);
+			testHelper.testSelection();
+			testHelper.testSelectionMatchesIndex(-1);
+		});
+		it('should scroll out of view elements into view', function() {
+			var stub = sinon.stub(Bullets, 'elementIsScrolledIntoView', function() { return false; });
+			var element = testHelper.bulletsElementAtIndex(0);
+			var spy = sinon.spy(element, 'scrollIntoView');
+			Bullets.selectNext();
+			spy.should.have.callCount(1);
+			stub.restore();
+			spy.restore();
 		});
 	});
 
 	describe('selectPrevious', function() {
 		it('should select the last tag when nothing is selected', function() {
 			Bullets.selectPrevious();
-			testhelper.testSelection();
-			testhelper.testSelectionMatchesIndex(-1);
+			testHelper.testSelection();
+			testHelper.testSelectionMatchesIndex(-1);
 		});
 		it('should select the previous tag before the selection', function() {
 			Bullets.selectPrevious();
 			Bullets.selectPrevious();
-			testhelper.testSelection();
-			testhelper.testSelectionMatchesIndex(-2);
+			testHelper.testSelection();
+			testHelper.testSelectionMatchesIndex(-2);
 		});
 		it('should keep the same selected tag when the first tag is selected', function() {
 			Bullets.selectNext();
@@ -133,15 +142,24 @@ describe('Bullets selection', function() {
 			Bullets.selectPrevious();
 			stub.should.have.callCount(1);
 			stub.restore();
-			testhelper.testSelection();
-			testhelper.testSelectionMatchesIndex(0);
+			testHelper.testSelection();
+			testHelper.testSelectionMatchesIndex(0);
+		});
+		it('should scroll out of view elements into view', function() {
+			var stub = sinon.stub(Bullets, 'elementIsScrolledIntoView', function() { return false; });
+			var element = testHelper.bulletsElementAtIndex(-1);
+			var spy = sinon.spy(element, 'scrollIntoView');
+			Bullets.selectPrevious();
+			spy.should.have.callCount(1);
+			stub.restore();
+			spy.restore();
 		});
 	});
 
 	describe('followSelection', function() {
 		it('should follow the selected tag', function() {
 			Bullets.selectNext();
-			var href = testhelper.valueOfAttributeForQuerySelectorAtIndex(Bullets.selectableTags, 0, 'href');
+			var href = testHelper.valueOfAttributeForBulletsElementAtIndex(0, 'href');
 			var stub = sinon.stub(Bullets, 'redirect');
 			Bullets.followSelection();
 			stub.should.have.callCount(1);
@@ -165,23 +183,40 @@ module.exports = {
 		document.querySelectorAll(Bullets.selectedID).length.should.equal(0);
 	},
 	testSelectionMatchesIndex: function(index) {
-		var testText = this.textOfQuerySelectorAtIndex(Bullets.selectableTags, index);
+		var testText = this.textOfBulletsElementAtIndex(index);
 		var bulletsText = Bullets.selectedElement.innerText;
 		bulletsText.should.equal(testText);
 	},
 
-	// Nodes
+
+	// Bullets Elements
+
+	textOfBulletsElementAtIndex: function(index) {
+		return this.textOfQuerySelectorAtIndex(Bullets.selectableTags, index);
+	},
+
+	valueOfAttributeForBulletsElementAtIndex: function(selectors, index, attribute) {
+		return this.valueOfAttributeForQuerySelectorAtIndex(Bullets.selectableTags, index, attribute);
+	},
+
+	bulletsElementAtIndex: function(index) {
+		return this.elementOfQuerySelectorAtIndex(Bullets.selectableTags, index);
+	},
+
+
+	// Element Helpers
+
 	textOfQuerySelectorAtIndex: function(selectors, index) {
-		var node = this.nodeOfQuerySelectorAtIndex(selectors, index);
+		var node = this.elementOfQuerySelectorAtIndex(selectors, index);
 		return node.innerText;
 	},
 
 	valueOfAttributeForQuerySelectorAtIndex: function(selectors, index, attribute) {
-		var node = this.nodeOfQuerySelectorAtIndex(selectors, index);
+		var node = this.elementOfQuerySelectorAtIndex(selectors, index);
 		return node.getAttribute(attribute);
 	},
 
-	nodeOfQuerySelectorAtIndex: function (selectors, index) {
+	elementOfQuerySelectorAtIndex: function (selectors, index) {
 		var nodeList = document.querySelectorAll(selectors);
 		if (index < 0) {
 			index = nodeList.length + index;
