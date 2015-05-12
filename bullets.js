@@ -5,7 +5,12 @@ var Bullets = {
 
 	// Public
 	selectedID: 'selected',
-	tags: 'a',
+	headerTags: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'],
+	hierarchicalTags: ['li'],
+  followTags: ['a'],
+  get selectableTags() {
+    return this.headerTags.concat(this.hierarchicalTags);
+  },
   get selectedElement() {
 		if (document.body != document.activeElement) {
 			return document.activeElement;
@@ -32,7 +37,9 @@ var Bullets = {
 	},
 
 	elementAtOffset: function(offset) {
-		var tagsNodeList = document.querySelectorAll(this.tags);
+		var tagsNodeList = document.querySelectorAll(this.selectableTags);
+		console.log("tagsNodeList = " + tagsNodeList);
+		console.log("tagsNodeList.length = " + tagsNodeList.length);
 		if (tagsNodeList.length < 1) {
 			return;
 		}

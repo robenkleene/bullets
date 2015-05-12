@@ -11,7 +11,7 @@ module.exports = {
 		document.querySelectorAll(Bullets.selectedID).length.should.equal(0);
 	},
 	testSelectionMatchesIndex: function(index) {
-		var testText = this.textOfQuerySelectorAtIndex(Bullets.tags, index);
+		var testText = this.textOfQuerySelectorAtIndex(Bullets.selectableTags, index);
 		var bulletsText = Bullets.selectedElement.innerText;
 		bulletsText.should.equal(testText);
 	},

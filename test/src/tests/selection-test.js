@@ -7,7 +7,7 @@ describe('Bullets selection', function() {
 	});
 
 	describe('deselect', function() {
-		it('should deselect the selection when it is passed in', function () {
+		it('TARGET should deselect the selection when it is passed in', function () {
 			Bullets.selectNext();
 			testhelper.testSelection();
 			Bullets.deselect(Bullets.selectedElement);
@@ -70,7 +70,7 @@ describe('Bullets selection', function() {
 	describe('followSelection', function() {
 		it('should follow the selected tag', function() {
 			Bullets.selectNext();
-			var href = testhelper.valueOfAttributeForQuerySelectorAtIndex(Bullets.tags, 0, 'href');
+			var href = testhelper.valueOfAttributeForQuerySelectorAtIndex(Bullets.selectableTags, 0, 'href');
 			var stub = sinon.stub(Bullets, 'redirect');
 			Bullets.followSelection();
 			stub.should.have.callCount(1);
