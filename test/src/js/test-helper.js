@@ -1,16 +1,16 @@
 module.exports = {
-	testSelection: function() {
-		var testSelection = document.activeElement;
-		var selectedElement = Bullets.selectedElement;
-		selectedElement.should.equal(testSelection);
-		selectedElement.id.should.equal(Bullets.selectedID);
-	},
-	testNoSelection: function() {
+
+	testNoSelectedElement: function() {
 		should.not.exist(Bullets.selectedElement);
-		document.activeElement.should.equal(document.body);
 		document.querySelectorAll(Bullets.selectedID).length.should.equal(0);
 	},
 	testSelectionMatchesIndex: function(index) {
+    // Confirm a selected element exists
+		var selectedElement = Bullets.selectedElement;
+		selectedElement.id.should.equal(Bullets.selectedID);
+
+    // Confirm that the inner text of that element equals
+    // the inner text of the element at the index
 		var testText = this.textOfBulletsElementAtIndex(index);
 		var bulletsText = Bullets.selectedElement.innerText;
 		bulletsText.should.equal(testText);

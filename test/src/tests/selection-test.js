@@ -9,28 +9,26 @@ describe('Bullets selection', function() {
 	describe('deselect', function() {
 		it('should deselect the selection when it is passed in', function () {
 			Bullets.selectNext();
-			testHelper.testSelection();
+			testHelper.testSelectionMatchesIndex(0);
 			Bullets.deselect(Bullets.selectedElement);
-			testHelper.testNoSelection();
+			testHelper.testNoSelectedElement();
 		});
 		it('should deselect the selection when nothing is passed in', function () {
 			Bullets.selectNext();
-			testHelper.testSelection();
+			testHelper.testSelectionMatchesIndex(0);
 			Bullets.deselect();
-			testHelper.testNoSelection();
+			testHelper.testNoSelectedElement();
 		});
 	});
 
 	describe('selectNext', function() {
 		it('should select the first tag when nothing is selected', function() {
 			Bullets.selectNext();
-			testHelper.testSelection();
 			testHelper.testSelectionMatchesIndex(0);
 		});
 		it('should select the next tag after the selection', function() {
 			Bullets.selectNext();
 			Bullets.selectNext();
-			testHelper.testSelection();
 			testHelper.testSelectionMatchesIndex(1);
 		});
 		it('should keep the same selected tag when the last tag is selected', function() {
@@ -39,7 +37,6 @@ describe('Bullets selection', function() {
 			Bullets.selectNext();
 			stub.should.have.callCount(1);
 			stub.restore();
-			testHelper.testSelection();
 			testHelper.testSelectionMatchesIndex(-1);
 		});
 		it('should scroll out of view elements into view', function() {
@@ -56,13 +53,11 @@ describe('Bullets selection', function() {
 	describe('selectPrevious', function() {
 		it('should select the last tag when nothing is selected', function() {
 			Bullets.selectPrevious();
-			testHelper.testSelection();
 			testHelper.testSelectionMatchesIndex(-1);
 		});
 		it('should select the previous tag before the selection', function() {
 			Bullets.selectPrevious();
 			Bullets.selectPrevious();
-			testHelper.testSelection();
 			testHelper.testSelectionMatchesIndex(-2);
 		});
 		it('should keep the same selected tag when the first tag is selected', function() {
@@ -71,7 +66,6 @@ describe('Bullets selection', function() {
 			Bullets.selectPrevious();
 			stub.should.have.callCount(1);
 			stub.restore();
-			testHelper.testSelection();
 			testHelper.testSelectionMatchesIndex(0);
 		});
 		it('should scroll out of view elements into view', function() {

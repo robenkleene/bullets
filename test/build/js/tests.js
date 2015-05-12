@@ -80,28 +80,26 @@ describe('Bullets selection', function() {
 	describe('deselect', function() {
 		it('should deselect the selection when it is passed in', function () {
 			Bullets.selectNext();
-			testHelper.testSelection();
+			testHelper.testSelectionMatchesIndex(0);
 			Bullets.deselect(Bullets.selectedElement);
-			testHelper.testNoSelection();
+			testHelper.testNoSelectedElement();
 		});
 		it('should deselect the selection when nothing is passed in', function () {
 			Bullets.selectNext();
-			testHelper.testSelection();
+			testHelper.testSelectionMatchesIndex(0);
 			Bullets.deselect();
-			testHelper.testNoSelection();
+			testHelper.testNoSelectedElement();
 		});
 	});
 
 	describe('selectNext', function() {
 		it('should select the first tag when nothing is selected', function() {
 			Bullets.selectNext();
-			testHelper.testSelection();
 			testHelper.testSelectionMatchesIndex(0);
 		});
 		it('should select the next tag after the selection', function() {
 			Bullets.selectNext();
 			Bullets.selectNext();
-			testHelper.testSelection();
 			testHelper.testSelectionMatchesIndex(1);
 		});
 		it('should keep the same selected tag when the last tag is selected', function() {
@@ -110,7 +108,6 @@ describe('Bullets selection', function() {
 			Bullets.selectNext();
 			stub.should.have.callCount(1);
 			stub.restore();
-			testHelper.testSelection();
 			testHelper.testSelectionMatchesIndex(-1);
 		});
 		it('should scroll out of view elements into view', function() {
@@ -127,13 +124,11 @@ describe('Bullets selection', function() {
 	describe('selectPrevious', function() {
 		it('should select the last tag when nothing is selected', function() {
 			Bullets.selectPrevious();
-			testHelper.testSelection();
 			testHelper.testSelectionMatchesIndex(-1);
 		});
 		it('should select the previous tag before the selection', function() {
 			Bullets.selectPrevious();
 			Bullets.selectPrevious();
-			testHelper.testSelection();
 			testHelper.testSelectionMatchesIndex(-2);
 		});
 		it('should keep the same selected tag when the first tag is selected', function() {
@@ -142,7 +137,6 @@ describe('Bullets selection', function() {
 			Bullets.selectPrevious();
 			stub.should.have.callCount(1);
 			stub.restore();
-			testHelper.testSelection();
 			testHelper.testSelectionMatchesIndex(0);
 		});
 		it('should scroll out of view elements into view', function() {
@@ -171,18 +165,18 @@ describe('Bullets selection', function() {
 
 },{"../js/test-helper":3}],3:[function(require,module,exports){
 module.exports = {
-	testSelection: function() {
-		var testSelection = document.activeElement;
-		var selectedElement = Bullets.selectedElement;
-		selectedElement.should.equal(testSelection);
-		selectedElement.id.should.equal(Bullets.selectedID);
-	},
-	testNoSelection: function() {
+
+	testNoSelectedElement: function() {
 		should.not.exist(Bullets.selectedElement);
-		document.activeElement.should.equal(document.body);
 		document.querySelectorAll(Bullets.selectedID).length.should.equal(0);
 	},
 	testSelectionMatchesIndex: function(index) {
+    // Confirm a selected element exists
+		var selectedElement = Bullets.selectedElement;
+		selectedElement.id.should.equal(Bullets.selectedID);
+
+    // Confirm that the inner text of that element equals
+    // the inner text of the element at the index
 		var testText = this.textOfBulletsElementAtIndex(index);
 		var bulletsText = Bullets.selectedElement.innerText;
 		bulletsText.should.equal(testText);
