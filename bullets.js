@@ -38,8 +38,6 @@ var Bullets = {
 
 	elementAtOffset: function(offset) {
 		var tagsNodeList = document.querySelectorAll(this.selectableTags);
-		console.log("tagsNodeList = " + tagsNodeList);
-		console.log("tagsNodeList.length = " + tagsNodeList.length);
 		if (tagsNodeList.length < 1) {
 			return;
 		}
@@ -72,18 +70,26 @@ var Bullets = {
 	},
 
 
-	select: function(object) {
+	select: function(element) {
 		this.deselect();
-		if (!!object) {
-			object.focus();
-			object.id = this.selectedID;
+		if (!!element) {
+			element.id = this.selectedID;
+			if (!this.elementIsScrolledIntoView(element)) {
+				element.scrollIntoView();
+			}
 		}
 	},
 
-	deselect: function(object) {
-		element = object || this.selectedElement;
+	elementIsScrolledIntoView: function(element) {
+	    var top = element.getBoundingClientRect().top;
+	    var bottom = element.getBoundingClientRect().bottom;
+	    var isVisible = (top >= 0) && (bottom <= window.innerHeight);
+	    return isVisible;
+	},
+
+	deselect: function(element) {
+		element = element || this.selectedElement;
 		if (!!element) {
-			element.blur();
 			element.removeAttribute('id');
 		}
 	},
