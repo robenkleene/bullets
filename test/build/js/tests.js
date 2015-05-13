@@ -102,6 +102,7 @@ describe('Bullets selection', function() {
 			stub.should.have.been.calledWithExactly(href);
 			stub.restore();
 		});
+		// TODO: Test `followSelect` should skip over tags that don't have the `href` attribute
 	});
 });
 
@@ -125,16 +126,29 @@ module.exports = {
 	},
 
 	indexOfBulletsElementWithChildMatchingQuerySelector: function(selectors) {
+		return this.indexOfBulletsElementUsingChildMatchingQuerySelector(selectors, false);
+	},
+
+	indexOfBulletsElementWithoutChildMatchingQuerySelector: function(selectors) {
+		return this.indexOfBulletsElementUsingChildMatchingQuerySelector(selectors, true);
+	},
+
+	indexOfBulletsElementUsingChildMatchingQuerySelector: function(selectors, invert) {
 		var selectableNodeList = document.querySelectorAll(Bullets.selectableTags);
 		for (var i = 0; i < selectableNodeList.length; i++) {
 	    var selectableElement = selectableNodeList[i];
 			var followNodeList = selectableElement.querySelectorAll(selectors);
-			if (followNodeList.length > 0) {
-				return i;
+			if (!invert) {
+				if (followNodeList.length > 0) {
+					return i;
+				}
+			} else {
+				if (followNodeList.length < 1) {
+					return i;
+				}
 			}
 		}
 	},
-
 
 	// Bullets Elements
 
