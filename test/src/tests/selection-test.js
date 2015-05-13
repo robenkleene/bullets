@@ -111,6 +111,7 @@ describe('Bullets selection', function() {
 			stub.should.have.callCount(1);
 			stub.restore();
 		});
+
 		// TODO: Test `followSelect` should skip over tags that don't have the `href` attribute
 	});
 });

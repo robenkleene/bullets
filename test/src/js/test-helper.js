@@ -25,7 +25,7 @@ module.exports = {
 	},
 
 	indexOfBulletsElementUsingChildMatchingQuerySelector: function(selectors, invert) {
-		var selectableNodeList = document.querySelectorAll(Bullets.selectableTags);
+		var selectableNodeList = document.querySelectorAll(Bullets.selectTags);
 		for (var i = 0; i < selectableNodeList.length; i++) {
 	    var selectableElement = selectableNodeList[i];
 			var followNodeList = selectableElement.querySelectorAll(selectors);
@@ -44,15 +44,15 @@ module.exports = {
 	// Bullets Elements
 
 	textOfBulletsElementAtIndex: function(index) {
-		return this.textOfQuerySelectorAtIndex(Bullets.selectableTags, index);
+		return this.textOfQuerySelectorAtIndex(Bullets.selectTags, index);
 	},
 
 	valueOfAttributeForBulletsElementAtIndex: function(selectors, index, attribute) {
-		return this.valueOfAttributeForQuerySelectorAtIndex(Bullets.selectableTags, index, attribute);
+		return this.valueOfAttributeForQuerySelectorAtIndex(Bullets.selectTags, index, attribute);
 	},
 
 	bulletsElementAtIndex: function(index) {
-		return this.elementOfQuerySelectorAtIndex(Bullets.selectableTags, index);
+		return this.elementOfQuerySelectorAtIndex(Bullets.selectTags, index);
 	},
 
 

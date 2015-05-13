@@ -8,7 +8,7 @@ var Bullets = {
 	headerTags: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'],
 	hierarchicalTags: ['li'],
   followTags: ['a'],
-  get selectableTags() {
+  get selectTags() {
     return this.headerTags.concat(this.hierarchicalTags);
   },
   get selectedElement() {
@@ -44,7 +44,7 @@ var Bullets = {
 	},
 
 	elementAtOffset: function(offset) {
-		var tagsNodeList = document.querySelectorAll(this.selectableTags);
+		var tagsNodeList = document.querySelectorAll(this.selectTags);
 		if (tagsNodeList.length < 1) {
 			return;
 		}
