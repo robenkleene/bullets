@@ -81,7 +81,7 @@ describe('Bullets selection', function() {
 	});
 
 	describe('followSelection', function() {
-		it('should follow the selected tag', function() {
+		it('should follow the first follow tag child of the selected tag', function() {
 			// Select the first element that has a followable child node
 			var index = testHelper.indexOfBulletsElementWithChildMatchingQuerySelector(Bullets.followTags);
 			for (var i = 0; i <= index; i++) {
@@ -100,6 +100,16 @@ describe('Bullets selection', function() {
 			Bullets.followSelection();
 			stub.should.have.callCount(1);
 			stub.should.have.been.calledWithExactly(href);
+			stub.restore();
+		});
+		it('should not follow anything if the selected tag has no follow tag children', function() {
+			var index = testHelper.indexOfBulletsElementWithoutChildMatchingQuerySelector(Bullets.followTags);
+			for (var i = 0; i <= index; i++) {
+				Bullets.selectNext();
+			}
+			var stub = sinon.stub(Bullets, 'nothingToFollow');
+			Bullets.followSelection();
+			stub.should.have.callCount(1);
 			stub.restore();
 		});
 		// TODO: Test `followSelect` should skip over tags that don't have the `href` attribute
