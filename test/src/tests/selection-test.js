@@ -81,8 +81,20 @@ describe('Bullets selection', function() {
 
 	describe('followSelection', function() {
 		it('should follow the selected tag', function() {
-			Bullets.selectNext();
-			var href = testHelper.valueOfAttributeForBulletsElementAtIndex(0, 'href');
+			// Select the first element that has a followable child node
+			var index = testHelper.indexOfBulletsElementWithChildMatchingQuerySelector(Bullets.followTags);
+			for (var i = 0; i <= index; i++) {
+				Bullets.selectNext();
+			}
+
+			// Get the content of the `href` attribute for the follow able node
+			var followTagNodeList = Bullets.selectedElement.querySelectorAll(Bullets.followTags);
+			followTagNodeList.length.should.be.above(0);
+			var followTag = followTagNodeList[0];
+			var href = followTag.getAttribute('href');
+			href.length.should.be.above(0);
+
+			// Confirm the `followSelection` redirects
 			var stub = sinon.stub(Bullets, 'redirect');
 			Bullets.followSelection();
 			stub.should.have.callCount(1);

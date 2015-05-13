@@ -16,6 +16,17 @@ module.exports = {
 		bulletsText.should.equal(testText);
 	},
 
+	indexOfBulletsElementWithChildMatchingQuerySelector: function(selectors) {
+		var selectableNodeList = document.querySelectorAll(Bullets.selectableTags);
+		for (var i = 0; i < selectableNodeList.length; i++) {
+	    var selectableElement = selectableNodeList[i];
+			var followNodeList = selectableElement.querySelectorAll(selectors);
+			if (followNodeList.length > 0) {
+				return i;
+			}
+		}
+	},
+
 
 	// Bullets Elements
 

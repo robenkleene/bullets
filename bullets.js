@@ -32,7 +32,6 @@ var Bullets = {
 		}
 	},
 
-
 	// Private
 
 	selectAtOffset: function(offset) {
@@ -69,8 +68,21 @@ var Bullets = {
 
 	followSelection: function() {
 		var selectedElement = this.selectedElement;
-		var address = selectedElement.getAttribute('href');
-		this.redirect(address);
+		var followTagsNodeList = selectedElement.querySelectorAll(this.followTags);
+		if (followTagsNodeList.length < 1) {
+			this.nothingToFollow();
+			return
+		}
+
+		for (var i = 0; i < followTagsNodeList.length; i++) {
+			var followTag = followTagsNodeList[i];
+			if (followTag.hasAttribute('href')) {
+				var address = followTag.getAttribute('href');
+				this.redirect(address);
+				return
+			}
+		}
+		this.nothingToFollow();
 	},
 
 	redirect: function(address) {
@@ -92,6 +104,12 @@ var Bullets = {
 	    var bottom = element.getBoundingClientRect().bottom;
 	    var isVisible = (top >= 0) && (bottom <= window.innerHeight);
 	    return isVisible;
+	},
+
+
+	nothingToFollow: function() {
+		// TODO Beep or visual bell here?
+		console.log("Nothing to follow");
 	},
 
 	nothingToSelect: function() {
