@@ -49,7 +49,7 @@ var Bullets = {
 			this.nothingToSelect();
 			return;
 		}
-		this.select(elementToSelect);
+		this.selectElement(elementToSelect);
 	},
 
 	elementAtOffset: function(offset) {
@@ -98,7 +98,7 @@ var Bullets = {
 		window.location = address;
 	},
 
-	select: function(element) {
+	selectElement: function(element) {
 		this.deselect();
 		if (!!element) {
 			element.id = this.selectedID;
