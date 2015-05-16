@@ -1,6 +1,3 @@
-#selected {
+#bullets-selected {
 	background-color: #BCD7D5;
-}
-#selected:focus {
-	background-color: #A7C1D7;
 }
