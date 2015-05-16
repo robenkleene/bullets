@@ -39,11 +39,15 @@ var Bullets = {
 			this.nothingToCollapse();
 			return;
 		}
-		this.toggleCollapseElement(selectedElement);
+		if(this.elementIsCollapsed(selectedElement)) {
+			this.expandElement(selectedElement);
+		} else {
+			this.collapseElement(selectedElement);
+		}
 	},
 	collapseSelection: function() {
 		var selectedElement = this.selectedElement;
-		if (!selectedElement) {
+		if (!selectedElement || this.elementIsCollapsed(selectedElement)) {
 			this.nothingToCollapse();
 			return;
 		}
@@ -51,15 +55,29 @@ var Bullets = {
 	},
 	expandSelection: function() {
 		var selectedElement = this.selectedElement;
-		if (!selectedElement) {
+		if (!selectedElement || !this.elementIsCollapsed(selectedElement)) {
 			this.nothingToExpand();
 			return;
 		}
 		this.expandElement(selectedElement);
 	},
-
+	expandAll: function() {
+		var nodeList = document.getElementsByClassName(this.collapsedClass);
+		for (var i = nodeList.length - 1; i >= 0; --i) {
+			var element = nodeList[i];
+			this.expandElement(element);
+		}
+	},
 
 	// Private
+
+	elementIsCollapsed: function(element) {
+		if (!element) {
+			return false;
+		}
+
+		return element.classList.contains(this.collapsedClass);
+	},
 
 	selectAtOffset: function(offset) {
     var elementToSelect = this.elementAtOffset(offset);
@@ -126,34 +144,19 @@ var Bullets = {
 		}
 	},
 
-	toggleCollapseElement: function(element) {
-		if (!element) {
-			return;
-		}
-
-		if (element.classList.contains(this.collapsedClass)) {
-			element.classList.remove(this.collapsedClass);
-		} else {
-			element.classList.add(this.collapsedClass);
-		}
-	},
 	collapseElement: function(element) {
 		if (!element) {
 			return;
 		}
 
-		if (!element.classList.contains(this.collapsedClass)) {
-			element.classList.add(this.collapsedClass);
-		}
+		element.classList.add(this.collapsedClass);
 	},
 	expandElement: function(element) {
 		if (!element) {
 			return;
 		}
 
-		if (element.classList.contains(this.collapsedClass)) {
-			element.classList.remove(this.collapsedClass);
-		}
+		element.classList.remove(this.collapsedClass);
 	},
 
 	elementIsScrolledIntoView: function(element) {

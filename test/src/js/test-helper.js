@@ -15,6 +15,7 @@ module.exports = {
 		var bulletsText = Bullets.selectedElement.innerText;
 		bulletsText.should.equal(testText);
 	},
+
 	isSelectedElementCollapsed: function() {
 		var selectedElement = Bullets.selectedElement;
 		if (!selectedElement) {
