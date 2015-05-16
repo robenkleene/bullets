@@ -8,21 +8,29 @@ describe('Bullets collapse', function() {
   describe('toggle collapse', function() {
 		it('should toggle collapse for the selection', function () {
 			Bullets.selectNext();
-			Bullets.toggleCollapse();
+			Bullets.toggleCollapseSelection();
 			var result = testHelper.isSelectedElementCollapsed();
 			result.should.equal(true);
-			Bullets.toggleCollapse();
+			Bullets.toggleCollapseSelection();
 			result = testHelper.isSelectedElementCollapsed();
 			result.should.equal(false);
 		});
 
     it('should do nothing when nothing is selected', function() {
       var stub = sinon.stub(Bullets, 'nothingToCollapse');
-      Bullets.toggleCollapse();
+      Bullets.toggleCollapseSelection();
       stub.should.have.callCount(1);
       stub.restore();
     });
-
-    // TODO It should call `nothingToCollapse` if there's no collapsable selection
+	});
+	describe('collapse selection', function() {
+    // TODO It should call `nothingToCollapse` if an element is already collapsed
+		// TODO It should call `nothingToCollapse` there's nothing selected
+		// TODO It should collapse the selection
+  });
+	describe('expand selection', function() {
+    // TODO It should call `nothingToExpand` if an element is already collapsed
+		// TODO It should call `nothingToExpand` there's nothing selected
+		// TODO It should expand the selection
   });
 });

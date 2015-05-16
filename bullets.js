@@ -33,7 +33,7 @@ var Bullets = {
 			element.removeAttribute('id');
 		}
 	},
-	toggleCollapse: function() {
+	toggleCollapseSelection: function() {
 		var selectedElement = this.selectedElement;
 		if (!selectedElement) {
 			this.nothingToCollapse();
@@ -41,6 +41,23 @@ var Bullets = {
 		}
 		this.toggleCollapseElement(selectedElement);
 	},
+	collapseSelection: function() {
+		var selectedElement = this.selectedElement;
+		if (!selectedElement) {
+			this.nothingToCollapse();
+			return;
+		}
+
+	},
+	expandSelection: function() {
+		var selectedElement = this.selectedElement;
+		if (!selectedElement) {
+			this.nothingToExpand();
+			return;
+		}
+
+	},
+
 
 	// Private
 
@@ -129,20 +146,26 @@ var Bullets = {
 	},
 
 
-	// Log messages if there's nothing to do
+	// Beep if there's nothing to do
 
 	nothingToFollow: function() {
-		// TODO Beep or visual bell here?
-		console.log("Nothing to follow");
+		this.beep("Nothing to follow");
 	},
 
 	nothingToSelect: function() {
-		// TODO Beep or visual bell here?
-		console.log("Nothing to select");
+		this.beep("Nothing to select");
 	},
 
 	nothingToCollapse: function() {
-		// TODO Beep or visual bell here?
-		console.log("Nothing to collapse");
+		this.beep("Nothing to collapse");
+	},
+
+	nothingToExpand: function() {
+		this.beep("Nothing to expand");
+	},
+
+	beep: function(message) {
+		// TODO Beep or visual bell
+		console.log(message);
 	}
 };
