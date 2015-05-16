@@ -6,22 +6,72 @@
 	border: 1px solid red;
 }
 
-.bullets-collapsed * {
+/* Hierarchical */
+.bullets-collapsed li {
 /* 	display: none; */
 	border: 1px solid blue;
 	background-color: yellow;
 }
 
-/*
-h5.collapse ~ *:not(h5):not(h1) {
-	background-color: #ebebfc;
+/* Headers */
+
+
+
+/*h2.bullets-collapsed ~ *:not(h1) {
+	border: 1px solid blue;
+	background-color: yellow;
+}
+h2.bullets-collapsed ~ h1 ~ * {
+	border: none;
+	background-color: transparent;
 }
 */
+
+h1.bullets-collapsed ~ *:not(h1),
+h2.bullets-collapsed ~ *:not(h1):not(h2),
+h3.bullets-collapsed ~ *:not(h1):not(h2):not(h3),
+h4.bullets-collapsed ~ *:not(h1):not(h2):not(h3):not(h4),
+h5.bullets-collapsed ~ *:not(h1):not(h2):not(h3):not(h4):not(h5),
+h6.bullets-collapsed ~ *:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6)
+{
+	border: 1px solid blue;
+	background-color: yellow;
+}
+
+h1.bullets-collapsed ~ h1 ~ *,
+
+h2.bullets-collapsed ~ h1 ~ *,
+h2.bullets-collapsed ~ h2 ~ *,
+
+h3.bullets-collapsed ~ h1 ~ *,
+h3.bullets-collapsed ~ h2 ~ *,
+h3.bullets-collapsed ~ h3 ~ *,
+
+h4.bullets-collapsed ~ h1 ~ *,
+h4.bullets-collapsed ~ h2 ~ *,
+h4.bullets-collapsed ~ h3 ~ *,
+h4.bullets-collapsed ~ h4 ~ *,
+
+h5.bullets-collapsed ~ h1 ~ *,
+h5.bullets-collapsed ~ h2 ~ *,
+h5.bullets-collapsed ~ h3 ~ *,
+h5.bullets-collapsed ~ h4 ~ *,
+h5.bullets-collapsed ~ h5 ~ *,
+
+h6.bullets-collapsed ~ h1 ~ *,
+h6.bullets-collapsed ~ h2 ~ *,
+h6.bullets-collapsed ~ h3 ~ *,
+h6.bullets-collapsed ~ h4 ~ *,
+h6.bullets-collapsed ~ h5 ~ *,
+h6.bullets-collapsed ~ h6 ~ *
+{
+	border: none  !important;
+	background-color: transparent !important;
+}
+
+
 
 /*h5.collapse ~ *:not(h1) {
 	background-color: #ebebfc;
 }
-
-h5.collapse ~ h1 ~ * {
-	background-color: blue;
-}*/
+*/
