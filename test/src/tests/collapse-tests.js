@@ -53,12 +53,27 @@ describe('Bullets collapse', function() {
       stub.should.have.callCount(1);
       stub.restore();
     });
-    // TODO It should call `nothingToCollapse` if an element is already collapsed
-		// TODO It should call `nothingToCollapse` there's nothing selected
   });
 	describe('expand selection', function() {
-    // TODO It should call `nothingToExpand` if an element is already collapsed
-		// TODO It should call `nothingToExpand` there's nothing selected
-		// TODO It should expand the selection (calling again should not collapse the selection)
+		it('should expand the selection', function () {
+			Bullets.selectNext();
+			Bullets.collapseSelection();
+			Bullets.expandSelection();
+			testHelper.isSelectedElementCollapsed().should.equal(false);
+		});
+		it('should do nothing when the selection is already expanded', function() {
+			var stub = sinon.stub(Bullets, 'nothingToExpand');
+			Bullets.selectNext();
+      Bullets.expandSelection();
+			testHelper.isSelectedElementCollapsed().should.equal(false);
+      stub.should.have.callCount(1);
+      stub.restore();
+    });
+		it('should do nothing when nothing is selected', function() {
+      var stub = sinon.stub(Bullets, 'nothingToExpand');
+      Bullets.expandSelection();
+      stub.should.have.callCount(1);
+      stub.restore();
+    });
   });
 });
