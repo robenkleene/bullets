@@ -5,6 +5,7 @@ window.testHelper = testHelper;
 describe('Bullets collapse', function() {
 	beforeEach(function() {
 		Bullets.deselect();
+		Bullets.expandAll();
 	});
   describe('toggle collapse', function() {
 		it('should toggle collapse for the selection', function () {
@@ -22,7 +23,7 @@ describe('Bullets collapse', function() {
     });
 	});
 	describe('expand all', function() {
-		it('TARGET should expand all', function() {
+		it('should expand all', function() {
 			Bullets.selectNext();
 			Bullets.collapseSelection();
 			Bullets.selectNext();
@@ -37,14 +38,13 @@ describe('Bullets collapse', function() {
 			Bullets.selectNext();
 			Bullets.collapseSelection();
 			testHelper.isSelectedElementCollapsed().should.equal(true);
-			Bullets.collapseSelection();
-			testHelper.isSelectedElementCollapsed().should.equal(true);
 		});
 		it('should do nothing when the selection is already collapsed', function() {
 			var stub = sinon.stub(Bullets, 'nothingToCollapse');
 			Bullets.selectNext();
 			Bullets.collapseSelection();
       Bullets.collapseSelection();
+			testHelper.isSelectedElementCollapsed().should.equal(true);
       stub.should.have.callCount(1);
       stub.restore();
     });
