@@ -4,7 +4,8 @@ var Bullets = {
 	PREVIOUS_OFFSET: -1,
 
 	// Public
-	selectedID: 'selected',
+	selectedID: 'bullets-selected',
+	collapsedClass: 'bullets-collapsed',
 	headerTags: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'],
 	hierarchicalTags: ['li'],
   followTags: ['a'],
@@ -19,6 +20,7 @@ var Bullets = {
 	},
 
 	// Public
+
 	selectNext: function() {
 		this.selectAtOffset(this.NEXT_OFFSET);
 	},
@@ -29,6 +31,13 @@ var Bullets = {
 		element = element || this.selectedElement;
 		if (!!element) {
 			element.removeAttribute('id');
+		}
+	},
+	collapseSelection: function() {
+		var selectedElement = this.selectedElement;
+		if (!selectedElement) {
+			this.nothingToCollapse();
+			return
 		}
 	},
 
@@ -71,7 +80,7 @@ var Bullets = {
 		var followTagsNodeList = selectedElement.querySelectorAll(this.followTags);
 		if (followTagsNodeList.length < 1) {
 			this.nothingToFollow();
-			return
+			return;
 		}
 
 		for (var i = 0; i < followTagsNodeList.length; i++) {
@@ -79,7 +88,7 @@ var Bullets = {
 			if (followTag.hasAttribute('href')) {
 				var address = followTag.getAttribute('href');
 				this.redirect(address);
-				return
+				return;
 			}
 		}
 		this.nothingToFollow();
@@ -107,6 +116,8 @@ var Bullets = {
 	},
 
 
+	// Log messages if there's nothing to do
+
 	nothingToFollow: function() {
 		// TODO Beep or visual bell here?
 		console.log("Nothing to follow");
@@ -115,5 +126,10 @@ var Bullets = {
 	nothingToSelect: function() {
 		// TODO Beep or visual bell here?
 		console.log("Nothing to select");
+	},
+
+	nothingToCollapse: function() {
+		// TODO Beep or visual bell here?
+		console.log("Nothing to collapse");
 	}
 };
