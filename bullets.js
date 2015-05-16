@@ -37,7 +37,7 @@ var Bullets = {
 		var selectedElement = this.selectedElement;
 		if (!selectedElement) {
 			this.nothingToCollapse();
-			return
+			return;
 		}
 	},
 
