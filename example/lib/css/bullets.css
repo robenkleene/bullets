@@ -1,3 +1,27 @@
 #bullets-selected {
 	background-color: #BCD7D5;
 }
+
+.bullets-collapsed {
+	border: 1px solid red;
+}
+
+.bullets-collapsed * {
+/* 	display: none; */
+	border: 1px solid blue;
+	background-color: yellow;
+}
+
+/*
+h5.collapse ~ *:not(h5):not(h1) {
+	background-color: #ebebfc;
+}
+*/
+
+/*h5.collapse ~ *:not(h1) {
+	background-color: #ebebfc;
+}
+
+h5.collapse ~ h1 ~ * {
+	background-color: blue;
+}*/
