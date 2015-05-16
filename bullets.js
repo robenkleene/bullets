@@ -47,7 +47,7 @@ var Bullets = {
 			this.nothingToCollapse();
 			return;
 		}
-
+		this.collapseElement(selectedElement);
 	},
 	expandSelection: function() {
 		var selectedElement = this.selectedElement;
@@ -55,7 +55,7 @@ var Bullets = {
 			this.nothingToExpand();
 			return;
 		}
-
+		this.expandElement(selectedElement);
 	},
 
 
@@ -135,6 +135,24 @@ var Bullets = {
 			element.classList.remove(this.collapsedClass);
 		} else {
 			element.classList.add(this.collapsedClass);
+		}
+	},
+	collapseElement: function(element) {
+		if (!element) {
+			return;
+		}
+
+		if (!element.classList.contains(this.collapsedClass)) {
+			element.classList.add(this.collapsedClass);
+		}
+	},
+	expandElement: function(element) {
+		if (!element) {
+			return;
+		}
+
+		if (element.classList.contains(this.collapsedClass)) {
+			element.classList.remove(this.collapsedClass);
 		}
 	},
 

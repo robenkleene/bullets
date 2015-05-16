@@ -25,14 +25,22 @@ describe('Bullets collapse', function() {
     });
 	});
 	describe('collapse selection', function() {
+		it('should collapse the selection', function () {
+			Bullets.selectNext();
+			Bullets.collapseSelection();
+			var result = testHelper.isSelectedElementCollapsed();
+			result.should.equal(true);
+			Bullets.collapseSelection();
+			result = testHelper.isSelectedElementCollapsed();
+			result.should.equal(true);
+		});
     // TODO It should call `nothingToCollapse` if an element is already collapsed
 		// TODO It should call `nothingToCollapse` there's nothing selected
-		// TODO It should collapse the selection
   });
 	describe('expand selection', function() {
     // TODO It should call `nothingToExpand` if an element is already collapsed
 		// TODO It should call `nothingToExpand` there's nothing selected
-		// TODO It should expand the selection
+		// TODO It should expand the selection (calling again should not collapse the selection)
   });
 });
 
