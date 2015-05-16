@@ -33,12 +33,13 @@ var Bullets = {
 			element.removeAttribute('id');
 		}
 	},
-	collapseSelection: function() {
+	toggleCollapse: function() {
 		var selectedElement = this.selectedElement;
 		if (!selectedElement) {
 			this.nothingToCollapse();
 			return;
 		}
+		this.toggleCollapseElement(selectedElement);
 	},
 
 	// Private
@@ -105,6 +106,18 @@ var Bullets = {
 			if (!this.elementIsScrolledIntoView(element)) {
 				element.scrollIntoView();
 			}
+		}
+	},
+
+	toggleCollapseElement: function(element) {
+		if (!element) {
+			return;
+		}
+
+		if (element.classList.contains(this.collapsedClass)) {
+			element.classList.remove(this.collapsedClass);
+		} else {
+			element.classList.add(this.collapsedClass);
 		}
 	},
 

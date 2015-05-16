@@ -15,6 +15,13 @@ module.exports = {
 		var bulletsText = Bullets.selectedElement.innerText;
 		bulletsText.should.equal(testText);
 	},
+	isSelectedElementCollapsed: function() {
+		var selectedElement = Bullets.selectedElement;
+		if (!selectedElement) {
+			return false;
+		}
+		return selectedElement.classList.contains(Bullets.collapsedClass);
+	},
 
 	indexOfBulletsElementWithChildMatchingQuerySelector: function(selectors) {
 		return this.indexOfBulletsElementUsingChildMatchingQuerySelector(selectors, false);

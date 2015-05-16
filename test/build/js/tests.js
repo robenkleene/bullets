@@ -6,15 +6,20 @@ describe('Bullets collapse', function() {
 	beforeEach(function() {
 		Bullets.deselect();
 	});
-  describe('collapse', function() {
-		it('should collapse the selection', function () {
+  describe('toggle collapse', function() {
+		it('should toggle collapse for the selection', function () {
 			Bullets.selectNext();
-      console.log("Got here");
+			Bullets.toggleCollapse();
+			var result = testHelper.isSelectedElementCollapsed();
+			result.should.equal(true);
+			Bullets.toggleCollapse();
+			result = testHelper.isSelectedElementCollapsed();
+			result.should.equal(false);
 		});
 
     it('should do nothing when nothing is selected', function() {
       var stub = sinon.stub(Bullets, 'nothingToCollapse');
-      Bullets.collapseSelection();
+      Bullets.toggleCollapse();
       stub.should.have.callCount(1);
       stub.restore();
     });
@@ -159,6 +164,13 @@ module.exports = {
 		var testText = this.textOfBulletsElementAtIndex(index);
 		var bulletsText = Bullets.selectedElement.innerText;
 		bulletsText.should.equal(testText);
+	},
+	isSelectedElementCollapsed: function() {
+		var selectedElement = Bullets.selectedElement;
+		if (!selectedElement) {
+			return false;
+		}
+		return selectedElement.classList.contains(Bullets.collapsedClass);
 	},
 
 	indexOfBulletsElementWithChildMatchingQuerySelector: function(selectors) {
