@@ -2,8 +2,7 @@
 var testHelper = require('../js/test-helper');
 window.testHelper = testHelper;
 
-// Bullets.rootElement = document.getElementById("test-content");
-// console.log("Bullets.rootElement = " + Bullets.rootElement);
+Bullets.rootElement = document.getElementById("test-content");
 
 describe('Bullets collapse', function() {
 	beforeEach(function() {
@@ -86,7 +85,7 @@ describe('Bullets collapse', function() {
 var testHelper = require('../js/test-helper');
 window.testHelper = testHelper;
 
-// Bullets.rootElement = document.getElementById("test-content");
+Bullets.rootElement = document.getElementById("test-content");
 
 describe('Bullets selection', function() {
 	beforeEach(function() {
