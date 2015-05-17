@@ -1,22 +1,30 @@
 var testHelper = require('../js/test-helper');
 window.testHelper = testHelper;
 
+// Bullets.rootElement = document.getElementById("test-content");
+
 describe('Bullets selection', function() {
 	beforeEach(function() {
-		Bullets.deselect();
+		Bullets.deselectAll();
 	});
 
-	describe('deselect', function() {
-		it('should deselect the selection when it is passed in', function () {
+	describe('deselectElement', function() {
+		it('should deselect the element', function () {
 			Bullets.selectNext();
 			testHelper.testSelectionMatchesIndex(0);
-			Bullets.deselect(Bullets.selectedElement);
+			var nodeList = Bullets.selectedNodes;
+			for (var i = nodeList.length - 1; i >= 0; --i) {
+				var element = nodeList[i];
+				Bullets.deselectElement(element);
+			}
 			testHelper.testNoSelectedElement();
 		});
-		it('should deselect the selection when nothing is passed in', function () {
+	});
+  describe('deselectAll', function() {
+		it('should deselect every element', function () {
 			Bullets.selectNext();
 			testHelper.testSelectionMatchesIndex(0);
-			Bullets.deselect();
+			Bullets.deselectAll();
 			testHelper.testNoSelectedElement();
 		});
 	});
@@ -88,7 +96,7 @@ describe('Bullets selection', function() {
 			}
 
 			// Get the content of the `href` attribute for the follow able node
-			var followTagNodeList = Bullets.selectedElement.querySelectorAll(Bullets.followTags);
+			var followTagNodeList = Bullets.selectedNodes[0].querySelectorAll(Bullets.followTags);
 			followTagNodeList.length.should.be.above(0);
 			var followTag = followTagNodeList[0];
 			var href = followTag.getAttribute('href');

@@ -1,23 +1,24 @@
 module.exports = {
 
 	testNoSelectedElement: function() {
-		should.not.exist(Bullets.selectedElement);
-		Bullets.rootElement.querySelectorAll(Bullets.selectedID).length.should.equal(0);
+		var nodeList = Bullets.selectedNodes;
+		nodeList.length.should.equal(0);
+		Bullets.rootElement.querySelectorAll(Bullets.selectedClass).length.should.equal(0);
 	},
 	testSelectionMatchesIndex: function(index) {
     // Confirm a selected element exists
-		var selectedElement = Bullets.selectedElement;
-		selectedElement.id.should.equal(Bullets.selectedID);
+		var selectedElement = Bullets.selectedNodes[0];
+		selectedElement.classList.contains(Bullets.selectedClass).should.equal(true);
 
     // Confirm that the inner text of that element equals
     // the inner text of the element at the index
 		var testText = this.textOfBulletsElementAtIndex(index);
-		var bulletsText = Bullets.selectedElement.innerText;
+		var bulletsText = selectedElement.innerText;
 		bulletsText.should.equal(testText);
 	},
 
 	isSelectedElementCollapsed: function() {
-		var selectedElement = Bullets.selectedElement;
+		var selectedElement = Bullets.selectedNodes[0];
 		if (!selectedElement) {
 			return false;
 		}

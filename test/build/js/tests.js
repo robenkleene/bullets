@@ -2,12 +2,15 @@
 var testHelper = require('../js/test-helper');
 window.testHelper = testHelper;
 
+// Bullets.rootElement = document.getElementById("test-content");
+// console.log("Bullets.rootElement = " + Bullets.rootElement);
+
 describe('Bullets collapse', function() {
 	beforeEach(function() {
-		Bullets.deselect();
+		Bullets.deselectAll();
 		Bullets.expandAll();
 	});
-  describe('toggle collapse', function() {
+  describe('toggleCollapseSelection', function() {
 		it('should toggle collapse for the selection', function () {
 			Bullets.selectNext();
 			Bullets.toggleCollapseSelection();
@@ -22,7 +25,7 @@ describe('Bullets collapse', function() {
       stub.restore();
     });
 	});
-	describe('expand all', function() {
+	describe('expandAll', function() {
 		it('should expand all', function() {
 			Bullets.selectNext();
 			Bullets.collapseSelection();
@@ -33,7 +36,7 @@ describe('Bullets collapse', function() {
 			nodeList.length.should.equal(0);
     });
 	});
-	describe('collapse selection', function() {
+	describe('collapseSelection', function() {
 		it('should collapse the selection', function () {
 			Bullets.selectNext();
 			Bullets.collapseSelection();
@@ -55,7 +58,7 @@ describe('Bullets collapse', function() {
       stub.restore();
     });
   });
-	describe('expand selection', function() {
+	describe('expandSelection', function() {
 		it('should expand the selection', function () {
 			Bullets.selectNext();
 			Bullets.collapseSelection();
@@ -83,22 +86,30 @@ describe('Bullets collapse', function() {
 var testHelper = require('../js/test-helper');
 window.testHelper = testHelper;
 
+// Bullets.rootElement = document.getElementById("test-content");
+
 describe('Bullets selection', function() {
 	beforeEach(function() {
-		Bullets.deselect();
+		Bullets.deselectAll();
 	});
 
-	describe('deselect', function() {
-		it('should deselect the selection when it is passed in', function () {
+	describe('deselectElement', function() {
+		it('should deselect the element', function () {
 			Bullets.selectNext();
 			testHelper.testSelectionMatchesIndex(0);
-			Bullets.deselect(Bullets.selectedElement);
+			var nodeList = Bullets.selectedNodes;
+			for (var i = nodeList.length - 1; i >= 0; --i) {
+				var element = nodeList[i];
+				Bullets.deselectElement(element);
+			}
 			testHelper.testNoSelectedElement();
 		});
-		it('should deselect the selection when nothing is passed in', function () {
+	});
+  describe('deselectAll', function() {
+		it('should deselect every element', function () {
 			Bullets.selectNext();
 			testHelper.testSelectionMatchesIndex(0);
-			Bullets.deselect();
+			Bullets.deselectAll();
 			testHelper.testNoSelectedElement();
 		});
 	});
@@ -170,7 +181,7 @@ describe('Bullets selection', function() {
 			}
 
 			// Get the content of the `href` attribute for the follow able node
-			var followTagNodeList = Bullets.selectedElement.querySelectorAll(Bullets.followTags);
+			var followTagNodeList = Bullets.selectedNodes[0].querySelectorAll(Bullets.followTags);
 			followTagNodeList.length.should.be.above(0);
 			var followTag = followTagNodeList[0];
 			var href = followTag.getAttribute('href');
@@ -204,23 +215,24 @@ describe('Bullets selection', function() {
 module.exports = {
 
 	testNoSelectedElement: function() {
-		should.not.exist(Bullets.selectedElement);
-		Bullets.rootElement.querySelectorAll(Bullets.selectedID).length.should.equal(0);
+		var nodeList = Bullets.selectedNodes;
+		nodeList.length.should.equal(0);
+		Bullets.rootElement.querySelectorAll(Bullets.selectedClass).length.should.equal(0);
 	},
 	testSelectionMatchesIndex: function(index) {
     // Confirm a selected element exists
-		var selectedElement = Bullets.selectedElement;
-		selectedElement.id.should.equal(Bullets.selectedID);
+		var selectedElement = Bullets.selectedNodes[0];
+		selectedElement.classList.contains(Bullets.selectedClass).should.equal(true);
 
     // Confirm that the inner text of that element equals
     // the inner text of the element at the index
 		var testText = this.textOfBulletsElementAtIndex(index);
-		var bulletsText = Bullets.selectedElement.innerText;
+		var bulletsText = selectedElement.innerText;
 		bulletsText.should.equal(testText);
 	},
 
 	isSelectedElementCollapsed: function() {
-		var selectedElement = Bullets.selectedElement;
+		var selectedElement = Bullets.selectedNodes[0];
 		if (!selectedElement) {
 			return false;
 		}

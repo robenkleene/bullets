@@ -1,12 +1,15 @@
 var testHelper = require('../js/test-helper');
 window.testHelper = testHelper;
 
+// Bullets.rootElement = document.getElementById("test-content");
+// console.log("Bullets.rootElement = " + Bullets.rootElement);
+
 describe('Bullets collapse', function() {
 	beforeEach(function() {
-		Bullets.deselect();
+		Bullets.deselectAll();
 		Bullets.expandAll();
 	});
-  describe('toggle collapse', function() {
+  describe('toggleCollapseSelection', function() {
 		it('should toggle collapse for the selection', function () {
 			Bullets.selectNext();
 			Bullets.toggleCollapseSelection();
@@ -21,7 +24,7 @@ describe('Bullets collapse', function() {
       stub.restore();
     });
 	});
-	describe('expand all', function() {
+	describe('expandAll', function() {
 		it('should expand all', function() {
 			Bullets.selectNext();
 			Bullets.collapseSelection();
@@ -32,7 +35,7 @@ describe('Bullets collapse', function() {
 			nodeList.length.should.equal(0);
     });
 	});
-	describe('collapse selection', function() {
+	describe('collapseSelection', function() {
 		it('should collapse the selection', function () {
 			Bullets.selectNext();
 			Bullets.collapseSelection();
@@ -54,7 +57,7 @@ describe('Bullets collapse', function() {
       stub.restore();
     });
   });
-	describe('expand selection', function() {
+	describe('expandSelection', function() {
 		it('should expand the selection', function () {
 			Bullets.selectNext();
 			Bullets.collapseSelection();
