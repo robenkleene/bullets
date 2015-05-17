@@ -2,7 +2,7 @@ module.exports = {
 
 	testNoSelectedElement: function() {
 		should.not.exist(Bullets.selectedElement);
-		document.querySelectorAll(Bullets.selectedID).length.should.equal(0);
+		Bullets.rootElement.querySelectorAll(Bullets.selectedID).length.should.equal(0);
 	},
 	testSelectionMatchesIndex: function(index) {
     // Confirm a selected element exists
@@ -33,7 +33,7 @@ module.exports = {
 	},
 
 	indexOfBulletsElementUsingChildMatchingQuerySelector: function(selectors, invert) {
-		var selectableNodeList = document.querySelectorAll(Bullets.selectTags);
+		var selectableNodeList = Bullets.rootElement.querySelectorAll(Bullets.selectTags);
 		for (var i = 0; i < selectableNodeList.length; i++) {
 	    var selectableElement = selectableNodeList[i];
 			var followNodeList = selectableElement.querySelectorAll(selectors);
@@ -77,7 +77,7 @@ module.exports = {
 	},
 
 	elementOfQuerySelectorAtIndex: function (selectors, index) {
-		var nodeList = document.querySelectorAll(selectors);
+		var nodeList = Bullets.rootElement.querySelectorAll(selectors);
 		if (index < 0) {
 			index = nodeList.length + index;
 		}

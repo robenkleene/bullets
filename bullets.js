@@ -4,6 +4,7 @@ var Bullets = {
 	PREVIOUS_OFFSET: -1,
 
 	// Public
+	rootElement: document,
 	selectedID: 'bullets-selected',
 	collapsedClass: 'bullets-collapsed',
 	headerTags: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'],
@@ -13,10 +14,7 @@ var Bullets = {
     return this.headerTags.concat(this.hierarchicalTags);
   },
   get selectedElement() {
-		if (document.body != document.activeElement) {
-			return document.activeElement;
-		}
-    return document.getElementById(this.selectedID);
+    return this.rootElement.getElementById(this.selectedID);
 	},
 
 	// Public
@@ -62,7 +60,7 @@ var Bullets = {
 		this.expandElement(selectedElement);
 	},
 	expandAll: function() {
-		var nodeList = document.getElementsByClassName(this.collapsedClass);
+		var nodeList = this.rootElement.getElementsByClassName(this.collapsedClass);
 		for (var i = nodeList.length - 1; i >= 0; --i) {
 			var element = nodeList[i];
 			this.expandElement(element);
@@ -89,7 +87,7 @@ var Bullets = {
 	},
 
 	elementAtOffset: function(offset) {
-		var tagsNodeList = document.querySelectorAll(this.selectTags);
+		var tagsNodeList = this.rootElement.querySelectorAll(this.selectTags);
 		if (tagsNodeList.length < 1) {
 			return;
 		}
@@ -153,21 +151,22 @@ var Bullets = {
 	// 	return elementToSelect;
 	// },
 	//
-	// findVisibleElementFromElement: function (element, backwards) {
-	//   if (this.elementIsVisible()) {
-	// 		return element;
-	// 	}
-	//
-	// 	element = backwards ? element.lastChild : element.firstChild;
-	//   while (element) {
-	// 	  this.findVisibleElementFromElement(element, backwards);
-	// 		element = backwards ? element.previousSibling : element.nextSibling;
-	//   }
-	// },
-	//
-	// elementIsVisible: function(element) {
-	//     return element.offsetParent !== null;
-	// },
+
+	findVisibleElementFromElement: function (element, backwards) {
+	  if (this.elementIsVisible()) {
+			return element;
+		}
+
+		element = backwards ? element.lastChild : element.firstChild;
+	  while (element) {
+		  this.findVisibleElementFromElement(element, backwards);
+			element = backwards ? element.previousSibling : element.nextSibling;
+	  }
+	},
+
+	elementIsVisible: function(element) {
+	    return element.offsetParent !== null;
+	},
 
 	followSelection: function() {
 		var selectedElement = this.selectedElement;

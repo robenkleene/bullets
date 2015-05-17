@@ -79,7 +79,7 @@ describe('Bullets collapse', function() {
   });
 });
 
-},{"../js/test-helper":3}],2:[function(require,module,exports){
+},{"../js/test-helper":4}],2:[function(require,module,exports){
 var testHelper = require('../js/test-helper');
 window.testHelper = testHelper;
 
@@ -198,12 +198,14 @@ describe('Bullets selection', function() {
 	});
 });
 
-},{"../js/test-helper":3}],3:[function(require,module,exports){
+},{"../js/test-helper":4}],3:[function(require,module,exports){
+
+},{}],4:[function(require,module,exports){
 module.exports = {
 
 	testNoSelectedElement: function() {
 		should.not.exist(Bullets.selectedElement);
-		document.querySelectorAll(Bullets.selectedID).length.should.equal(0);
+		Bullets.rootElement.querySelectorAll(Bullets.selectedID).length.should.equal(0);
 	},
 	testSelectionMatchesIndex: function(index) {
     // Confirm a selected element exists
@@ -234,7 +236,7 @@ module.exports = {
 	},
 
 	indexOfBulletsElementUsingChildMatchingQuerySelector: function(selectors, invert) {
-		var selectableNodeList = document.querySelectorAll(Bullets.selectTags);
+		var selectableNodeList = Bullets.rootElement.querySelectorAll(Bullets.selectTags);
 		for (var i = 0; i < selectableNodeList.length; i++) {
 	    var selectableElement = selectableNodeList[i];
 			var followNodeList = selectableElement.querySelectorAll(selectors);
@@ -278,7 +280,7 @@ module.exports = {
 	},
 
 	elementOfQuerySelectorAtIndex: function (selectors, index) {
-		var nodeList = document.querySelectorAll(selectors);
+		var nodeList = Bullets.rootElement.querySelectorAll(selectors);
 		if (index < 0) {
 			index = nodeList.length + index;
 		}
@@ -287,4 +289,4 @@ module.exports = {
 
 };
 
-},{}]},{},[1,2]);
+},{}]},{},[1,2,3]);
