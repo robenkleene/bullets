@@ -209,6 +209,14 @@ describe('Bullets selection', function() {
 });
 
 },{"../js/test-helper":4}],3:[function(require,module,exports){
+describe('Bullets visible elements', function() {
+	describe('findVisibleElementFromElement', function() {
+		it('should find the correct visible element', function () {
+
+
+		});
+	});
+});
 
 },{}],4:[function(require,module,exports){
 module.exports = {

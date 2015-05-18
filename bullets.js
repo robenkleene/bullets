@@ -140,59 +140,21 @@ var Bullets = {
 		return elementToSelect;
 	},
 
-	// elementAtOffset: function(offset) {
-	// 	var tagsNodeList = document.querySelectorAll(this.selectTags);
-	// 	if (tagsNodeList.length < 1) {
-	// 		return;
-	// 	}
-	//
-	//
-	// 	// TODO Handle elements that aren't visible here
-	//
-	// 	var startingIndex;
-	// 	var selectedElement = this.selectedElement;
-	// 	if (!!selectedElement) {
-	// 		startingIndex = Array.prototype.indexOf.call(tagsNodeList, selectedElement) + offset;
-	// 	} else {
-	// 		// No selected element, start from the first or last index
-	// 		startingIndex = offset > 0 ? 0 : tagsNodeList.length - 1;
-	// 	}
-	//
-	// 	// TODO We need to do a recursive search from here to avoid testing if every
-	// 	// child of an element is visible. I.e., if a parent is not visible then all
-	// 	// of it's children are also not visible
-	//
-	// 	var increment = offset > 0 ? 1 : -1;
-	// 	if (indexToSelect < 0 || indexToSelect >= tagsNodeList.length) {
-	// 		// Ignore out of bounds indexes
-	// 		return;
-	// 	}
-	//
-	//
-	// 	// TODO Handle elements that aren't visible here
-	//
-	// 	var indexToSelect;
-	//
-	// 	var elementToSelect = tagsNodeList[indexToSelect];
-	// 	return elementToSelect;
-	// },
-	//
+	findVisibleElementFromElement: function (element, backwards) {
+	  if (this.elementIsVisible()) {
+			return element;
+		}
 
-	// findVisibleElementFromElement: function (element, backwards) {
-	//   if (this.elementIsVisible()) {
-	// 		return element;
-	// 	}
-	//
-	// 	element = backwards ? element.lastChild : element.firstChild;
-	//   while (element) {
-	// 	  this.findVisibleElementFromElement(element, backwards);
-	// 		element = backwards ? element.previousSibling : element.nextSibling;
-	//   }
-	// },
-	//
-	// elementIsVisible: function(element) {
-	//     return element.offsetParent !== null;
-	// },
+		element = backwards ? element.lastChild : element.firstChild;
+	  while (element) {
+		  this.findVisibleElementFromElement(element, backwards);
+			element = backwards ? element.previousSibling : element.nextSibling;
+	  }
+	},
+
+	elementIsVisible: function(element) {
+	    return element.offsetParent !== null;
+	},
 
 	followSelection: function() {
 		var nodeList = this.selectedNodes;
