@@ -141,18 +141,21 @@ var Bullets = {
 	},
 
 	findVisibleElementFromElement: function (element, backwards) {
-	  if (this.elementIsVisible()) {
+console.log("findVisibleElementFromElement element = " + element);
+	  if (this.elementIsVisible(element)) {
 			return element;
 		}
 
 		element = backwards ? element.lastChild : element.firstChild;
 	  while (element) {
-		  this.findVisibleElementFromElement(element, backwards);
+		  return this.findVisibleElementFromElement(element, backwards);
 			element = backwards ? element.previousSibling : element.nextSibling;
 	  }
 	},
 
 	elementIsVisible: function(element) {
+console.log("element.outerHTML = " + element.outerHTML);
+console.log("element.offsetParent = " + element.offsetParent);
 	    return element.offsetParent !== null;
 	},
 
