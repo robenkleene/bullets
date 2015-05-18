@@ -2,8 +2,6 @@
 var testHelper = require('../js/test-helper');
 window.testHelper = testHelper;
 
-
-
 describe('Bullets collapse', function() {
 	beforeEach(function() {
 		Bullets.rootElement = document.getElementById("test-content");
@@ -211,18 +209,25 @@ describe('Bullets selection', function() {
 });
 
 },{"../js/test-helper":4}],3:[function(require,module,exports){
-describe('Bullets visible elements', function() {
+function runTest(name) {
+  var element = document.getElementById(name);
+  var forward = element.getAttribute('data-forward');
+  var backward = element.getAttribute('data-backward');
+  var forwardResult = Bullets.findVisibleElementFromElement(element, false).innerText;
+  forwardResult.should.equal(forward);
+  var backwardResult = Bullets.findVisibleElementFromElement(element, true).innerText;
+  backwardResult.should.equal(backward);
+}
+
+describe('Bullets findVisibleElementFromElement', function() {
   beforeEach(function() {
 		Bullets.rootElement = document.getElementById("test-content");
 		Bullets.deselectAll();
 	});
 
-	describe('findVisibleElementFromElement', function() {
+	describe('Test 1', function() {
 		it('should find the correct visible element', function () {
-      var element = document.getElementById('vet-hidden-paragraph');
-      var result = Bullets.findVisibleElementFromElement(element, false);
-
-      console.log("result.outerHTML = " + result.outerHTML);
+      runTest('test-1');
 		});
 	});
 });
