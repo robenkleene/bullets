@@ -1,10 +1,11 @@
 var testHelper = require('../js/test-helper');
 window.testHelper = testHelper;
 
-Bullets.rootElement = document.getElementById("test-content");
+
 
 describe('Bullets selection', function() {
 	beforeEach(function() {
+		Bullets.rootElement = document.getElementById("test-content");
 		Bullets.deselectAll();
 	});
 

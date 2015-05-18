@@ -1,9 +1,12 @@
 var Bullets = {
 	// Constants
+
 	NEXT_OFFSET: 1,
 	PREVIOUS_OFFSET: -1,
 
-	// Public
+
+	// Properties
+
 	rootElement: document,
 	selectedClass: 'bullets-selected',
 	collapsedClass: 'bullets-collapsed',
@@ -16,6 +19,7 @@ var Bullets = {
   get selectedNodes() {
     return this.rootElement.getElementsByClassName(this.selectedClass);
 	},
+
 
 	// Public
 
@@ -141,21 +145,29 @@ var Bullets = {
 	},
 
 	findVisibleElementFromElement: function (element, backwards) {
-console.log("findVisibleElementFromElement element = " + element);
+		if (element == this.rootElement) {
+			return null;
+		}
+
 	  if (this.elementIsVisible(element)) {
 			return element;
 		}
 
-		element = backwards ? element.lastChild : element.firstChild;
-	  while (element) {
-		  return this.findVisibleElementFromElement(element, backwards);
-			element = backwards ? element.previousSibling : element.nextSibling;
-	  }
+		if (this.elementIsVisible(element.parentNode)) {
+			var nodeList = element.parentNode.querySelectorAll(this.selectTags);
+
+			var increment = backwards ? -1 : 1;
+			var nextIndex = Array.prototype.indexOf.call(nodeList, element) + increment;
+			if (nextIndex < nodeList.length) {
+				var nextElement = nodeList[nextIndex];
+				return this.findVisibleElementFromElement(nextElement, backwards);
+			}
+		}
+
+		return this.findVisibleElementFromElement(element.parentNode, backwards);
 	},
 
 	elementIsVisible: function(element) {
-console.log("element.outerHTML = " + element.outerHTML);
-console.log("element.offsetParent = " + element.offsetParent);
 	    return element.offsetParent !== null;
 	},
 

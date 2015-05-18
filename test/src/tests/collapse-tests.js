@@ -1,10 +1,11 @@
 var testHelper = require('../js/test-helper');
 window.testHelper = testHelper;
 
-Bullets.rootElement = document.getElementById("test-content");
+
 
 describe('Bullets collapse', function() {
 	beforeEach(function() {
+		Bullets.rootElement = document.getElementById("test-content");
 		Bullets.deselectAll();
 		Bullets.expandAll();
 	});

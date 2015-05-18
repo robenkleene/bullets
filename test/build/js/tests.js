@@ -2,10 +2,11 @@
 var testHelper = require('../js/test-helper');
 window.testHelper = testHelper;
 
-Bullets.rootElement = document.getElementById("test-content");
+
 
 describe('Bullets collapse', function() {
 	beforeEach(function() {
+		Bullets.rootElement = document.getElementById("test-content");
 		Bullets.deselectAll();
 		Bullets.expandAll();
 	});
@@ -85,10 +86,11 @@ describe('Bullets collapse', function() {
 var testHelper = require('../js/test-helper');
 window.testHelper = testHelper;
 
-Bullets.rootElement = document.getElementById("test-content");
+
 
 describe('Bullets selection', function() {
 	beforeEach(function() {
+		Bullets.rootElement = document.getElementById("test-content");
 		Bullets.deselectAll();
 	});
 
@@ -210,13 +212,17 @@ describe('Bullets selection', function() {
 
 },{"../js/test-helper":4}],3:[function(require,module,exports){
 describe('Bullets visible elements', function() {
+  beforeEach(function() {
+		Bullets.rootElement = document.getElementById("test-content");
+		Bullets.deselectAll();
+	});
+
 	describe('findVisibleElementFromElement', function() {
 		it('should find the correct visible element', function () {
       var element = document.getElementById('vet-hidden-paragraph');
-      var result = Bullets.findVisibleElementFromElement(element);
+      var result = Bullets.findVisibleElementFromElement(element, false);
+
       console.log("result.outerHTML = " + result.outerHTML);
-
-
 		});
 	});
 });
