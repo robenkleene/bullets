@@ -250,6 +250,11 @@ describe('Bullets visible elements', function() {
       runBothTests('test-2');
 		});
 	});
+  describe('Test 3', function() {
+		it('should find the correct element', function () {
+      runBothTests('test-3');
+		});
+	});
 });
 
 },{}],4:[function(require,module,exports){
