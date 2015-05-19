@@ -1,22 +1,42 @@
-function runTest(name) {
+function runTest(name, attribute, backward) {
   var element = document.getElementById(name);
-  var forward = element.getAttribute('data-forward');
-  var backward = element.getAttribute('data-backward');
-  var forwardResult = Bullets.findVisibleElementFromElement(element, false).innerText;
-  forwardResult.should.equal(forward);
-  var backwardResult = Bullets.findVisibleElementFromElement(element, true).innerText;
-  backwardResult.should.equal(backward);
+  var testResult = element.getAttribute(attribute);
+  var result = Bullets.findVisibleElementFromElement(element, backward);
+  if (!!testResult) {
+    var text = result.innerText;
+    text.should.equal(testResult);
+  } else {
+    should.equal(result, null);
+  }
 }
 
-describe('Bullets findVisibleElementFromElement', function() {
+function runForwardTest(name) {
+  runTest(name, 'data-forward', false);
+}
+
+function runBackwardTest(name) {
+  runTest(name, 'data-backward', true);
+}
+
+function runBothTests(name) {
+  runBackwardTest(name);
+  runForwardTest(name);
+}
+
+describe('Bullets visible elements', function() {
   beforeEach(function() {
-		Bullets.rootElement = document.getElementById("test-content");
+		Bullets.rootElement = document.getElementById("visible-element-tests");
 		Bullets.deselectAll();
 	});
 
 	describe('Test 1', function() {
-		it('should find the correct visible element', function () {
-      runTest('test-1');
+		it('should find the correct element', function () {
+      runBothTests('test-1');
+		});
+	});
+  describe('Test 2', function() {
+		it('should find the correct element', function () {
+      runBothTests('test-2');
 		});
 	});
 });

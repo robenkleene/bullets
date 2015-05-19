@@ -145,7 +145,7 @@ var Bullets = {
 	},
 
 	findVisibleElementFromElement: function (element, backwards) {
-		if (element == this.rootElement) {
+		if (element === this.rootElement) {
 			return null;
 		}
 
@@ -158,7 +158,7 @@ var Bullets = {
 
 			var increment = backwards ? -1 : 1;
 			var nextIndex = Array.prototype.indexOf.call(nodeList, element) + increment;
-			if (nextIndex < nodeList.length) {
+			if (nextIndex > 0 && nextIndex < nodeList.length) {
 				var nextElement = nodeList[nextIndex];
 				return this.findVisibleElementFromElement(nextElement, backwards);
 			}
@@ -168,7 +168,10 @@ var Bullets = {
 	},
 
 	elementIsVisible: function(element) {
-	    return element.offsetParent !== null;
+		if (!element) {
+			return false;
+		}
+		return element.offsetParent !== null;
 	},
 
 	followSelection: function() {
