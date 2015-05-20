@@ -29,7 +29,7 @@ describe('Bullets collapse', function() {
 			Bullets.selectNext();
 			Bullets.collapseSelection();
 			Bullets.expandAll();
-			var nodeList = document.getElementsByClassName(Bullets.collapsedClass);
+			var nodeList = Bullets.rootElement.getElementsByClassName(Bullets.collapsedClass);
 			nodeList.length.should.equal(0);
     });
 	});

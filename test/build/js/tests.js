@@ -1,4 +1,76 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+if (typeof Element.prototype.matches === 'undefined') {
+  // `Element.prototype.matches` appears to be missing from phantomjs
+  Element.prototype.matches = Element.prototype.webkitMatchesSelector;
+}
+
+function runTest(name, attribute, backward) {
+  var element = document.getElementById(name);
+  var testResult = element.getAttribute(attribute);
+  var result = Bullets.findVisibleElementFromElement(element, backward);
+  if (!!testResult) {
+    var text = result.innerText.trim();
+    text.should.equal(testResult);
+  } else {
+    should.equal(result, null);
+  }
+}
+
+function runForwardTest(name) {
+  runTest(name, 'data-forward', false);
+}
+
+function runBackwardTest(name) {
+  runTest(name, 'data-backward', true);
+}
+
+function runBothTests(name) {
+  console.log("BACKWARDS");
+  runBackwardTest(name);
+  console.log("FORWARDS");
+  runForwardTest(name);
+}
+
+// describe('Bullets visible elements', function() {
+//   beforeEach(function() {
+// 		Bullets.rootElement = document.getElementById("collapse-selection-tests");
+// 		Bullets.deselectAll();
+// 	});
+//
+// 	describe('Test 1', function() {
+// 		it('should find the correct element', function () {
+//       runBothTests('test-1');
+// 		});
+// 	});
+//   describe('TARGET Test 2', function() {
+// 		it('should find the correct element', function () {
+//       runBothTests('test-2');
+// 		});
+// 	});
+//   describe('Test 3', function() {
+// 		it('should find the correct element', function () {
+//       runBothTests('test-3');
+// 		});
+// 	});
+//   describe('Test 4', function() {
+// 		it('should find the correct element', function () {
+//       runBothTests('test-4');
+// 		});
+// 	});
+//   describe('Test 5', function() {
+// 		it('should find the correct element', function () {
+//       runBothTests('test-5');
+// 		});
+// 	});
+//   describe('Test 6', function() {
+// 		it('should find the correct element', function () {
+//       runBothTests('test-6');
+// 		});
+// 	});
+//
+// });
+
+},{}],2:[function(require,module,exports){
 var testHelper = require('../js/test-helper');
 window.testHelper = testHelper;
 
@@ -30,7 +102,7 @@ describe('Bullets collapse', function() {
 			Bullets.selectNext();
 			Bullets.collapseSelection();
 			Bullets.expandAll();
-			var nodeList = document.getElementsByClassName(Bullets.collapsedClass);
+			var nodeList = Bullets.rootElement.getElementsByClassName(Bullets.collapsedClass);
 			nodeList.length.should.equal(0);
     });
 	});
@@ -80,7 +152,7 @@ describe('Bullets collapse', function() {
   });
 });
 
-},{"../js/test-helper":3}],2:[function(require,module,exports){
+},{"../js/test-helper":4}],3:[function(require,module,exports){
 var testHelper = require('../js/test-helper');
 window.testHelper = testHelper;
 
@@ -208,7 +280,7 @@ describe('Bullets selection', function() {
 	});
 });
 
-},{"../js/test-helper":3}],3:[function(require,module,exports){
+},{"../js/test-helper":4}],4:[function(require,module,exports){
 module.exports = {
 
 	testNoSelectedElement: function() {
@@ -298,4 +370,4 @@ module.exports = {
 
 };
 
-},{}]},{},[1,2]);
+},{}]},{},[1,2,3]);
