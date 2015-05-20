@@ -80,7 +80,7 @@ describe('Bullets collapse', function() {
   });
 });
 
-},{"../js/test-helper":4}],2:[function(require,module,exports){
+},{"../js/test-helper":3}],2:[function(require,module,exports){
 var testHelper = require('../js/test-helper');
 window.testHelper = testHelper;
 
@@ -208,79 +208,7 @@ describe('Bullets selection', function() {
 	});
 });
 
-},{"../js/test-helper":4}],3:[function(require,module,exports){
-if (typeof Element.prototype.matches === 'undefined') {
-  // `Element.prototype.matches` appears to be missing from phantomjs
-  Element.prototype.matches = Element.prototype.webkitMatchesSelector;
-}
-
-function runTest(name, attribute, backward) {
-  var element = document.getElementById(name);
-  var testResult = element.getAttribute(attribute);
-  var result = Bullets.findVisibleElementFromElement(element, backward);
-  if (!!testResult) {
-    var text = result.innerText.trim();
-    text.should.equal(testResult);
-  } else {
-    should.equal(result, null);
-  }
-}
-
-function runForwardTest(name) {
-  runTest(name, 'data-forward', false);
-}
-
-function runBackwardTest(name) {
-  runTest(name, 'data-backward', true);
-}
-
-function runBothTests(name) {
-  console.log("BACKWARDS");
-  runBackwardTest(name);
-  console.log("FORWARDS");
-  runForwardTest(name);
-}
-
-describe('Bullets visible elements', function() {
-  beforeEach(function() {
-		Bullets.rootElement = document.getElementById("visible-element-tests");
-		Bullets.deselectAll();
-	});
-
-	describe('Test 1', function() {
-		it('should find the correct element', function () {
-      runBothTests('test-1');
-		});
-	});
-  describe('TARGET Test 2', function() {
-		it('should find the correct element', function () {
-      runBothTests('test-2');
-		});
-	});
-  describe('Test 3', function() {
-		it('should find the correct element', function () {
-      runBothTests('test-3');
-		});
-	});
-  describe('Test 4', function() {
-		it('should find the correct element', function () {
-      runBothTests('test-4');
-		});
-	});
-  describe('Test 5', function() {
-		it('should find the correct element', function () {
-      runBothTests('test-5');
-		});
-	});
-  describe('Test 6', function() {
-		it('should find the correct element', function () {
-      runBothTests('test-6');
-		});
-	});
-
-});
-
-},{}],4:[function(require,module,exports){
+},{"../js/test-helper":3}],3:[function(require,module,exports){
 module.exports = {
 
 	testNoSelectedElement: function() {
@@ -370,4 +298,4 @@ module.exports = {
 
 };
 
-},{}]},{},[1,2,3]);
+},{}]},{},[1,2]);
