@@ -216,15 +216,19 @@ var Bullets = {
 	    return isVisible;
 	},
 
+
 	// Selection
+
+	// Next
 
 	nextVisibleSelectableElement: function() {
 		var selectedNodeList = this.selectedNodes;
 		if (selectedNodeList.length < 1) {
 			// If nothing it selected return the first selectable element or null
+			// By definition the first selectable node is always visible
 			var firstSelectTagNodeList = this.rootElement.querySelectorAll(this.selectTags);
 			if (firstSelectTagNodeList.length > 0) {
-				return firstSelectTagNodeList[0];
+				return firstSelectTagNodeList[firstSelectTagNodeList.length - 1];
 			}
 			return null;
 		}
@@ -248,26 +252,24 @@ var Bullets = {
 			}
 
 			// In this case we have to select the next selectable node after the last child node of the parent
-			return this.nextSelectableElementAfterLastSelectableChild(selectedElement.parentNode);
+			return this.nextSelectableElementAfterLastSelectableChildElement(selectedElement.parentNode);
 		}
 
 		if (this.hierarchicalTags.indexOf(tagName) >= 0) {
-			return this.nextSelectableElementAfterLastSelectableChild(selectedElement);
+			return this.nextSelectableElementAfterLastSelectableChildElement(selectedElement);
 		}
 		return null;
 	},
 
-	nextSelectableElementAfterLastSelectableChild: function(element) {
-		var childSelectableNodeList = element.querySelectorAll(this.selectTags);
+	nextSelectableElementAfterLastSelectableChildElement: function(element) {
+		var lastSelectableChildElement = this.lastSelectableChildElement(element);
 
-		var lastSelectableChild = childSelectableNodeList.length > 0 ? childSelectableNodeList[childSelectableNodeList.length -1] : element;
+		if (!lastSelectableChildElement) {
+			lastSelectableChildElement = element;
+		}
 
 		var selectTagNodeList = this.rootElement.querySelectorAll(this.selectTags);
-		return this.elementAtOffsetInNodeList(lastSelectableChild, this.NEXT_OFFSET, selectTagNodeList);
-	},
-
-	previousVisibleSelectableElement: function() {
-		// TODO Implement
+		return this.elementAtOffsetInNodeList(lastSelectableChildElement, this.NEXT_OFFSET, selectTagNodeList);
 	},
 
 	nextSelectableElement: function(element) {
@@ -275,9 +277,100 @@ var Bullets = {
 		return this.elementAtOffsetInNodeList(element, this.NEXT_OFFSET, nodeList);
 	},
 
-	previousSelectableElement: function(element) {
-		var nodeList = this.rootElement.querySelectorAll(this.selectTags);
-		return this.elementAtOffsetInNodeList(element, this.PREVIOUS_OFFSET, nodeList);
+	// Previous
+
+	previousVisibleSelectableElement: function() {
+
+		var selectedNodeList = this.selectedNodes;
+		var selectableNodeList = this.rootElement.querySelectorAll(this.selectTags);
+		var selectedElement;
+
+		if (selectedNodeList.length < 1) {
+			if (selectableNodeList.length > 0) {
+				selectedElement = selectableNodeList[selectableNodeList.length - 1];
+				if (this.elementIsVisible(selectedElement)) {
+					// If there was no selection, and the last element is visible
+					// Then that's the target selection
+					return selectedElement;
+				}
+			} else {
+				// No selectable elements exist
+				return null;
+			}
+		} else {
+			selectedElement = selectedNodeList[0];
+		}
+
+		var previousSelectableElement = this.elementAtOffsetInNodeList(selectedElement, this.PREVIOUS_OFFSET, selectableNodeList);
+		if (!previousSelectableElement) {
+			// If there's no previous element, this is the top element
+			return null;
+		}
+
+		return findPreviousVisibleSelectableElement(previousSelectableElement);
+	},
+
+	findPreviousVisibleSelectableElement: function(element) {
+
+		if (this.elementIsVisible(element)) {
+			return element;
+		}
+
+		var visibleParentElement = this.visibleParentElement(element);
+		if (!visibleParentElement) {
+			return null;
+		}
+		if (this.elementIsVisible(visibleParentElement)) {
+			return visibleParentElement;
+		}
+
+		var previousVisibleSibling = this.previousVisibleSibling(visibleParentElement);
+		if (!previousVisibleSibling) {
+			return this.findPreviousVisibleSelectableElement(visibleParentElement);
+		}
+
+		var lastSelectableChildElement = this.lastSelectableChildElement(previousVisibleSibling);
+
+		if (!lastSelectableChildElement) {
+			lastSelectableChildElement = previousVisibleSibling;
+		}
+
+		return this.findPreviousVisibleSelectableElement(lastSelectableChildElement);
+	},
+
+	visibleParentElement: function(element) {
+		while(element.parentNode) {
+			element = element.parentNode;
+
+			if (element == this.rootElement) {
+				return null;
+			}
+
+			if (this.elementIsVisible(element)) {
+				return element;
+			}
+		}
+	},
+
+	previousVisibleSibling: function(element) {
+		while(element.previousElementSibling) {
+			element = element.previousElementSibling;
+
+			if (this.elementIsVisible(element)) {
+				return element;
+			}
+		}
+
+		return null;
+	},
+
+	// Next & Previous Selection
+
+	elementIsVisible: function(element) {
+		if (!element) {
+			return false;
+		}
+		return element.offsetParent !== null;
 	},
 
 	elementAtOffsetInNodeList: function(element, offset, nodeList) {
@@ -294,24 +387,17 @@ var Bullets = {
 		return nodeList[offsetIndex];
 	},
 
-	// elementIsHeader: function(element) {
-	// 	var tagName = element.tagName;
-	// 	return this.headerTags.indexOf(needle) >= 0;
-	// },
+	lastSelectableChildElement: function(element) {
+		var selectableChildNodeList = element.querySelectorAll(this.selectTags);
 
-	elementIsVisible: function(element) {
-		if (!element) {
-			return false;
+		if (selectableChildNodeList.length < 1) {
+			return null;
 		}
-		return element.offsetParent !== null;
+
+		return selectableChildNodeList[selectableChildNodeList.length - 1];
 	},
 
-
-	// nextEqualOrHigherPrecendenceSiblingOfHeader: function(headerElement) {
-	// 	var headerTagName =
-	// },
-
-	// Beep if there's nothing to do
+	// Nothing to do
 
 	nothingToFollow: function() {
 		this.beep("Nothing to follow");
