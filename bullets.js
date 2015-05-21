@@ -10,9 +10,9 @@ var Bullets = {
 	rootElement: document,
 	selectedClass: 'bullets-selected',
 	collapsedClass: 'bullets-collapsed',
-	headerTags: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'],
-	hierarchicalTags: ['li'],
-  followTags: ['a'],
+	headerTags: ['H1', 'H2', 'H3', 'H4', 'H5', 'H6'],
+	hierarchicalTags: ['LI'],
+  followTags: ['A'],
   get selectTags() {
     return this.headerTags.concat(this.hierarchicalTags);
   },
@@ -24,6 +24,12 @@ var Bullets = {
 	// Public
 
 	selectNext: function() {
+	  // var elementToSelect = this.nextVisibleSelectableElement();
+		// if (!elementToSelect) {
+		// 	this.nothingToSelect();
+		// 	return;
+		// }
+		// this.selectElement(elementToSelect);
 		this.selectAtOffset(this.NEXT_OFFSET);
 	},
 	selectPrevious: function() {
@@ -110,6 +116,9 @@ var Bullets = {
 		return element.classList.contains(this.collapsedClass);
 	},
 
+
+
+// TODO DEPRECATED Delete when new selection logic is in place
 	selectAtOffset: function(offset) {
     var elementToSelect = this.elementAtOffset(offset);
 		if (!elementToSelect) {
@@ -143,13 +152,9 @@ var Bullets = {
 		var elementToSelect = tagsNodeList[indexToSelect];
 		return elementToSelect;
 	},
+// TODO DEPRECATED Delete when new selection logic is in place
 
-	elementIsVisible: function(element) {
-		if (!element) {
-			return false;
-		}
-		return element.offsetParent !== null;
-	},
+
 
 	followSelection: function() {
 		var nodeList = this.selectedNodes;
@@ -211,6 +216,90 @@ var Bullets = {
 	    return isVisible;
 	},
 
+	// Selection
+
+	nextVisibleSelectableElement: function() {
+		var selectedNodeList = this.selectedNodes;
+		if (selectedNodeList.length < 1) {
+			// If nothing it selected return the first selectable element or null
+			var firstSelectTagNodeList = this.rootElement.querySelectorAll(this.selectTags);
+			if (firstSelectTagNodeList.length > 0) {
+				return firstSelectTagNodeList[0];
+			}
+			return null;
+		}
+
+		// Get the last selected node
+		var selectedElement = selectedNodeList[selectedNodeList.length - 1];
+		if (!this.elementIsCollapsed(selectedElement)) {
+			return this.nextSelectableElement(selectedElement);
+		}
+
+		var tagName = selectedElement.tagName;
+
+		// If it's a header tag, jump to the next higher precendence header
+		var headerIndex	= this.headerTags.indexOf(tagName);
+		if (headerIndex >= 0) {
+			var equalOrHigherPrecedenceHeaderTags = this.headerTags.slice(0, headerIndex + 1);
+			var equalOrHigherPrecedenceHeaderNodeList = this.rootElement.querySelectorAll(equalOrHigherPrecedenceHeaderTags);
+			return this.elementAtOffsetInNodeList(selectedElement, this.NEXT_OFFSET, equalOrHigherPrecedenceHeaderNodeList);
+		}
+
+		if (this.hierarchicalTags.indexOf(tagName) >= 0) {
+			var childSelectableNodeList = selectedElement.querySelectorAll(this.selectTags);
+
+			var lastCollapsedElement = childSelectableNodeList.length > 0 ? childSelectableNodeList[childSelectableNodeList.length -1] : selectedElement;
+
+			var selectTagNodeList = this.rootElement.querySelectorAll(this.selectTags);
+			return this.elementAtOffsetInNodeList(lastCollapsedElement, this.NEXT_OFFSET, selectTagNodeList);
+		}
+		return null;
+	},
+
+	previousVisibleSelectableElement: function() {
+		// TODO Implement
+	},
+
+	nextSelectableElement: function(element) {
+		var nodeList = this.rootElement.querySelectorAll(this.selectTags);
+		return this.elementAtOffsetInNodeList(element, this.NEXT_OFFSET, nodeList);
+	},
+
+	previousSelectableElement: function(element) {
+		var nodeList = this.rootElement.querySelectorAll(this.selectTags);
+		return this.elementAtOffsetInNodeList(element, this.PREVIOUS_OFFSET, nodeList);
+	},
+
+	elementAtOffsetInNodeList: function(element, offset, nodeList) {
+		if (nodeList.length < 1) {
+			return null;
+		}
+
+		var index = Array.prototype.indexOf.call(nodeList, element);
+		var offsetIndex = index + offset;
+		if (offsetIndex < 0 || offsetIndex >= nodeList.length) {
+			return null;
+		}
+
+		return nodeList[offsetIndex];
+	},
+
+	// elementIsHeader: function(element) {
+	// 	var tagName = element.tagName;
+	// 	return this.headerTags.indexOf(needle) >= 0;
+	// },
+
+	elementIsVisible: function(element) {
+		if (!element) {
+			return false;
+		}
+		return element.offsetParent !== null;
+	},
+
+
+	// nextEqualOrHigherPrecendenceSiblingOfHeader: function(headerElement) {
+	// 	var headerTagName =
+	// },
 
 	// Beep if there's nothing to do
 
