@@ -44,62 +44,62 @@ describe('Bullets visible elements', function() {
 
 	describe('Test 1', function() {
 		it('should find the correct element', function () {
-      runForwardTest('test-1');
+      runBothTests('test-1');
 		});
 	});
   describe('Test 2', function() {
 		it('should find the correct element', function () {
-      runForwardTest('test-2');
+      runBothTests('test-2');
 		});
 	});
   describe('Test 3', function() {
 		it('should find the correct element', function () {
-      runForwardTest('test-3');
+      runBothTests('test-3');
 		});
 	});
   describe('Test 4', function() {
 		it('should find the correct element', function () {
-      runForwardTest('test-4');
+      runBothTests('test-4');
 		});
 	});
   describe('Test 5', function() {
 		it('should find the correct element', function () {
-      runForwardTest('test-5');
+      runBothTests('test-5');
 		});
 	});
   describe('Test 6', function() {
 		it('should find the correct element', function () {
-      runForwardTest('test-6');
+      runBothTests('test-6');
 		});
 	});
   describe('Test 7', function() {
 		it('should find the correct element', function () {
-      runForwardTest('test-7');
+      runBothTests('test-7');
 		});
 	});
   describe('Test 8', function() {
 		it('should find the correct element', function () {
-      runForwardTest('test-8');
+      runBothTests('test-8');
 		});
 	});
   describe('Test 9', function() {
 		it('should find the correct element', function () {
-      runForwardTest('test-9');
+      runBothTests('test-9');
 		});
 	});
   describe('Test 10', function() {
 		it('should find the correct element', function () {
-      runForwardTest('test-10');
+      runBothTests('test-10');
 		});
 	});
   describe('Test 11', function() {
 		it('should find the correct element', function () {
-      runForwardTest('test-11');
+      runBothTests('test-11');
 		});
 	});
   describe('Test 12', function() {
 		it('should find the correct element', function () {
-      runForwardTest('test-12');
+      runBothTests('test-12');
 		});
 	});
 

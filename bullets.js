@@ -307,7 +307,7 @@ var Bullets = {
 			return null;
 		}
 
-		return findPreviousVisibleSelectableElement(previousSelectableElement);
+		return this.findPreviousVisibleSelectableElement(previousSelectableElement);
 	},
 
 	findPreviousVisibleSelectableElement: function(element) {
