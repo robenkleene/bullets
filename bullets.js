@@ -241,19 +241,29 @@ var Bullets = {
 		var headerIndex	= this.headerTags.indexOf(tagName);
 		if (headerIndex >= 0) {
 			var equalOrHigherPrecedenceHeaderTags = this.headerTags.slice(0, headerIndex + 1);
-			var equalOrHigherPrecedenceHeaderNodeList = this.rootElement.querySelectorAll(equalOrHigherPrecedenceHeaderTags);
-			return this.elementAtOffsetInNodeList(selectedElement, this.NEXT_OFFSET, equalOrHigherPrecedenceHeaderNodeList);
+			var equalOrHigherPrecedenceHeaderSiblingNodeList = selectedElement.parentNode.querySelectorAll(equalOrHigherPrecedenceHeaderTags);
+			var nextHeaderNode = this.elementAtOffsetInNodeList(selectedElement, this.NEXT_OFFSET, equalOrHigherPrecedenceHeaderSiblingNodeList);
+			if (!!nextHeaderNode) {
+				return nextHeaderNode;
+			}
+
+			// In this case we have to select the next selectable node after the last child node of the parent
+			return this.nextSelectableElementAfterLastSelectableChild(selectedElement.parentNode);
 		}
 
 		if (this.hierarchicalTags.indexOf(tagName) >= 0) {
-			var childSelectableNodeList = selectedElement.querySelectorAll(this.selectTags);
-
-			var lastCollapsedElement = childSelectableNodeList.length > 0 ? childSelectableNodeList[childSelectableNodeList.length -1] : selectedElement;
-
-			var selectTagNodeList = this.rootElement.querySelectorAll(this.selectTags);
-			return this.elementAtOffsetInNodeList(lastCollapsedElement, this.NEXT_OFFSET, selectTagNodeList);
+			return this.nextSelectableElementAfterLastSelectableChild(selectedElement);
 		}
 		return null;
+	},
+
+	nextSelectableElementAfterLastSelectableChild: function(element) {
+		var childSelectableNodeList = element.querySelectorAll(this.selectTags);
+
+		var lastSelectableChild = childSelectableNodeList.length > 0 ? childSelectableNodeList[childSelectableNodeList.length -1] : element;
+
+		var selectTagNodeList = this.rootElement.querySelectorAll(this.selectTags);
+		return this.elementAtOffsetInNodeList(lastSelectableChild, this.NEXT_OFFSET, selectTagNodeList);
 	},
 
 	previousVisibleSelectableElement: function() {

@@ -35,7 +35,7 @@ function runBothTests(name) {
   runForwardTest(name);
 }
 
-describe('TARGET Bullets visible elements', function() {
+describe('Bullets visible elements', function() {
   beforeEach(function() {
 		Bullets.rootElement = document.getElementById("collapse-selection-tests");
 		Bullets.deselectAll();
