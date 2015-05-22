@@ -8,7 +8,7 @@
 }
 
 /* Hierarchical */
-.bullets-collapsed li {
+.bullets-collapsed li, .bullets-collapsed ul {
 /* 	display: none; */
 /*	border: 1px solid blue;
 	background-color: yellow;
