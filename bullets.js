@@ -24,16 +24,22 @@ var Bullets = {
 	// Public
 
 	selectNext: function() {
-	  // var elementToSelect = this.nextVisibleSelectableElement();
-		// if (!elementToSelect) {
-		// 	this.nothingToSelect();
-		// 	return;
-		// }
-		// this.selectElement(elementToSelect);
-		this.selectAtOffset(this.NEXT_OFFSET);
+	  var elementToSelect = this.nextVisibleSelectableElement();
+		if (!elementToSelect) {
+			this.nothingToSelect();
+			return;
+		}
+		this.selectElement(elementToSelect);
+		// this.selectAtOffset(this.NEXT_OFFSET);
 	},
 	selectPrevious: function() {
-		this.selectAtOffset(this.PREVIOUS_OFFSET);
+		var elementToSelect = this.previousVisibleSelectableElement();
+		if (!elementToSelect) {
+			this.nothingToSelect();
+			return;
+		}
+		this.selectElement(elementToSelect);
+		// this.selectAtOffset(this.PREVIOUS_OFFSET);
 	},
 	deselectElement: function(element) {
 		if (!!element) {
@@ -118,41 +124,41 @@ var Bullets = {
 
 
 
-// TODO DEPRECATED Delete when new selection logic is in place
-	selectAtOffset: function(offset) {
-    var elementToSelect = this.elementAtOffset(offset);
-		if (!elementToSelect) {
-			this.nothingToSelect();
-			return;
-		}
-		this.selectElement(elementToSelect);
-	},
-
-	elementAtOffset: function(offset) {
-		var tagsNodeList = this.rootElement.querySelectorAll(this.selectTags);
-		if (tagsNodeList.length < 1) {
-			return;
-		}
-
-		var selectedNodeList = this.selectedNodes;
-		if (selectedNodeList.length < 1) {
-			// No selected element, return first or last element
-			var firstOrLastElement = offset > 0 ? tagsNodeList[0] : tagsNodeList[tagsNodeList.length - 1];
-			return firstOrLastElement;
-		}
-
-		var lastSelectedElement = selectedNodeList[selectedNodeList.length - 1];
-
-		var indexToSelect = Array.prototype.indexOf.call(tagsNodeList, lastSelectedElement) + offset;
-		if (indexToSelect < 0 || indexToSelect >= tagsNodeList.length) {
-			// Ignore out of bounds indexes
-			return;
-		}
-
-		var elementToSelect = tagsNodeList[indexToSelect];
-		return elementToSelect;
-	},
-// TODO DEPRECATED Delete when new selection logic is in place
+// // TODO DEPRECATED Delete when new selection logic is in place
+// 	selectAtOffset: function(offset) {
+//     var elementToSelect = this.elementAtOffset(offset);
+// 		if (!elementToSelect) {
+// 			this.nothingToSelect();
+// 			return;
+// 		}
+// 		this.selectElement(elementToSelect);
+// 	},
+//
+// 	elementAtOffset: function(offset) {
+// 		var tagsNodeList = this.rootElement.querySelectorAll(this.selectTags);
+// 		if (tagsNodeList.length < 1) {
+// 			return;
+// 		}
+//
+// 		var selectedNodeList = this.selectedNodes;
+// 		if (selectedNodeList.length < 1) {
+// 			// No selected element, return first or last element
+// 			var firstOrLastElement = offset > 0 ? tagsNodeList[0] : tagsNodeList[tagsNodeList.length - 1];
+// 			return firstOrLastElement;
+// 		}
+//
+// 		var lastSelectedElement = selectedNodeList[selectedNodeList.length - 1];
+//
+// 		var indexToSelect = Array.prototype.indexOf.call(tagsNodeList, lastSelectedElement) + offset;
+// 		if (indexToSelect < 0 || indexToSelect >= tagsNodeList.length) {
+// 			// Ignore out of bounds indexes
+// 			return;
+// 		}
+//
+// 		var elementToSelect = tagsNodeList[indexToSelect];
+// 		return elementToSelect;
+// 	},
+// // TODO DEPRECATED Delete when new selection logic is in place
 
 
 
@@ -228,7 +234,7 @@ var Bullets = {
 			// By definition the first selectable node is always visible
 			var firstSelectTagNodeList = this.rootElement.querySelectorAll(this.selectTags);
 			if (firstSelectTagNodeList.length > 0) {
-				return firstSelectTagNodeList[firstSelectTagNodeList.length - 1];
+				return firstSelectTagNodeList[0];
 			}
 			return null;
 		}
