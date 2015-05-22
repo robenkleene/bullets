@@ -311,45 +311,51 @@ var Bullets = {
 	},
 
 	findPreviousVisibleSelectableElement: function(element) {
-
 		if (this.elementIsVisible(element)) {
 			return element;
 		}
 
-		var visibleParentElement = this.visibleParentElement(element);
-		if (!visibleParentElement) {
+		var visibleParentOrTopLevelElement = this.visibleParentOrTopLevelElement(element);
+		if (this.elementIsVisibleSelectable(visibleParentOrTopLevelElement)) {
+			return visibleParentOrTopLevelElement;
+		}
+
+		var previousVisibleSibling = this.previousVisibleSibling(visibleParentOrTopLevelElement);
+
+		if (!!previousVisibleSibling) {
+			var lastSelectableChildElement = this.lastSelectableChildElement(previousVisibleSibling);
+
+			if (!lastSelectableChildElement) {
+				lastSelectableChildElement = previousVisibleSibling;
+			}
+
+			return this.findPreviousVisibleSelectableElement(lastSelectableChildElement);
+		}
+
+		if (visibleParentOrTopLevelElement.parentNode == this.rootElement) {
+			// If there are no previous siblings, and the parent is the root node
+			// There's nothing to select.
+			// This should really never happen because the first child of the root node
+			// should never be hidden, but this can prevent infinite loops in buggy conditions
 			return null;
 		}
-		if (this.elementIsVisible(visibleParentElement)) {
-			return visibleParentElement;
-		}
-
-		var previousVisibleSibling = this.previousVisibleSibling(visibleParentElement);
-		if (!previousVisibleSibling) {
-			return this.findPreviousVisibleSelectableElement(visibleParentElement);
-		}
-
-		var lastSelectableChildElement = this.lastSelectableChildElement(previousVisibleSibling);
-
-		if (!lastSelectableChildElement) {
-			lastSelectableChildElement = previousVisibleSibling;
-		}
-
-		return this.findPreviousVisibleSelectableElement(lastSelectableChildElement);
+		return this.findPreviousVisibleSelectableElement(visibleParentOrTopLevelElement);
 	},
 
-	visibleParentElement: function(element) {
+	visibleParentOrTopLevelElement: function(element) {
 		while(element.parentNode) {
-			element = element.parentNode;
-
-			if (element == this.rootElement) {
-				return null;
+			if (element.parentNode == this.rootElement) {
+				return element;
 			}
+
+			element = element.parentNode;
 
 			if (this.elementIsVisible(element)) {
 				return element;
 			}
 		}
+
+		return null;
 	},
 
 	previousVisibleSibling: function(element) {
@@ -362,6 +368,18 @@ var Bullets = {
 		}
 
 		return null;
+	},
+
+	elementIsVisibleSelectable: function(element) {
+		return this.elementIsSelectable(element) && this.elementIsVisible(element);
+	},
+
+	elementIsSelectable: function(element) {
+		if (element == this.rootElement) {
+			return false;
+		}
+		var tagName = element.tagName;
+		return this.selectTags.indexOf(tagName) >= 0;
 	},
 
 	// Next & Previous Selection
