@@ -7,30 +7,14 @@ body .bullets-selected {
 	border-right: 1px solid red;
 }
 
-/* Hierarchical */
+
+/* Hiding */
 .bullets-collapsed li, .bullets-collapsed ul {
-/* 	display: none; */
-/*	border: 1px solid blue;
-	background-color: yellow;
-*/
 	display: none;
 }
 
-/* Headers */
 
-
-
-/*h2.bullets-collapsed ~ *:not(h1) {
-	border: 1px solid blue;
-	background-color: yellow;
-}
-h2.bullets-collapsed ~ h1 ~ * {
-	border: none;
-	background-color: transparent;
-}
-*/
-
-h1.bullets-collapsed ~ *:not(h1),
+/*h1.bullets-collapsed ~ *:not(h1),
 h2.bullets-collapsed ~ *:not(h1):not(h2),
 h3.bullets-collapsed ~ *:not(h1):not(h2):not(h3),
 h4.bullets-collapsed ~ *:not(h1):not(h2):not(h3):not(h4),
@@ -38,11 +22,32 @@ h5.bullets-collapsed ~ *:not(h1):not(h2):not(h3):not(h4):not(h5),
 h6.bullets-collapsed ~ *:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6)
 {
 	display: none;
-/*	border: 1px solid blue;
-	background-color: yellow;
-*/}
+}
+*/
 
-h1.bullets-collapsed ~ h1:not(.bullets-collapsed) ~ *,
+h1.bullets-collapsed ~ *:not(h1:not(.bullets-collapsed) ~ *),
+h2.bullets-collapsed ~ *:not(h1):not(h2),
+h3.bullets-collapsed ~ *:not(h1):not(h2):not(h3),
+h4.bullets-collapsed ~ *:not(h1):not(h2):not(h3):not(h4),
+h5.bullets-collapsed ~ *:not(h1):not(h2):not(h3):not(h4):not(h5),
+h6.bullets-collapsed ~ *:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6)
+{
+	display: none;
+}
+
+/*GOOD*/
+
+/*h1.bullets-collapsed ~ *:not(h1),
+h2.bullets-collapsed ~ *:not(h1):not(h2),
+h3.bullets-collapsed ~ *:not(h1):not(h2):not(h3),
+h4.bullets-collapsed ~ *:not(h1):not(h2):not(h3):not(h4),
+h5.bullets-collapsed ~ *:not(h1):not(h2):not(h3):not(h4):not(h5),
+h6.bullets-collapsed ~ *:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6)
+{
+	display: none;
+}*/
+
+/*h1.bullets-collapsed ~ h1:not(.bullets-collapsed) ~ *,
 
 h2.bullets-collapsed ~ h1:not(.bullets-collapsed) ~ *,
 h2.bullets-collapsed ~ h2:not(.bullets-collapsed) ~ *,
@@ -69,15 +74,5 @@ h6.bullets-collapsed ~ h4:not(.bullets-collapsed) ~ *,
 h6.bullets-collapsed ~ h5:not(.bullets-collapsed) ~ *,
 h6.bullets-collapsed ~ h6:not(.bullets-collapsed) ~ *
 {
-/*	border: none  !important;
-	background-color: transparent !important;
-*/
-	display: inherit !important;
-}
-
-
-
-/*h5.collapse ~ *:not(h1) {
-	background-color: #ebebfc;
-}
-*/
+	display: inherit;
+}*/
