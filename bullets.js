@@ -183,7 +183,108 @@ var Bullets = {
 
 	// Selection
 
-	
+	visibleSelectableElementFromOffset: function(offset) {
+
+		var selectedNodeList = this.selectedNodes;
+		var selectableNodeList = this.rootElement.querySelectorAll(this.selectTags);
+		var selectedElement;
+
+		if (selectedNodeList.length < 1) {
+			if (selectableNodeList.length < 1) {
+				// No selectable nodes
+				return null;
+			}
+
+			selectedElement = (offset > 0) ? selectableNodeList[selectableNodeList.length - 1] : selectableNodeList[0];
+			if (this.elementIsVisible(selectedElement)) {
+				// If there's no existing selection return the first or last element if it's visible
+				return selectedElement;
+			}
+		}
+
+		var selectableElement = this.elementAtOffsetInNodeList(selectedElement, offset, selectableNodeList);
+		if (!selectableElement) {
+			// If there's no selectable element, then this is the first or last selectable element
+			return null;
+		}
+
+		return this.findVisibleSelectableElement(selectableElement, offset);
+	},
+
+	findVisibleSelectableElement: function(element, offset) {
+		if (this.elementIsVisibleSelectable(element)) {
+			return element;
+		}
+
+		var visibleElement = this.visibleElementForOffset(element, offset);
+
+		if (!!visibleElement) {
+			return this.findVisibleSelectableElement(visibleElement);
+		}
+
+		if (element.parentNode == this.rootElement) {
+			// If there are no visible siblings, and the parent is the root node
+			// then there's nothing to select.
+			// This should really never happen because the first child of the root node
+			// always be visible and selectable, but this can prevent infinite loops caused by bugs.
+			return null;
+		}
+
+		var ancestorWithVisibleParentOrTopLevelElement = this.ancestorWithVisibleParentOrTopLevelElement(element);
+
+		return this.findVisibleSelectableElement(ancestorWithVisibleParentOrTopLevelElement);
+	},
+
+	visibleElementForOffset: function(element, offset) {
+		var visibleSibling = this.visibleSiblingForOffset(element, offset);
+		if (!visibleSibling) {
+			return null;
+		}
+
+		// If the offset is positive the visible element is the sibling
+		if (offset > 0) {
+			return visibleSibling;
+		}
+
+		// If the offset is negative, than the visible element is the last selectable
+		// descendant of the element.
+		if (!!visibleSibling) {
+			var lastSelectableDescendant = this.lastSelectableDescendant(visibleSibling);
+			if (!lastSelectableDescendant) {
+				lastSelectableDescendant = visibleSibling;
+			}
+		}
+
+		return null;
+	},
+
+	visibleSiblingForOffset: function(element, offset) {
+		var sibling = offset > 0 ? 'nextElementSibling' : 'previousElementSibling';
+
+		while(element[sibling]) {
+			element = element[sibling];
+
+			if (this.elementIsVisible(element)) {
+				return element;
+			}
+		}
+
+		return null;
+	},
+
+	lastSelectableDescendant: function(element) {
+		var selectableDescendants = element.querySelectorAll(this.selectTags);
+
+		if (selectableDescendants.length < 1) {
+			return null;
+		}
+
+		return selectableDescendants[selectableDescendants.length - 1];
+	},
+
+
+
+
 
 
 	// Next
