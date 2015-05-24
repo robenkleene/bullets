@@ -104,6 +104,48 @@ describe('Bullets visible elements', function() {
         runBothTests('cs-test-12');
   		});
   	});
+  });
+
+  describe('Header Collapse Selection Tests', function() {
+    beforeEach(function() {
+  		Bullets.rootElement = document.getElementById("header-collapse-selection-tests");
+  	});
+    describe('Header Collapse Selection Test 1', function() {
+  		it('should find the correct element', function () {
+        runBothTests('hcs-test-1');
+  		});
+  	});
+    describe('Header Collapse Selection Test 2', function() {
+  		it('should find the correct element', function () {
+        runBothTests('hcs-test-2');
+  		});
+  	});
+    describe('Header Collapse Selection Test 3', function() {
+  		it('should find the correct element', function () {
+        runBothTests('hcs-test-3');
+  		});
+  	});
+    describe('Header Collapse Selection Test 4', function() {
+  		it('should find the correct element', function () {
+        runBothTests('hcs-test-4');
+  		});
+  	});
+    describe('Header Collapse Selection Test 5', function() {
+  		it('should find the correct element', function () {
+        runBothTests('hcs-test-5');
+  		});
+  	});
+    describe('Header Collapse Selection Test 6', function() {
+  		it('should find the correct element', function () {
+        runBothTests('hcs-test-6');
+  		});
+  	});
+    describe('Header Collapse Selection Test 7', function() {
+  		it('should find the correct element', function () {
+        runBothTests('hcs-test-7');
+  		});
+  	});
+
 	});
 
 });
