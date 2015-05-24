@@ -69,10 +69,9 @@ describe('Bullets visible elements', function() {
         runBothTests('cs-test-5');
   		});
   	});
-    describe('TARGET Collapse Selection Test 6', function() {
+    describe('Collapse Selection Test 6', function() {
   		it('should find the correct element', function () {
-        // runBothTests('cs-test-6');
-        runForwardTest('cs-test-6');
+        runBothTests('cs-test-6');
   		});
   	});
     describe('Collapse Selection Test 7', function() {

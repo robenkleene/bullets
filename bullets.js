@@ -235,13 +235,9 @@ console.log("element.outerHTML = " + element.outerHTML);
 			return null;
 		}
 
-		var ancestorWithVisibleParentOrTopLevelElement = this.ancestorWithVisibleParentOrTopLevelElement(element);
-		if (offset > 0) {
-			// The ancestor is only a valid element to test if going backwards
-			// forwards it's the next sibling
-		}
+		var ancestorOrAncestorSiblingWithVisibleParent = this.ancestorOrAncestorSiblingWithVisibleParent(element, offset);
 
-		return this.findVisibleSelectableElement(ancestorWithVisibleParentOrTopLevelElement, offset);
+		return this.findVisibleSelectableElement(ancestorOrAncestorSiblingWithVisibleParent, offset);
 	},
 
 	visibleElementForOffset: function(element, offset) {
@@ -293,6 +289,30 @@ console.log("element.outerHTML = " + element.outerHTML);
 		return selectableDescendants[selectableDescendants.length - 1];
 	},
 
+	ancestorOrAncestorSiblingWithVisibleParent: function(element, offset) {
+		while(element.parentNode) {
+			if (element.parentNode == this.rootElement) {
+				return element;
+			}
+
+			element = element.parentNode;
+
+			if (this.elementIsVisible(element.parentNode)) {
+				if (offset < 0) {
+					// If the offset is negative, then return the element
+					return element;
+				} else {
+					// If the offset is positive, then return the sibling
+					var sibling = element.nextElementSibling;
+					if (!!sibling) {
+						return sibling;
+					}
+				}
+			}
+		}
+
+		return null;
+	},
 
 
 
@@ -428,6 +448,26 @@ console.log("element.outerHTML = " + element.outerHTML);
 			if (this.elementIsVisible(element.parentNode)) {
 				return element;
 			}
+		}
+
+		return null;
+	},
+
+	ancestorVisibleSiblintOrTopLevelElement: function(element) {
+		while(element.parentNode) {
+			if (element.parentNode == this.rootElement) {
+				return element;
+			}
+
+			element = element.parentNode;
+
+
+
+			// Need to traverse all the siblings here
+
+			// if (this.elementIsVisible(element.parentNode)) {
+			// 	return element;
+			// }
 		}
 
 		return null;
