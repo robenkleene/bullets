@@ -4,14 +4,16 @@ html(lang="en")
     meta(charset="utf-8")
     title= "Bullets Tests"
     - var nodeModulesPath = '../../node_modules/'
-    include javascript.jade
-    include css.jade
+    include javascript
+    include css
     - var resourceBasePath = '../../example/lib/'
-    include ../../../example/src/jade/css.jade
-    include ../../../example/src/jade/javascript.jade
+    include ../../../example/src/jade/css
+    include ../../../example/src/jade/javascript
   body
     article#test-content
-      include ../../../example/src/jade/content.jade
+      include ../../../example/src/jade/content
     article#collapse-selection-tests
-      include collapse-selection-tests.jade
+      include collapse-selection-tests
+    article#header-collapse-selection-tests
+      include header-collapse-selection-tests
     include mocha.html
