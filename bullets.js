@@ -25,6 +25,7 @@ var Bullets = {
 
 	selectNext: function() {
 	  var elementToSelect = this.nextVisibleSelectableElement();
+	  // TODO var elementToSelect = this.visibleSelectableElementFromOffset(this.NEXT_OFFSET);
 		if (!elementToSelect) {
 			this.nothingToSelect();
 			return;
@@ -33,6 +34,7 @@ var Bullets = {
 	},
 	selectPrevious: function() {
 		var elementToSelect = this.previousVisibleSelectableElement();
+		// TODO var elementToSelect = this.visibleSelectableElementFromOffset(this.PREVIOUS_OFFSET);
 		if (!elementToSelect) {
 			this.nothingToSelect();
 			return;
@@ -195,11 +197,13 @@ var Bullets = {
 				return null;
 			}
 
-			selectedElement = (offset > 0) ? selectableNodeList[selectableNodeList.length - 1] : selectableNodeList[0];
+			selectedElement = (offset > 0) ? selectableNodeList[0] : selectableNodeList[selectableNodeList.length - 1];
 			if (this.elementIsVisible(selectedElement)) {
 				// If there's no existing selection return the first or last element if it's visible
 				return selectedElement;
 			}
+		} else {
+			selectedElement = (offset > 0) ? selectedNodeList[selectedNodeList.length - 1] : selectedNodeList[0];
 		}
 
 		var selectableElement = this.elementAtOffsetInNodeList(selectedElement, offset, selectableNodeList);
@@ -207,11 +211,12 @@ var Bullets = {
 			// If there's no selectable element, then this is the first or last selectable element
 			return null;
 		}
-
 		return this.findVisibleSelectableElement(selectableElement, offset);
 	},
 
 	findVisibleSelectableElement: function(element, offset) {
+console.log("element = " + element);
+console.log("element.outerHTML = " + element.outerHTML);
 		if (this.elementIsVisibleSelectable(element)) {
 			return element;
 		}
@@ -219,7 +224,7 @@ var Bullets = {
 		var visibleElement = this.visibleElementForOffset(element, offset);
 
 		if (!!visibleElement) {
-			return this.findVisibleSelectableElement(visibleElement);
+			return this.findVisibleSelectableElement(visibleElement, offset);
 		}
 
 		if (element.parentNode == this.rootElement) {
@@ -231,8 +236,12 @@ var Bullets = {
 		}
 
 		var ancestorWithVisibleParentOrTopLevelElement = this.ancestorWithVisibleParentOrTopLevelElement(element);
+		if (offset > 0) {
+			// The ancestor is only a valid element to test if going backwards
+			// forwards it's the next sibling
+		}
 
-		return this.findVisibleSelectableElement(ancestorWithVisibleParentOrTopLevelElement);
+		return this.findVisibleSelectableElement(ancestorWithVisibleParentOrTopLevelElement, offset);
 	},
 
 	visibleElementForOffset: function(element, offset) {
@@ -246,16 +255,18 @@ var Bullets = {
 			return visibleSibling;
 		}
 
-		// If the offset is negative, than the visible element is the last selectable
-		// descendant of the element.
-		if (!!visibleSibling) {
-			var lastSelectableDescendant = this.lastSelectableDescendant(visibleSibling);
-			if (!lastSelectableDescendant) {
-				lastSelectableDescendant = visibleSibling;
-			}
+		if (!visibleSibling) {
+			return null;
 		}
 
-		return null;
+		// If the offset is negative, than the visible element is the last selectable
+		// descendant of the element.
+		var lastSelectableDescendant = this.lastSelectableDescendant(visibleSibling);
+		if (!!lastSelectableDescendant) {
+			return lastSelectableDescendant;
+		}
+
+		return visibleSibling;
 	},
 
 	visibleSiblingForOffset: function(element, offset) {

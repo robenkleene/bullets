@@ -8,7 +8,8 @@ function runTest(name, attribute, backward) {
   var testResult = element.getAttribute(attribute);
   Bullets.selectElement(element);
 
-  var result = backward ? Bullets.previousVisibleSelectableElement() : Bullets.nextVisibleSelectableElement();
+  var offset = backward ? Bullets.PREVIOUS_OFFSET : Bullets.NEXT_OFFSET;
+  var result = Bullets.visibleSelectableElementFromOffset(offset);
 
   if (!!testResult) {
     var text = result.innerText.trim();
@@ -68,9 +69,10 @@ describe('Bullets visible elements', function() {
         runBothTests('cs-test-5');
   		});
   	});
-    describe('Collapse Selection Test 6', function() {
+    describe('TARGET Collapse Selection Test 6', function() {
   		it('should find the correct element', function () {
-        runBothTests('cs-test-6');
+        // runBothTests('cs-test-6');
+        runForwardTest('cs-test-6');
   		});
   	});
     describe('Collapse Selection Test 7', function() {
