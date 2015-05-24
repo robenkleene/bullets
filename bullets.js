@@ -183,6 +183,9 @@ var Bullets = {
 
 	// Selection
 
+	
+
+
 	// Next
 
 	nextVisibleSelectableElement: function() {
@@ -297,12 +300,12 @@ var Bullets = {
 			return null;
 		}
 
-		var firstAncestorWithVisibleParentOrTopLevelElement = this.firstAncestorWithVisibleParentOrTopLevelElement(element);
+		var ancestorWithVisibleParentOrTopLevelElement = this.ancestorWithVisibleParentOrTopLevelElement(element);
 
-		return this.findPreviousVisibleSelectableElement(firstAncestorWithVisibleParentOrTopLevelElement);
+		return this.findPreviousVisibleSelectableElement(ancestorWithVisibleParentOrTopLevelElement);
 	},
 
-	firstAncestorWithVisibleParentOrTopLevelElement: function(element) {
+	ancestorWithVisibleParentOrTopLevelElement: function(element) {
 		while(element.parentNode) {
 			if (element.parentNode == this.rootElement) {
 				return element;
