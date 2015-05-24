@@ -37,70 +37,72 @@ function runBothTests(name) {
 
 describe('Bullets visible elements', function() {
   beforeEach(function() {
-		Bullets.rootElement = document.getElementById("collapse-selection-tests");
-		Bullets.deselectAll();
+    Bullets.deselectAll();
+  });
+  describe('Collapse Selection Tests', function() {
+    beforeEach(function() {
+  		Bullets.rootElement = document.getElementById("collapse-selection-tests");
+  	});
+    describe('Collapse Selection Test 1', function() {
+  		it('should find the correct element', function () {
+        runBothTests('cs-test-1');
+  		});
+  	});
+    describe('Collapse Selection Test 2', function() {
+  		it('should find the correct element', function () {
+        runBothTests('cs-test-2');
+  		});
+  	});
+    describe('Collapse Selection Test 3', function() {
+  		it('should find the correct element', function () {
+        runBothTests('cs-test-3');
+  		});
+  	});
+    describe('Collapse Selection Test 4', function() {
+  		it('should find the correct element', function () {
+        runBothTests('cs-test-4');
+  		});
+  	});
+    describe('Collapse Selection Test 5', function() {
+  		it('should find the correct element', function () {
+        runBothTests('cs-test-5');
+  		});
+  	});
+    describe('Collapse Selection Test 6', function() {
+  		it('should find the correct element', function () {
+        runBothTests('cs-test-6');
+  		});
+  	});
+    describe('Collapse Selection Test 7', function() {
+  		it('should find the correct element', function () {
+        runBothTests('cs-test-7');
+  		});
+  	});
+    describe('Collapse Selection Test 8', function() {
+  		it('should find the correct element', function () {
+        runBothTests('cs-test-8');
+  		});
+  	});
+    describe('Collapse Selection Test 9', function() {
+  		it('should find the correct element', function () {
+        runBothTests('cs-test-9');
+  		});
+  	});
+    describe('Collapse Selection Test 10', function() {
+  		it('should find the correct element', function () {
+        runBothTests('cs-test-10');
+  		});
+  	});
+    describe('Collapse Selection Test 11', function() {
+  		it('should find the correct element', function () {
+        runBothTests('cs-test-11');
+  		});
+  	});
+    describe('Collapse Selection Test 12', function() {
+  		it('should find the correct element', function () {
+        runBothTests('cs-test-12');
+  		});
+  	});
 	});
-
-	describe('Test 1', function() {
-		it('should find the correct element', function () {
-      runBothTests('cs-test-1');
-		});
-	});
-  describe('Test 2', function() {
-		it('should find the correct element', function () {
-      runBothTests('cs-test-2');
-		});
-	});
-  describe('Test 3', function() {
-		it('should find the correct element', function () {
-      runBothTests('cs-test-3');
-		});
-	});
-  describe('Test 4', function() {
-		it('should find the correct element', function () {
-      runBothTests('cs-test-4');
-		});
-	});
-  describe('Test 5', function() {
-		it('should find the correct element', function () {
-      runBothTests('cs-test-5');
-		});
-	});
-  describe('Test 6', function() {
-		it('should find the correct element', function () {
-      runBothTests('cs-test-6');
-		});
-	});
-  describe('Test 7', function() {
-		it('should find the correct element', function () {
-      runBothTests('cs-test-7');
-		});
-	});
-  describe('Test 8', function() {
-		it('should find the correct element', function () {
-      runBothTests('cs-test-8');
-		});
-	});
-  describe('Test 9', function() {
-		it('should find the correct element', function () {
-      runBothTests('cs-test-9');
-		});
-	});
-  describe('Test 10', function() {
-		it('should find the correct element', function () {
-      runBothTests('cs-test-10');
-		});
-	});
-  describe('Test 11', function() {
-		it('should find the correct element', function () {
-      runBothTests('cs-test-11');
-		});
-	});
-  describe('Test 12', function() {
-		it('should find the correct element', function () {
-      runBothTests('cs-test-12');
-		});
-	});
-
 
 });
