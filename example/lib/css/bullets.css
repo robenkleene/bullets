@@ -8,71 +8,18 @@ body .bullets-selected {
 }
 
 
-/* Hiding */
-.bullets-collapsed li, .bullets-collapsed ul {
+/* Hierarchical */
+li.bullets-collapsed li,
+li.bullets-collapsed ul {
 	display: none;
 }
 
-
-/*h1.bullets-collapsed ~ *:not(h1),
-h2.bullets-collapsed ~ *:not(h1):not(h2),
-h3.bullets-collapsed ~ *:not(h1):not(h2):not(h3),
-h4.bullets-collapsed ~ *:not(h1):not(h2):not(h3):not(h4),
-h5.bullets-collapsed ~ *:not(h1):not(h2):not(h3):not(h4):not(h5),
-h6.bullets-collapsed ~ *:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6)
-{
+/* Headers */
+h1.bullets-collapsed + *,
+h2.bullets-collapsed + *,
+h3.bullets-collapsed + *,
+h4.bullets-collapsed + *,
+h5.bullets-collapsed + *,
+h6.bullets-collapsed + * {
 	display: none;
-}
-*/
-
-/*h1.bullets-collapsed ~ *:not(h1:not(.bullets-collapsed) ~ *),
-h2.bullets-collapsed ~ *:not(h1):not(h2),
-h3.bullets-collapsed ~ *:not(h1):not(h2):not(h3),
-h4.bullets-collapsed ~ *:not(h1):not(h2):not(h3):not(h4),
-h5.bullets-collapsed ~ *:not(h1):not(h2):not(h3):not(h4):not(h5),
-h6.bullets-collapsed ~ *:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6)
-{
-	display: none;
-}*/
-
-/*GOOD*/
-
-h1.bullets-collapsed ~ *:not(h1),
-h2.bullets-collapsed ~ *:not(h1):not(h2),
-h3.bullets-collapsed ~ *:not(h1):not(h2):not(h3),
-h4.bullets-collapsed ~ *:not(h1):not(h2):not(h3):not(h4),
-h5.bullets-collapsed ~ *:not(h1):not(h2):not(h3):not(h4):not(h5),
-h6.bullets-collapsed ~ *:not(h1):not(h2):not(h3):not(h4):not(h5):not(h6)
-{
-	display: none;
-}
-
-h1.bullets-collapsed ~ h1:not(.bullets-collapsed) ~ *,
-
-h2.bullets-collapsed ~ h1:not(.bullets-collapsed) ~ *,
-h2.bullets-collapsed ~ h2:not(.bullets-collapsed) ~ *,
-
-h3.bullets-collapsed ~ h1:not(.bullets-collapsed) ~ *,
-h3.bullets-collapsed ~ h2:not(.bullets-collapsed) ~ *,
-h3.bullets-collapsed ~ h3:not(.bullets-collapsed) ~ *,
-
-h4.bullets-collapsed ~ h1:not(.bullets-collapsed) ~ *,
-h4.bullets-collapsed ~ h2:not(.bullets-collapsed) ~ *,
-h4.bullets-collapsed ~ h3:not(.bullets-collapsed) ~ *,
-h4.bullets-collapsed ~ h4:not(.bullets-collapsed) ~ *,
-
-h5.bullets-collapsed ~ h1:not(.bullets-collapsed) ~ *,
-h5.bullets-collapsed ~ h2:not(.bullets-collapsed) ~ *,
-h5.bullets-collapsed ~ h3:not(.bullets-collapsed) ~ *,
-h5.bullets-collapsed ~ h4:not(.bullets-collapsed) ~ *,
-h5.bullets-collapsed ~ h5:not(.bullets-collapsed) ~ *,
-
-h6.bullets-collapsed ~ h1:not(.bullets-collapsed) ~ *,
-h6.bullets-collapsed ~ h2:not(.bullets-collapsed) ~ *,
-h6.bullets-collapsed ~ h3:not(.bullets-collapsed) ~ *,
-h6.bullets-collapsed ~ h4:not(.bullets-collapsed) ~ *,
-h6.bullets-collapsed ~ h5:not(.bullets-collapsed) ~ *,
-h6.bullets-collapsed ~ h6:not(.bullets-collapsed) ~ *
-{
-	display: inherit;
 }

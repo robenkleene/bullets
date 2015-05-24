@@ -275,8 +275,7 @@ var Bullets = {
 	},
 
 	findPreviousVisibleSelectableElement: function(element) {
-
-		if (this.elementIsVisible(element)) {
+		if (this.elementIsVisibleSelectable(element)) {
 			return element;
 		}
 
@@ -298,15 +297,12 @@ var Bullets = {
 			return null;
 		}
 
-		var visibleParentOrTopLevelElement = this.visibleParentOrTopLevelElement(element);
-		if (this.elementIsVisibleSelectable(visibleParentOrTopLevelElement)) {
-			return visibleParentOrTopLevelElement;
-		}
+		var firstAncestorWithVisibleParentOrTopLevelElement = this.firstAncestorWithVisibleParentOrTopLevelElement(element);
 
-		return this.findPreviousVisibleSelectableElement(visibleParentOrTopLevelElement);
+		return this.findPreviousVisibleSelectableElement(firstAncestorWithVisibleParentOrTopLevelElement);
 	},
 
-	visibleParentOrTopLevelElement: function(element) {
+	firstAncestorWithVisibleParentOrTopLevelElement: function(element) {
 		while(element.parentNode) {
 			if (element.parentNode == this.rootElement) {
 				return element;
@@ -314,7 +310,7 @@ var Bullets = {
 
 			element = element.parentNode;
 
-			if (this.elementIsVisible(element)) {
+			if (this.elementIsVisible(element.parentNode)) {
 				return element;
 			}
 		}

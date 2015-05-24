@@ -84,91 +84,119 @@
     </article>
     <article id="collapse-selection-tests">
       <h1 id="test-1" data-forward="h1-2" class="bullets-collapsed">h1-1</h1>
-      <p>p-1</p>
-      <h3>h3-1</h3>
-      <ol>
-        <li>li-1</li>
-        <li>li-2</li>
-        <li>li-3</li>
-      </ol>
+      <div>
+        <p>p-1</p>
+        <h3>h3-1</h3>
+        <ol>
+          <li>li-1</li>
+          <li>li-2</li>
+          <li>li-3</li>
+        </ol>
+      </div>
       <h1 id="test-2" data-backward="h1-1" data-forward="h4-1">h1-2</h1>
-      <p>p-2</p>
-      <h4 id="test-3" data-backward="h1-2" data-forward="h3-2" class="bullets-collapsed">h4-1</h4>
-      <h5>h5-1</h5>
-      <h3>h3-2</h3>
-      <h6>h6-1</h6>
-      <h2 id="test-4" data-backward="h6-1" data-forward="h1-3" class="bullets-collapsed">h2-1</h2>
-      <p>p-3</p>
-      <h6>h6-2</h6>
-      <ol>
-        <li>li-4</li>
-        <li>li-5</li>
-        <li>li-6</li>
-      </ol>
+      <div>
+        <p>p-2</p>
+        <h4 id="test-3" data-backward="h1-2" data-forward="h3-2" class="bullets-collapsed">h4-1</h4>
+        <div>
+          <h5>h5-1</h5>
+          <div>
+            <p>p-3</p>
+          </div>
+        </div>
+        <h3>h3-2</h3>
+        <div>
+          <h6>h6-1</h6>
+          <div></div>
+        </div>
+        <h2 id="test-4" data-backward="h6-1" data-forward="h1-3" class="bullets-collapsed">h2-1</h2>
+        <div>
+          <p>p-4</p>
+          <h6>h6-2</h6>
+          <div>
+            <ol>
+              <li>li-4</li>
+              <li>li-5</li>
+              <li>li-6</li>
+            </ol>
+          </div>
+        </div>
+      </div>
       <h1>h1-3</h1>
-      <h5>h5-2</h5>
-      <ul>
-        <li>li-7</li>
-        <li id="test-5" data-backward="li-7" data-forward="li-9">li-8</li>
-        <li>li-9</li>
-      </ul>
-      <ul>
-        <li id="test-6" data-backward="li-9" data-forward="li-13" class="bullets-collapsed">li-10
+      <div>
+        <h5>h5-2</h5>
+        <div>
           <ul>
-            <li>li-11</li>
-            <li>li-12</li>
+            <li>li-7</li>
+            <li id="test-5" data-backward="li-7" data-forward="li-9">li-8</li>
+            <li>li-9</li>
           </ul>
-        </li>
-        <li>li-13   
           <ul>
-            <li>li-14</li>
-            <li>li-15</li>
+            <li id="test-6" data-backward="li-9" data-forward="li-13" class="bullets-collapsed">li-10
+              <ul>
+                <li>li-11</li>
+                <li>li-12</li>
+              </ul>
+            </li>
+            <li>li-13   
+              <ul>
+                <li>li-14</li>
+                <li>li-15</li>
+              </ul>
+            </li>
           </ul>
-        </li>
-      </ul>
-      <ul>
-        <li id="test-7" data-backward="li-15" data-forward="li-18" class="bullets-collapsed">li-16
           <ul>
-            <li>li-17</li>
+            <li id="test-7" data-backward="li-15" data-forward="li-18" class="bullets-collapsed">li-16
+              <ul>
+                <li>li-17</li>
+              </ul>
+            </li>
           </ul>
-        </li>
-      </ul>
-      <ul>
-        <li id="test-8" data-backward="li-16" data-forward="li-19">li-18</li>
-      </ul>
-      <ul>
-        <li>li-19</li>
-        <li id="test-9" data-backward="li-19" data-forward="li-21">li-20</li>
-      </ul>
-      <p>p-4</p>
-      <ul>
-        <li>li-21</li>
-        <li>li-22</li>
-        <li>li-23</li>
-      </ul>
-      <ul>
-        <li>li-24
           <ul>
-            <li>li-25</li>
+            <li id="test-8" data-backward="li-16" data-forward="li-19">li-18</li>
           </ul>
-        </li>
-        <li>li-26
-          <h1 id="test-10" data-backward="li-26" data-forward="h1-5" class="bullets-collapsed">h1-4</h1>
           <ul>
-            <li>li-27</li>
+            <li>li-19</li>
+            <li id="test-9" data-backward="li-19" data-forward="li-21">li-20</li>
           </ul>
           <p>p-5</p>
-          <h2>h2-2</h2>
-          <h1 id="test-11" data-backward="h1-4" data-forward="li-28" class="bullets-collapsed">h1-5</h1>
-          <h2>h2-3</h2>
-        </li>
-        <li>li-28</li>
-      </ul>
+          <ul>
+            <li>li-21</li>
+            <li>li-22</li>
+            <li>li-23</li>
+          </ul>
+          <ul>
+            <li>li-24
+              <ul>
+                <li>li-25</li>
+              </ul>
+            </li>
+            <li>li-26
+              <h1 id="test-10" data-backward="li-26" data-forward="h1-5" class="bullets-collapsed">h1-4</h1>
+              <div>
+                <ul>
+                  <li>li-27</li>
+                </ul>
+                <p>p-6</p>
+                <h2>h2-2</h2>
+                <div></div>
+              </div>
+              <h1 id="test-11" data-backward="h1-4" data-forward="li-28" class="bullets-collapsed">h1-5</h1>
+              <div>
+                <h2>h2-3</h2>
+                <div></div>
+              </div>
+            </li>
+            <li>li-28</li>
+          </ul>
+        </div>
+      </div>
       <h2>h2-3</h2>
-      <p>p-6</p>
-      <ul>
-        <li id="test-12" data-backward="h2-3">li-29</li>
-      </ul>
+      <div>
+        <p>p-7</p>
+        <ul>
+          <li id="test-12" data-backward="h2-3">li-29</li>
+        </ul>
+      </div>
     </article>
 	<div id="mocha"></div>
 	<script>
