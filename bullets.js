@@ -262,6 +262,26 @@ var Bullets = {
 		return null;
 	},
 
+	ancestorSiblingWithVisibleParent: function(element) {
+		while(element.parentNode) {
+
+			if (element.parentNode == this.rootElement) {
+				return null;
+			}
+
+			element = element.parentNode;
+
+			if (this.elementIsVisible(element.parentNode)) {
+				var sibling = element.nextElementSibling;
+				if (!!sibling) {
+					return sibling;
+				}
+			}
+		}
+
+		return null;
+	},
+
 	// Previous
 
 	findPreviousVisibleSelectableElement: function(element) {
@@ -305,28 +325,6 @@ var Bullets = {
 		return null;
 	},
 
-	// Next & Previous
-
-	ancestorSiblingWithVisibleParent: function(element) {
-		while(element.parentNode) {
-
-			if (element.parentNode == this.rootElement) {
-				return null;
-			}
-
-			element = element.parentNode;
-
-			if (this.elementIsVisible(element.parentNode)) {
-				var sibling = element.nextElementSibling;
-				if (!!sibling) {
-					return sibling;
-				}
-			}
-		}
-
-		return null;
-	},
-
 	ancestorWithVisibleParent: function(element) {
 		while(element.parentNode) {
 
@@ -343,6 +341,8 @@ var Bullets = {
 
 		return null;
 	},
+
+	// Next & Previous
 
 	visibleSibling: function(element, offset) {
 		var sibling = offset > 0 ? 'nextElementSibling' : 'previousElementSibling';
@@ -369,342 +369,6 @@ var Bullets = {
 		return selectableDescendants[index];
 	},
 
-
-	// TODO Refactor
-
-	findVisibleSelectableElement: function(element, offset) {
-console.log("element = " + element);
-console.log("element.outerHTML = " + element.outerHTML);
-
-		// Check the siblings
-		// Go to the next ancestors sibling
-		var visibleSelectableElement = this.visibleSelectableSiblingOrSiblingsDescendant(element, offset);
-		if (!!visibleSelectableElement) {
-			return visibleSelectableElement;
-		}
-
-		if (element.parentNode == this.rootElement) {
-			// If there are no visible siblings, and the parent is the root node
-			// then there's nothing to select.
-			// This should really never happen because the first child of the root node
-			// always be visible and selectable, but this can prevent infinite loops caused by bugs.
-			return null;
-		}
-
-		var ancestorsSiblingWithVisibleParent = this.ancestorsSiblingWithVisibleParent(element, offset);
-
-		if (offset > 0) {
-			visibleSelectableElement = this.visibleSelectableElementOrDescendant(ancestorsSiblingWithVisibleParent, offset);
-			if (!!visibleSelectableElement) {
-				return visibleSelectableElement;
-			}
-
-
-		} else {
-			if (this.elementIsSelectable(ancestorsSiblingWithVisibleParent)) {
-				return ancestorsSiblingWithVisibleParent;
-			}
-		}
-
-
-
-		return this.findVisibleSelectableElement(ancestorsSiblingWithVisibleParent, offset);
-	},
-
-	visibleSelectableSiblingOrSiblingsDescendant: function(element, offset) {
-
-		var siblingProperty = offset > 0 ? 'nextElementSibling' : 'previousElementSibling';
-
-		var sibling = element;
-		while(sibling[siblingProperty]) {
-			sibling = sibling[siblingProperty];
-			if (this.elementIsVisible(sibling)) {
-				// If the offset is negative, than the visible element is the last selectable
-				// descendant of the element.
-				var visibleSelectableElement = this.visibleSelectableElementOrDescendant(sibling, offset);
-				if (!!visibleSelectableElement) {
-					return visibleSelectableElement;
-				}
-			}
-		}
-
-		return null;
-	},
-
-	visibleSelectableElementOrDescendant: function(element, offset) {
-		if (offset > 0) {
-			return this.firstVisibleSelectableDescendantOrElement(element);
-		} else {
-			return this.lastVisibleSelectableDescendantOrElement(element);
-		}
-	},
-
-	firstVisibleSelectableDescendantOrElement: function(element) {
-		if (this.elementIsSelectable(element)) {
-			return element;
-		}
-		var selectableDescendants = element.querySelectorAll(this.selectTags);
-		if (selectableDescendants.length < 1) {
-			return null;
-		}
-
-		var selectableDescendant = selectableDescendants[0];
-		if (this.elementIsVisible(selectableDescendant)) {
-			return selectableDescendant;
-		}
-		return null;
-	},
-
-	lastVisibleSelectableDescendantOrElement: function(element) {
-
-		var selectableDescendants = element.querySelectorAll(this.selectTags);
-		if (selectableDescendants.length < 1) {
-			if (this.elementIsSelectable(element)) {
-				return element;
-			}
-			return null;
-		}
-
-		var lastSelectableDescendant = selectableDescendants[selectableDescendants.length - 1];
-		if (this.elementIsVisible(lastSelectableDescendant)) {
-			return lastSelectableDescendant;
-		}
-
-		var ancestor = lastSelectableDescendant;
-		while(ancestor.parentNode) {
-			if (ancestor.parentNode == element) {
-				return null;
-			}
-
-			ancestor = ancestor.parentNode;
-
-			if (this.elementIsVisible(ancestor)) {
-				var firstVisibleSelectableDescendant = this.firstVisibleSelectableDescendantOrElement(ancestor);
-				if (!!firstVisibleSelectableDescendant) {
-					return firstVisibleSelectableDescendant;
-				}
-			}
-		}
-
-		return null;
-	},
-
-	ancestorsSiblingWithVisibleParent: function(element, offset) {
-		while(element.parentNode) {
-			if (element.parentNode == this.rootElement) {
-				return element;
-			}
-
-			element = element.parentNode;
-
-			if (this.elementIsVisible(element.parentNode)) {
-				var sibling = offset > 0 ? element.nextElementSibling : element.previousElementSibling;
-				if (!!sibling) {
-					return sibling;
-				}
-			}
-		}
-
-		return null;
-	},
-
-
-
-
-
-	// Next
-
-	// nextVisibleSelectableElement: function() {
-	// 	var selectedNodeList = this.selectedNodes;
-	// 	if (selectedNodeList.length < 1) {
-	// 		// If nothing it selected return the first selectable element or null
-	// 		// By definition the first selectable node is always visible
-	// 		var firstSelectTagNodeList = this.rootElement.querySelectorAll(this.selectTags);
-	// 		if (firstSelectTagNodeList.length > 0) {
-	// 			return firstSelectTagNodeList[0];
-	// 		}
-	// 		return null;
-	// 	}
-	//
-	// 	// Get the last selected node
-	// 	var selectedElement = selectedNodeList[selectedNodeList.length - 1];
-	// 	if (!this.elementIsCollapsed(selectedElement)) {
-	// 		return this.nextSelectableElement(selectedElement);
-	// 	}
-	//
-	// 	var tagName = selectedElement.tagName;
-	//
-	// 	// If it's a header tag, jump to the next higher precendence header
-	// 	var headerIndex	= this.headerTags.indexOf(tagName);
-	// 	if (headerIndex >= 0) {
-	// 		var equalOrHigherPrecedenceHeaderTags = this.headerTags.slice(0, headerIndex + 1);
-	// 		var equalOrHigherPrecedenceHeaderSiblingNodeList = selectedElement.parentNode.querySelectorAll(equalOrHigherPrecedenceHeaderTags);
-	// 		var nextHeaderNode = this.elementAtOffsetInNodeList(selectedElement, this.NEXT_OFFSET, equalOrHigherPrecedenceHeaderSiblingNodeList);
-	// 		if (!!nextHeaderNode) {
-	// 			return nextHeaderNode;
-	// 		}
-	//
-	// 		// In this case we have to select the next selectable node after the last child node of the parent
-	// 		return this.nextSelectableElementAfterLastSelectableChildElement(selectedElement.parentNode);
-	// 	}
-	//
-	// 	if (this.hierarchicalTags.indexOf(tagName) >= 0) {
-	// 		return this.nextSelectableElementAfterLastSelectableChildElement(selectedElement);
-	// 	}
-	// 	return null;
-	// },
-	//
-	// nextSelectableElementAfterLastSelectableChildElement: function(element) {
-	// 	var lastSelectableChildElement = this.lastSelectableChildElement(element);
-	//
-	// 	if (!lastSelectableChildElement) {
-	// 		lastSelectableChildElement = element;
-	// 	}
-	//
-	// 	var selectTagNodeList = this.rootElement.querySelectorAll(this.selectTags);
-	// 	return this.elementAtOffsetInNodeList(lastSelectableChildElement, this.NEXT_OFFSET, selectTagNodeList);
-	// },
-	//
-	// nextSelectableElement: function(element) {
-	// 	var nodeList = this.rootElement.querySelectorAll(this.selectTags);
-	// 	return this.elementAtOffsetInNodeList(element, this.NEXT_OFFSET, nodeList);
-	// },
-	//
-	// // Previous
-	//
-	// previousVisibleSelectableElement: function() {
-	//
-	// 	var selectedNodeList = this.selectedNodes;
-	// 	var selectableNodeList = this.rootElement.querySelectorAll(this.selectTags);
-	// 	var selectedElement;
-	//
-	// 	if (selectedNodeList.length < 1) {
-	// 		if (selectableNodeList.length > 0) {
-	// 			selectedElement = selectableNodeList[selectableNodeList.length - 1];
-	// 			if (this.elementIsVisible(selectedElement)) {
-	// 				// If there was no selection, and the last element is visible
-	// 				// Then that's the target selection
-	// 				return selectedElement;
-	// 			}
-	// 		} else {
-	// 			// No selectable elements exist
-	// 			return null;
-	// 		}
-	// 	} else {
-	// 		selectedElement = selectedNodeList[0];
-	// 	}
-	//
-	// 	var previousSelectableElement = this.elementAtOffsetInNodeList(selectedElement, this.PREVIOUS_OFFSET, selectableNodeList);
-	// 	if (!previousSelectableElement) {
-	// 		// If there's no previous element, this is the top element
-	// 		return null;
-	// 	}
-	//
-	// 	return this.findPreviousVisibleSelectableElement(previousSelectableElement);
-	// },
-
-	// findPreviousVisibleSelectableElement: function(element) {
-	// 	if (this.elementIsVisibleSelectable(element)) {
-	// 		return element;
-	// 	}
-	//
-	// 	var previousVisibleSibling = this.previousVisibleSibling(element);
-	//
-	// 	if (!!previousVisibleSibling) {
-	// 		var lastSelectableChildElement = this.lastSelectableChildElement(previousVisibleSibling);
-	//
-	// 		if (!lastSelectableChildElement) {
-	// 			lastSelectableChildElement = previousVisibleSibling;
-	// 		}
-	//
-	// 		return this.findPreviousVisibleSelectableElement(lastSelectableChildElement);
-	// 	} else if (element.parentNode == this.rootElement) {
-	// 		// If there are no previous visible siblings, and the parent is the root node
-	// 		// then there's nothing to select.
-	// 		// This should really never happen because the first child of the root node
-	// 		// should never be hidden, but this can prevent infinite loops in buggy conditions
-	// 		return null;
-	// 	}
-	//
-	// 	var ancestorWithVisibleParentOrTopLevelElement = this.ancestorWithVisibleParentOrTopLevelElement(element);
-	//
-	// 	return this.findPreviousVisibleSelectableElement(ancestorWithVisibleParentOrTopLevelElement);
-	// },
-
-	// ancestorWithVisibleParentOrTopLevelElement: function(element) {
-	// 	while(element.parentNode) {
-	// 		if (element.parentNode == this.rootElement) {
-	// 			return element;
-	// 		}
-	//
-	// 		element = element.parentNode;
-	//
-	// 		if (this.elementIsVisible(element.parentNode)) {
-	// 			return element;
-	// 		}
-	// 	}
-	//
-	// 	return null;
-	// },
-	//
-	// ancestorVisibleSiblintOrTopLevelElement: function(element) {
-	// 	while(element.parentNode) {
-	// 		if (element.parentNode == this.rootElement) {
-	// 			return element;
-	// 		}
-	//
-	// 		element = element.parentNode;
-	//
-	//
-	//
-	// 		// Need to traverse all the siblings here
-	//
-	// 		// if (this.elementIsVisible(element.parentNode)) {
-	// 		// 	return element;
-	// 		// }
-	// 	}
-	//
-	// 	return null;
-	// },
-	//
-	// previousVisibleSibling: function(element) {
-	// 	while(element.previousElementSibling) {
-	// 		element = element.previousElementSibling;
-	//
-	// 		if (this.elementIsVisible(element)) {
-	// 			return element;
-	// 		}
-	// 	}
-	//
-	// 	return null;
-	// },
-
-	// elementAtOffsetInNodeList: function(element, offset, nodeList) {
-	// 	if (nodeList.length < 1) {
-	// 		return null;
-	// 	}
-	//
-	// 	var index = Array.prototype.indexOf.call(nodeList, element);
-	// 	var offsetIndex = index + offset;
-	// 	if (offsetIndex < 0 || offsetIndex >= nodeList.length) {
-	// 		return null;
-	// 	}
-	//
-	// 	return nodeList[offsetIndex];
-	// },
-
-	// lastSelectableChildElement: function(element) {
-	// 	var selectableChildNodeList = element.querySelectorAll(this.selectTags);
-	//
-	// 	if (selectableChildNodeList.length < 1) {
-	// 		return null;
-	// 	}
-	//
-	// 	return selectableChildNodeList[selectableChildNodeList.length - 1];
-	// },
-
-	// Next & Previous Selection
-
 	elementIsVisibleSelectable: function(element) {
 		return this.elementIsSelectable(element) && this.elementIsVisible(element);
 	},
@@ -717,14 +381,12 @@ console.log("element.outerHTML = " + element.outerHTML);
 		return this.selectTags.indexOf(tagName) >= 0;
 	},
 
-
 	elementIsVisible: function(element) {
 		if (!element) {
 			return false;
 		}
 		return element.offsetParent !== null;
 	},
-
 
 
 	// Nothing to do
