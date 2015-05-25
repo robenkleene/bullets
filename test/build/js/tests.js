@@ -33,11 +33,11 @@ function runBackwardTest(name) {
 }
 
 function runBothTests(name) {
-  runBackwardTest(name);
-  // runForwardTest(name);
+  // runBackwardTest(name);
+  runForwardTest(name);
 }
 
-describe('TARGET Bullets visible elements', function() {
+describe('Bullets visible elements', function() {
   beforeEach(function() {
     Bullets.deselectAll();
   });

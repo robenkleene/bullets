@@ -24,8 +24,8 @@ var Bullets = {
 	// Public
 
 	selectNext: function() {
-	  var elementToSelect = this.nextVisibleSelectableElement();
-	  // TODO var elementToSelect = this.visibleSelectableElementFromOffset(this.NEXT_OFFSET);
+	  // var elementToSelect = this.nextVisibleSelectableElement();
+		var elementToSelect = this.visibleSelectableElementFromOffset(this.NEXT_OFFSET);
 		if (!elementToSelect) {
 			this.nothingToSelect();
 			return;
@@ -33,8 +33,8 @@ var Bullets = {
 		this.selectElement(elementToSelect);
 	},
 	selectPrevious: function() {
-		var elementToSelect = this.previousVisibleSelectableElement();
-		// TODO var elementToSelect = this.visibleSelectableElementFromOffset(this.PREVIOUS_OFFSET);
+		// var elementToSelect = this.previousVisibleSelectableElement();
+		var elementToSelect = this.visibleSelectableElementFromOffset(this.PREVIOUS_OFFSET);
 		if (!elementToSelect) {
 			this.nothingToSelect();
 			return;
@@ -209,17 +209,63 @@ var Bullets = {
 
 		if (offset < 0) {
 			return this.findPreviousVisibleSelectableElement(selectedElement);
+		} else {
+			return this.findNextVisibleSelectableElement(selectedElement);
+		}
+	},
+
+	// Next
+
+	findNextVisibleSelectableElement: function(element) {
+		var offset = this.NEXT_OFFSET;
+		var nextVisibleSibling = this.visibleSibling(element, offset);
+		if (!!nextVisibleSibling) {
+			if (this.elementIsSelectable(nextVisibleSibling)) {
+				return nextVisibleSibling;
+			}
+
+			var nextElement = this.selectableDescendant(nextVisibleSibling, offset);
+
+			if (!!nextElement) {
+				if (this.elementIsVisible(nextElement)) {
+					return nextElement;
+				}
+			} else {
+				nextElement = nextVisibleSibling;
+			}
+			return this.findNextVisibleSelectableElement(nextElement);
 		}
 
-		return this.findVisibleSelectableElement(selectedElement, offset);
+
+		if (element.parentNode == this.rootElement) {
+			// If there are no previous visible siblings, and the parent is the root node
+			// then there's nothing to select.
+			// This should really never happen because the first child of the root node
+			// should never be hidden, but this can prevent infinite loops in buggy conditions
+			return null;
+		}
+
+		var ancestorSiblingWithVisibleParent = this.ancestorSiblingWithVisibleParent(element);
+		if (!!ancestorSiblingWithVisibleParent) {
+
+			if (this.elementIsVisibleSelectable(ancestorSiblingWithVisibleParent)) {
+				return ancestorSiblingWithVisibleParent;
+			}
+
+			var selectableDescendant = this.selectableDescendant(ancestorSiblingWithVisibleParent, offset);
+			if (!!selectableDescendant && this.elementIsVisible(selectableDescendant)) {
+				return selectableDescendant;
+			}
+
+			return this.findNextVisibleSelectableElement(ancestorSiblingWithVisibleParent);
+		}
+
+		return null;
 	},
 
 	// Previous
 
 	findPreviousVisibleSelectableElement: function(element) {
-		// if (this.elementIsVisibleSelectable(element)) {
-		// 	return element;
-		// }
 		var offset = this.PREVIOUS_OFFSET;
 		var previousVisibleSibling = this.visibleSibling(element, offset);
 
@@ -255,6 +301,28 @@ var Bullets = {
 			}
 
 			return this.findPreviousVisibleSelectableElement(ancestorWithVisibleParent);
+		}
+
+		return null;
+	},
+
+	// Next & Previous
+
+	ancestorSiblingWithVisibleParent: function(element) {
+		while(element.parentNode) {
+
+			if (element.parentNode == this.rootElement) {
+				return null;
+			}
+
+			element = element.parentNode;
+
+			if (this.elementIsVisible(element.parentNode)) {
+				var sibling = element.nextElementSibling;
+				if (!!sibling) {
+					return sibling;
+				}
+			}
 		}
 
 		return null;
