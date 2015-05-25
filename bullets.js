@@ -273,7 +273,6 @@ var Bullets = {
 			}
 
 			element = element.parentNode;
-
 			if (this.elementIsVisible(element.parentNode)) {
 				var sibling = element.nextElementSibling;
 				if (!!sibling) {
@@ -389,6 +388,10 @@ var Bullets = {
 	elementIsVisible: function(element) {
 		if (!element) {
 			return false;
+		}
+		if (element === this.rootNode) {
+			// Always consider the rootNode visible
+			return true;
 		}
 		return element.offsetParent !== null;
 	},
