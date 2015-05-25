@@ -24,7 +24,6 @@ var Bullets = {
 	// Public
 
 	selectNext: function() {
-	  // var elementToSelect = this.nextVisibleSelectableElement();
 		var elementToSelect = this.visibleSelectableElementFromOffset(this.NEXT_OFFSET);
 		if (!elementToSelect) {
 			this.nothingToSelect();
@@ -33,7 +32,6 @@ var Bullets = {
 		this.selectElement(elementToSelect);
 	},
 	selectPrevious: function() {
-		// var elementToSelect = this.previousVisibleSelectableElement();
 		var elementToSelect = this.visibleSelectableElementFromOffset(this.PREVIOUS_OFFSET);
 		if (!elementToSelect) {
 			this.nothingToSelect();
@@ -53,6 +51,7 @@ var Bullets = {
 			element.classList.remove(this.selectedClass);
 		}
 	},
+
 	toggleCollapseSelection: function() {
 		var nodeList = this.selectedNodes;
 		if (nodeList.length < 1) {
@@ -68,8 +67,8 @@ var Bullets = {
 				this.collapseElement(element);
 			}
 		}
-
 	},
+
 	collapseSelection: function() {
 		var nodeList = this.selectedNodes;
 		var elementsToCollapse = Array.prototype.filter.call(nodeList, function(node) {

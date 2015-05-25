@@ -32,7 +32,7 @@ function runBackwardTest(name) {
 }
 
 function runBothTests(name) {
-  // runBackwardTest(name);
+  runBackwardTest(name);
   runForwardTest(name);
 }
 
