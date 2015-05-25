@@ -220,6 +220,12 @@ var Bullets = {
 
   findNextVisibleSelectableElement: function(element) {
     var offset = this.NEXT_OFFSET;
+
+    var selectableDescendant = this.selectableDescendant(element, offset);
+    if (!!this.elementIsVisible(selectableDescendant)) {
+      return selectableDescendant;
+    }
+
     var nextVisibleSibling = this.visibleSibling(element, offset);
     if (!!nextVisibleSibling) {
       if (this.elementIsSelectable(nextVisibleSibling)) {
