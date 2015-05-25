@@ -7,7 +7,10 @@ var Bullets = {
 
 	// Properties
 
-	rootElement: document,
+	rootElement: null,
+	get rootNode() {
+		return this.rootElement || document.body;
+	},
 	selectedClass: 'bullets-selected',
 	collapsedClass: 'bullets-collapsed',
 	headerTags: ['H1', 'H2', 'H3', 'H4', 'H5', 'H6'],
@@ -17,7 +20,7 @@ var Bullets = {
     return this.headerTags.concat(this.hierarchicalTags);
   },
   get selectedNodes() {
-    return this.rootElement.getElementsByClassName(this.selectedClass);
+    return this.rootNode.getElementsByClassName(this.selectedClass);
 	},
 
 
@@ -104,7 +107,7 @@ var Bullets = {
 	},
 
 	expandAll: function() {
-		var nodeList = this.rootElement.getElementsByClassName(this.collapsedClass);
+		var nodeList = this.rootNode.getElementsByClassName(this.collapsedClass);
 		for (var i = nodeList.length - 1; i >= 0; --i) {
 			var element = nodeList[i];
 			this.expandElement(element);
@@ -189,7 +192,7 @@ var Bullets = {
 		var selectedElement;
 
 		if (selectedNodeList.length < 1) {
-			var selectableNodeList = this.rootElement.querySelectorAll(this.selectTags);
+			var selectableNodeList = this.rootNode.querySelectorAll(this.selectTags);
 			if (selectableNodeList.length < 1) {
 				// No selectable nodes
 				return null;
@@ -236,7 +239,7 @@ var Bullets = {
 		}
 
 
-		if (element.parentNode == this.rootElement) {
+		if (element.parentNode == this.rootNode) {
 			// If there are no previous visible siblings, and the parent is the root node
 			// then there's nothing to select.
 			// This should really never happen because the first child of the root node
@@ -265,7 +268,7 @@ var Bullets = {
 	ancestorSiblingWithVisibleParent: function(element) {
 		while(element.parentNode) {
 
-			if (element.parentNode == this.rootElement) {
+			if (element.parentNode == this.rootNode) {
 				return null;
 			}
 
@@ -285,6 +288,7 @@ var Bullets = {
 	// Previous
 
 	findPreviousVisibleSelectableElement: function(element) {
+
 		var offset = this.PREVIOUS_OFFSET;
 		var previousVisibleSibling = this.visibleSibling(element, offset);
 
@@ -305,7 +309,7 @@ var Bullets = {
 			return this.findPreviousVisibleSelectableElement(previousElement);
 		}
 
-		if (element.parentNode == this.rootElement) {
+		if (element.parentNode == this.rootNode) {
 			// If there are no previous visible siblings, and the parent is the root node
 			// then there's nothing to select.
 			// This should really never happen because the first child of the root node
@@ -328,7 +332,8 @@ var Bullets = {
 	ancestorWithVisibleParent: function(element) {
 		while(element.parentNode) {
 
-			if (element.parentNode == this.rootElement) {
+
+			if (element.parentNode == this.rootNode) {
 				return element;
 			}
 
@@ -374,7 +379,7 @@ var Bullets = {
 	},
 
 	elementIsSelectable: function(element) {
-		if (element == this.rootElement) {
+		if (element == this.rootNode) {
 			return false;
 		}
 		var tagName = element.tagName;

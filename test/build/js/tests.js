@@ -105,6 +105,16 @@ describe('Bullets visible elements', function() {
         runBothTests('cs-test-12');
   		});
   	});
+    describe('Collapse Selection Test 13', function() {
+  		it('should find the correct element', function () {
+        runBothTests('cs-test-13');
+  		});
+  	});
+    describe('Collapse Selection Test 14', function() {
+  		it('should find the correct element', function () {
+        runBothTests('cs-test-14');
+  		});
+  	});
   });
 
   describe('Header Collapse Selection Tests', function() {
