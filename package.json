@@ -1,8 +1,8 @@
 {
   "name": "bullets",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A simple JavaScript library to give outliner functionality to an HTML document.",
-  "main": "bullets.js",
+  "main": "dist/bullets.js",
   "scripts": {
     "test": "test/scripts/run_tests.js"
   },
@@ -23,6 +23,7 @@
     "gulp": "^3.8.11",
     "gulp-jade": "^1.0.0",
     "gulp-plumber": "^1.0.0",
+    "marked": "^0.3.3",
     "mocha": "^2.2.4",
     "sinon": "^1.14.1",
     "sinon-chai": "^2.7.0",
